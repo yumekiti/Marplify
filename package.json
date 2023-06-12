@@ -42,5 +42,8 @@
   },
   "engines": {
     "npm": "please_use_yarn_instead"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
   }
 }
