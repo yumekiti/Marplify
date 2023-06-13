@@ -1,23 +1,13 @@
-import { FC } from 'react';
+import { ReactNode, FC } from 'react';
 
-const Card: FC = () => {
+type Props = {
+  children: ReactNode;
+}
+
+const Card: FC<Props> = ({ children }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex">
-        <div className="flex-shrink-0">
-          <img className="h-12 w-12" src="https://picsum.photos/200/300" alt="ChitChat Logo" />
-        </div>
-        <div className="ml-4">
-          <div className="text-sm font-medium text-gray-900">
-            ChitChat
-          </div>
-          <div className="text-sm text-gray-500">
-            <a href="#" className="hover:underline">
-              Start a conversation
-            </a>
-          </div>
-        </div>
-      </div>
+    <div className="h-full bg-cardBackground rounded-lg px-4 py-2">
+      {children}
     </div>
   );
 }
