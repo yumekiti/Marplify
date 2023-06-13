@@ -15,7 +15,7 @@ const App: FC = () => {
               </span>
             </div>
             <div>
-              this is share
+              Share
             </div>
           </div>
         </div>
@@ -33,42 +33,50 @@ const App: FC = () => {
             <Card>
               <div className='flex justify-between items-center flex-col'>
                 <div className='w-10 h-10 bg-gray-300 rounded-full'></div>
-                <p>asdasdasd</p>
+                <p className='text-sm'>Presenter View</p>
               </div>
             </Card>
             <Card>
               <div className='flex justify-between items-center flex-col'>
                 <div className='w-10 h-10 bg-gray-300 rounded-full'></div>
-                <p>asdasdasd</p>
+                <p className='text-sm'>Export</p>
               </div>
             </Card>
           </div>
         </div>
         <div className='h-5/6 grid grid-cols-2 gap-4 mt-4 py-2'>
-          <div className='h-full col-span-1 bg-cardBackground rounded-l-lg pl-6 pt-4 relative'>
-            <textarea className='w-full h-full bg-cardBackground resize-none outline-none'
-            defaultValue={`# Markdown to Marp Converter\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`}></textarea>
+          <div className='h-full col-span-1 bg-cardBackground rounded-lg relative'>
+            <textarea className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none'
+              defaultValue={`# Markdown to Marp Converter\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`}>
+            </textarea>
             <div className='absolute top-4 right-24 rounded-b-lg'>
               <div className='fixed'>
                 <div>
-                  copy
+                  Copy
                 </div>
                 <div>
-                  help
+                  Help
                 </div>
               </div>
             </div>
             <div className='absolute bottom-14 right-24 rounded-b-lg'>
               <div className='fixed'>
-                asdasd
+                Convert
               </div>
             </div>
           </div>
-          <div className='h-full col-span-1 bg-cardBackground rounded-r-lg px-6 pt-4 relative'>
-            asdasdasd
+          <div className='h-full col-span-1 bg-cardBackground rounded-lg relative overflow-y-scroll'>
+            <div className='w-full h-full rounded-lg px-6 pt-4'>
+              <h1>Markdown to Marp Converter</h1>
+              <p>Markdown形式のドキュメントとスライドの相互変換ツール。</p>
+              <br />
+              <h2>Marpに変換したいMarkdownを入力してください。</h2>
+              <p>便利な体験をお楽しみください！</p>
+              <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            </div>
             <div className='absolute bottom-14 right-24 rounded-b-lg'>
               <div className='fixed'>
-                asdasd
+                Style
               </div>
             </div>
           </div>
