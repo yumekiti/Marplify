@@ -1,5 +1,5 @@
 export const convertToMarkDown = (text: string, handleConvertText: (newText: string) => void) => {
-  fetch('http://localhost:3003/api/v1/markdown', {
+  fetch('https://markdown-to-marp-converter-api.herokuapp.com/api/v1/markdown', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
