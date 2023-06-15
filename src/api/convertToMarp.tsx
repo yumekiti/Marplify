@@ -11,7 +11,7 @@ export const convertToMarp = (text: string, handleConvertText: (newText: string)
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.raw_body);
+      console.log("成功");
       handleConvertText(data.raw_body);
     })
     .catch((err) => console.log("エラー"));
