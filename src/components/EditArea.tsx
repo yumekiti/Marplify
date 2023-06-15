@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { convertToMarp } from "../api/convertToMarp";
 
 type EditAreaPropsType = {
     text: string
@@ -23,7 +23,7 @@ const EditArea = ({ text, handleTextChange }: EditAreaPropsType) => {
             </div>
             <div className='absolute bottom-14 right-24 rounded-b-lg'>
                 <div className='fixed'>
-                    Convert
+                    <button onClick={() => convertToMarp(text, handleTextChange)}>Convert</button>
                 </div>
             </div>
         </div>
