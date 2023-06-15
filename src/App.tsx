@@ -14,24 +14,30 @@ export type Mode = keyof typeof Mode
 
 const App: FC = () => {
   const [mode, setMode] = useState<Mode>(Mode.Both)
+  const [text, setText] = useState<string>(`# Markdown to Marp Converter\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`)
 
   //ModeSwitchBarにmodeの更新関数を渡すhandle
   const handleModeSwitch = (mode:Mode) => {
     setMode(mode)
   }
 
+  //EditAreaにtextの更新関数を渡すhandle
+  const handelTextChange = (newText: string) => {
+    setText(newText)
+  }
+
   //選択されたモードによってコンポーネントを出し分ける
   const switchMode = () => {
     switch (mode) {
       case Mode.Edit:
-        return <EditArea />
+        return <EditArea text={text} handleTextChange={handelTextChange} />
       case Mode.Both:
         return <>
-          <EditArea/>
-          <PreviewArea />
+          <EditArea text={text} handleTextChange={handelTextChange} />
+          <PreviewArea text={text} />
         </>
       case Mode.Preview:
-        return <PreviewArea />
+        return <PreviewArea text={text}/>
     }
   }
 
