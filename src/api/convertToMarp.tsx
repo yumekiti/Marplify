@@ -1,6 +1,5 @@
 export const convertToMarp = (text: string, handleConvertText: (newText: string) => void) => {
-  console.log(text);
-  fetch('https://markdown-to-marp-converter-api.herokuapp.com/api/v1/marp', {
+  fetch('http://localhost:3003/api/v1/marp', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -12,8 +11,8 @@ export const convertToMarp = (text: string, handleConvertText: (newText: string)
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      console.log(data.raw_body);
       handleConvertText(data.raw_body);
     })
-    .catch((err) => alert('失敗'));
+    .catch((err) => console.log("エラー"));
 };
