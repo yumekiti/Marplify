@@ -8,13 +8,19 @@ servers:
     description: "Mock server"
 
 paths:
-  /api/marp:
+  /api/v1/marp:
     post:
       summary: MarkdownをMarpのデータに変換する
       description: |
         ## 説明
 
         このAPIは、MarkdownをMarpのデータに変換するためのAPIです。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Markdown'
+        required: true
 
       responses:
         '200':
@@ -25,14 +31,20 @@ paths:
                 $ref: "#/components/schemas/Marp"
         '500':
           description: サーバーエラーが発生しました
-  /api/markdown:
+  /api/v1/markdown:
     post:
       summary: MarpのデータをMarkdownに変換する
       description: |
         ## 説明
 
         このAPIは、MarpのデータをMarkdownに変換するためのAPIです。
-
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Markdown'
+        required: true
+        
       responses:
         '200':
           description: 成功
@@ -53,7 +65,7 @@ components:
           description: Marpのマークダウンデータ
 
       example:
-        body: |
+        raw_body: |
           # Hello, world!
 
           ---
@@ -70,7 +82,7 @@ components:
           description: Markdownのマークダウンデータ
 
       example:
-        body: |
+        raw_body: |
           # Hello, world!
 
           ## Marp
