@@ -14,7 +14,7 @@ export type Mode = keyof typeof Mode;
 
 export const TextType = {
   Markdown: 'Markdown',
-  Marp: 'Marp'
+  Marp: 'Marp',
 } as const;
 export type TextType = keyof typeof TextType;
 
@@ -38,17 +38,29 @@ const App: FC = () => {
   //EditAreaにtextTypeの更新関数を渡すhandle
   const handleTextTypeChange = (textType: TextType) => {
     setTextType(textType);
-  }
+  };
 
   //選択されたモードによってコンポーネントを出し分ける
   const switchMode = () => {
     switch (mode) {
       case Mode.Edit:
-        return <EditArea text={text} textType={textType} handleTextChange={handleTextChange} handleTextTypeChange={handleTextTypeChange} />;
+        return (
+          <EditArea
+            text={text}
+            textType={textType}
+            handleTextChange={handleTextChange}
+            handleTextTypeChange={handleTextTypeChange}
+          />
+        );
       case Mode.Both:
         return (
           <>
-            <EditArea text={text} textType={textType} handleTextChange={handleTextChange} handleTextTypeChange={handleTextTypeChange} />
+            <EditArea
+              text={text}
+              textType={textType}
+              handleTextChange={handleTextChange}
+              handleTextTypeChange={handleTextTypeChange}
+            />
             <PreviewArea text={text} />
           </>
         );
