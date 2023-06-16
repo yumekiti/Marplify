@@ -30,7 +30,7 @@ const App: FC = () => {
     setMode(mode);
   };
 
-  //EditAreaにtextの更新関数を渡すhandle
+  //textの更新関数を渡すhandle
   const handleTextChange = (newText: string) => {
     setText(newText);
   };
@@ -61,11 +61,11 @@ const App: FC = () => {
               handleTextChange={handleTextChange}
               handleTextTypeChange={handleTextTypeChange}
             />
-            <PreviewArea text={text} />
+            <PreviewArea text={text} handleTextChange={handleTextChange} />
           </>
         );
       case Mode.Preview:
-        return <PreviewArea text={text} />;
+        return <PreviewArea text={text} handleTextChange={handleTextChange} />;
     }
   };
 
