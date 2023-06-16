@@ -1,5 +1,5 @@
 export const convertToMarp = (text: string, handleConvertText: (newText: string) => void) => {
-  fetch('https://markdown-to-marp-converter-api.herokuapp.com/api/v1/marp', {
+  fetch('https://markdown-to-marp-converter-api-production.up.railway.app/api/v1/marp', {
 
     method: 'POST',
     headers: {
