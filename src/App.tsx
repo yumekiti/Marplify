@@ -61,11 +61,11 @@ const App: FC = () => {
               handleTextChange={handleTextChange}
               handleTextTypeChange={handleTextTypeChange}
             />
-            <PreviewArea text={text} handleTextChange={handleTextChange} />
+            <PreviewArea text={text} textType={textType} handleTextChange={handleTextChange} />
           </>
         );
       case Mode.Preview:
-        return <PreviewArea text={text} handleTextChange={handleTextChange} />;
+        return <PreviewArea text={text} textType={textType} handleTextChange={handleTextChange} />;
     }
   };
 
