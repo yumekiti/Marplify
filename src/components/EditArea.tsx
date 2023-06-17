@@ -25,7 +25,7 @@ const EditArea = ({ text, textType, handleTextChange, handleTextTypeChange }: Ed
   };
 
   return (
-    <div className='h-full col-span-1 bg-cardBackground rounded-lg relative'>
+    <div className='h-full w-full bg-cardBackground rounded-lg relative'>
       <textarea
         className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none'
         value={text}

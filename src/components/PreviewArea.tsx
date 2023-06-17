@@ -39,7 +39,7 @@ const PreviewArea = ({ text, handleTextChange }: PreviewAreaPropsType) => {
   };
 
   return (
-    <div className='h-full col-span-1 bg-cardBackground rounded-lg relative overflow-y-scroll'>
+    <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll'>
       <div className='w-full h-full rounded-lg px-6 pt-4 markdown' style={{ whiteSpace: 'pre-line' }}>
         <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={text} />
       </div>
