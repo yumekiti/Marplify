@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Card from './Card';
 import modes from '../constant/modes';
 
@@ -10,7 +11,7 @@ type Props = {
   setMode: (mode: string) => void;
 };
 
-const ModeSwitchBar = ({ mode, setMode }: Props) => {
+const ModeSwitchBar: FC<Props> = ({ mode, setMode }) => {
   return (
     <Card>
       <div className='flex justify-between items-center gap-2'>
