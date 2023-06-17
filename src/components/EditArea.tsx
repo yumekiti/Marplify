@@ -1,35 +1,24 @@
-import { TextType } from '../App';
-import { convertToMarp } from '../api/convertToMarp';
-import { convertToMarkDown } from '../api/convetToMarkDown';
+import { isMarpMarkdown, convertMarkdown, convertMarp } from '../libs/markdown';
+import { AiOutlineRetweet } from 'react-icons/ai';
 
 type EditAreaPropsType = {
-  text: string;
-  textType: TextType;
-  handleTextChange: (newText: string) => void;
-  handleTextTypeChange: (textType: TextType) => void;
+  content: string;
+  setContent: (content: string) => void;
 };
 
-const EditArea = ({ text, textType, handleTextChange, handleTextTypeChange }: EditAreaPropsType) => {
-  //Convertボタンが押されたとき
-  const onClickConvert = () => {
-    switch (textType) {
-      case TextType.Markdown:
-        convertToMarp(text, handleTextChange);
-        handleTextTypeChange(TextType.Marp);
-        return;
-      case TextType.Marp:
-        convertToMarkDown(text, handleTextChange);
-        handleTextTypeChange(TextType.Markdown);
-        return;
-    }
+const EditArea = ({ content, setContent }: EditAreaPropsType) => {
+  const handleConvertClick = async () => {
+    if (!isMarpMarkdown(content)) setContent(await convertMarp(content));
+    else setContent(await convertMarkdown(content));
   };
 
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative'>
       <textarea
         className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none'
-        value={text}
-        onChange={(e) => handleTextChange(e.target.value)}
+        placeholder={`# Marplify\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！`}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
       ></textarea>
       <div className='absolute top-4 right-24 rounded-b-lg'>
         <div className='fixed'>
@@ -37,9 +26,15 @@ const EditArea = ({ text, textType, handleTextChange, handleTextTypeChange }: Ed
           <div>Help</div>
         </div>
       </div>
-      <div className='absolute bottom-14 right-24 rounded-b-lg'>
+      <div className='absolute bottom-20 right-44 rounded-b-lg'>
         <div className='fixed'>
-          <button onClick={onClickConvert}>Convert</button>
+          <button
+            onClick={handleConvertClick}
+            className='bg-icons-tertiary text-icons-main text-xl rounded-lg px-4 py-2 font-bold flex items-center gap-2 shadow-md'
+          >
+            <AiOutlineRetweet className='w-8 h-8' />
+            Convert
+          </button>
         </div>
       </div>
     </div>
