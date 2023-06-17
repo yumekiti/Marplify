@@ -4,6 +4,7 @@ import PreviewArea from './components/PreviewArea';
 import ModeSwitchBar from './components/ModeSwitchBar';
 import ToolBar from './components/ToolBar';
 import Header from './components/Header';
+import Share from './components/Share';
 
 import modes from './constant/modes';
 
@@ -15,6 +16,7 @@ export type TextType = keyof typeof TextType;
 
 const App: FC = () => {
   const [mode, setMode] = useState(modes.Both);
+  const [share, setShare] = useState(false);
   const [textType, setTextType] = useState<TextType>(TextType.Markdown);
   const [text, setText] = useState<string>(
     `# Markdown to Marp Converter\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
@@ -32,7 +34,8 @@ const App: FC = () => {
 
   return (
     <div className='App bg-background h-screen'>
-      <Header />
+      {share && <Share url={window.location.href} setShare={setShare} />}
+      <Header setShare={setShare} />
       <div className='h-full pt-24 container mx-auto px-4'>
         <div className='flex justify-between items-end'>
           <ModeSwitchBar mode={mode} setMode={setMode} />
