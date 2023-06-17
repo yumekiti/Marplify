@@ -6,7 +6,7 @@ import { selectStyle } from '../api/selectStyle';
 
 export const Theme = {
   gaia: 'gaia',
-  default: 'default'
+  default: 'default',
 } as const;
 export type Theme = keyof typeof Theme;
 
@@ -16,21 +16,27 @@ type PreviewAreaPropsType = {
 };
 
 const PreviewArea = ({ text, handleTextChange }: PreviewAreaPropsType) => {
-  const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false)
+  const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false);
 
   //Styleボタンが押されたとき
   const handleStyleClick = () => {
-    setIsDisplayedStyle(!isDisplayedStyle)
-  }
+    setIsDisplayedStyle(!isDisplayedStyle);
+  };
 
   const displayStyleList = () => {
     if (isDisplayedStyle) {
-      return <ul className='flex'>
-        <li className='pr-2'><button onClick={() => selectStyle(text, Theme.gaia, handleTextChange)}>{Theme.gaia}</button></li>
-        <li className=''><button onClick={() => selectStyle(text, Theme.gaia, handleTextChange)}>{Theme.default}</button></li>
-      </ul>
+      return (
+        <ul className='flex'>
+          <li className='pr-2'>
+            <button onClick={() => selectStyle(text, Theme.gaia, handleTextChange)}>{Theme.gaia}</button>
+          </li>
+          <li className=''>
+            <button onClick={() => selectStyle(text, Theme.gaia, handleTextChange)}>{Theme.default}</button>
+          </li>
+        </ul>
+      );
     }
-  }
+  };
 
   return (
     <div className='h-full col-span-1 bg-cardBackground rounded-lg relative overflow-y-scroll'>
@@ -38,9 +44,7 @@ const PreviewArea = ({ text, handleTextChange }: PreviewAreaPropsType) => {
         <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={text} />
       </div>
       <div className='absolute bottom-20 right-24 rounded-b-lg'>
-        <div className='fixed'>
-          {displayStyleList()}
-        </div>
+        <div className='fixed'>{displayStyleList()}</div>
       </div>
       <div className='absolute bottom-14 right-24 rounded-b-lg'>
         <div className='fixed'>

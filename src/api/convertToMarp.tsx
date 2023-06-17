@@ -1,6 +1,5 @@
 export const convertToMarp = (text: string, handleConvertText: (newText: string) => void) => {
   fetch('https://markdown-to-marp-converter-api-production.up.railway.app/api/v1/marp', {
-
     method: 'POST',
     headers: {
       Accept: 'application/json',
