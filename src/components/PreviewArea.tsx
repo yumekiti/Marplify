@@ -1,20 +1,18 @@
 import 'github-markdown-css/github-markdown.css';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import Card from './Card';
 
-export const Theme = {
-  gaia: 'gaia',
-  default: 'default',
-} as const;
-export type Theme = keyof typeof Theme;
+import { FaPaintRoller } from 'react-icons/fa';
 
-type PreviewAreaPropsType = {
+type Props = {
   content: string;
   setContent: (content: string) => void;
+  marp: boolean;
 };
 
-const PreviewArea = ({ content, setContent }: PreviewAreaPropsType) => {
+const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false);
 
   //Styleボタンが押されたとき
@@ -45,10 +43,17 @@ const PreviewArea = ({ content, setContent }: PreviewAreaPropsType) => {
       <div className='absolute bottom-20 right-24 rounded-b-lg'>
         <div className='fixed'>{displayStyleList()}</div>
       </div>
-      <div className='absolute bottom-14 right-24 rounded-b-lg'>
-        <div className='fixed'>
-          <button onClick={handleStyleClick}>Style</button>
-        </div>
+      <div className='absolute bottom-8 right-10 rounded-b-lg'>
+        <button onClick={handleStyleClick} className='group hover:opacity-80'>
+          <Card>
+            <div className='py-2'>
+              <FaPaintRoller className='w-8 h-8 text-headline' />
+            </div>
+          </Card>
+          <span className='absolute -bottom-6 left-0 right-0 bg-icons-highlight text-icons-main rounded px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition-all duration-300'>
+            Style
+          </span>
+        </button>
       </div>
     </div>
   );

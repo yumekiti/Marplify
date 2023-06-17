@@ -5,7 +5,7 @@ type Props = {
 };
 
 const Card: FC<Props> = ({ children }) => {
-  return <div className='h-full bg-cardBackground rounded-lg px-4 py-2'>{children}</div>;
+  return <div className='h-full bg-cardBackground rounded-lg px-4 py-2 shadow-md'>{children}</div>;
 };
 
 export default Card;
