@@ -1,21 +1,22 @@
 import Card from './Card';
 
-type ToolSwitchBarPropsType = {};
+import { BsDisplay } from 'react-icons/bs';
+import { TbFileExport } from 'react-icons/tb';
 
-const ToolBar = (props: ToolSwitchBarPropsType) => {
+const ToolBar = () => {
   return (
     <div className='flex gap-4'>
       <Card>
-        <div className='flex justify-between items-center flex-col'>
-          <div className='w-10 h-10 bg-gray-300 rounded-full'></div>
-          <p className='text-sm'>Presenter View</p>
-        </div>
+        <button className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
+          <BsDisplay className='w-8 h-10' />
+          <p className='text-sm'>Presentation</p>
+        </button>
       </Card>
       <Card>
-        <div className='flex justify-between items-center flex-col'>
-          <div className='w-10 h-10 bg-gray-300 rounded-full'></div>
+        <button className='flex justify-between items-center flex-col text-icons-highlight hover:opacity-60'>
+          <TbFileExport className='w-8 h-10' />
           <p className='text-sm'>Export</p>
-        </div>
+        </button>
       </Card>
     </div>
   );
