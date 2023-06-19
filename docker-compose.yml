@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  app:
+    image: node:18-alpine
+    container_name: 'SchoolCall_app'
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - '3000:3000'
+    command: >
+      sh -c "
+        yarn &&
+        yarn start
+      "
+
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: "swagger-editor"
+    ports:
+      - "3001:8080"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "3002:8080"
+    volumes:
+      - ./:/mock
+    environment:
+      SWAGGER_JSON: /mock/openapi.yml
+
+  swagger-api:
+    image: stoplight/prism:4
+    container_name: "swagger-api"
+    ports:
+      - "3003:4010"
+    command: mock -h 0.0.0.0 /mock/openapi.yml
+    volumes:
+      - ./:/mock

@@ -1,0 +1,90 @@
+openapi: "3.0.0"
+info:
+  title: "API"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:3003"
+    description: "Mock server"
+
+paths:
+  /api/v1/marp:
+    post:
+      summary: MarkdownをMarpのデータに変換する
+      description: |
+        ## 説明
+
+        このAPIは、MarkdownをMarpのデータに変換するためのAPIです。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Markdown'
+        required: true
+
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Marp"
+        '500':
+          description: サーバーエラーが発生しました
+  /api/v1/markdown:
+    post:
+      summary: MarpのデータをMarkdownに変換する
+      description: |
+        ## 説明
+
+        このAPIは、MarpのデータをMarkdownに変換するためのAPIです。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Markdown'
+        required: true
+        
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Markdown"
+        '500':
+          description: サーバーエラーが発生しました
+
+components:
+  schemas:
+    Marp:
+      type: object
+      properties:
+        body:
+          type: string
+          description: Marpのマークダウンデータ
+
+      example:
+        raw_body: |
+          # Hello, world!
+
+          ---
+
+          ## Marp
+
+          Markdown + Marp = Beautiful slide deck
+    
+    Markdown:
+      type: object
+      properties:
+        body:
+          type: string
+          description: Markdownのマークダウンデータ
+
+      example:
+        raw_body: |
+          # Hello, world!
+
+          ## Marp
+
+          Markdown + Marp = Beautiful slide deck

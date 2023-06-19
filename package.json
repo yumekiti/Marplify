@@ -34,7 +34,8 @@
     "server-public": "http-server -p 3000 --cors",
     "server-root": "http-server ./ -p 3000 --cors",
     "server": "http-server ./build -p 3000 --cors",
-    "pretty": "prettier --write 'src/**/*.{html,css,scss,js,jsx,ts,tsx,json}' README.md"
+    "pretty": "prettier --write 'src/**/*.{html,css,scss,js,jsx,ts,tsx,json}' README.md",
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "@marp-team/marp-core": "^1.4.0",
@@ -47,16 +48,22 @@
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "axios": "^1.4.0",
     "filesafe-embed": "^1.0.10",
     "filesafe-js": "^1.0.4",
     "gh-pages": "^3.1.0",
+    "github-markdown-css": "^5.2.0",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
     "node-sass": "4.14.1",
     "prettier": "^2.2.1",
+    "qrcode.react": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.9.0",
+    "react-markdown": "^8.0.7",
     "react-scripts": "4.0.1",
+    "remark-gfm": "^3.0.1",
     "sn-editor-kit": "1.0.6",
     "sn-stylekit": "2.1.0",
     "source-map-explorer": "^2.5.1",
@@ -93,5 +100,8 @@
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
     ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.6"
   }
 }

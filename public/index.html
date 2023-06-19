@@ -9,11 +9,37 @@
   <meta name="description"
     content="「Markdown to Marp Converter」は、Markdown形式のドキュメントをスライド形式に変換したり、逆にスライドをドキュメントに変換したりすることができるツールです。これにより、同じ文書をドキュメントとして閲覧するだけでなく、プレゼンテーションやスライドショーとしても利用することができます。" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/icons/icon-192x192.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      content: ['./src/**/*.{js,jsx,ts,tsx}'],
+      theme: {
+        extend: {
+          colors: {
+            background: '#d8eefe',
+            headline: '#094067',
+            subheadline: '#5f6c7b',
+            cardBackground: '#fffffe',
+            cardHeading: '#094067',
+            cardParagraph: '#5f6c7b',
+            icons: {
+              stroke: '#094067',
+              main: '#fffffe',
+              highlight: '#3da9fc',
+              secondary: '#90b4ce',
+              tertiary: '#ef4565',
+            },
+          },
+        },
+      },
+      plugins: [],
+    };
+  </script>
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
