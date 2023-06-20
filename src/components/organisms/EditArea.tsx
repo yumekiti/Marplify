@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { isMarpMarkdown, convertMarkdown, convertMarp } from '../../libs/markdown';
+import { isMarpMarkdown, convertToMarkdown, convertToMarp } from '../../libs/markdown';
 import { AiOutlineRetweet } from 'react-icons/ai';
 
 type Props = {
@@ -12,8 +12,8 @@ type Props = {
 const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   const handleConvertClick = async () => {
     let newContent = '';
-    if (isMarpMarkdown(content)) newContent = await convertMarkdown(content);
-    else newContent = await convertMarp(content);
+    if (isMarpMarkdown(content)) newContent = await convertToMarkdown(content);
+    else newContent = await convertToMarp(content);
     setContent(newContent);
     setMarp(isMarpMarkdown(newContent));
   };

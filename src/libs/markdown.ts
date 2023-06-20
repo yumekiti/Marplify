@@ -7,20 +7,20 @@ export const isMarpMarkdown = (markdown: string): boolean => {
   return isMarpStart;
 };
 
-export const convertMarkdown = (markdown: string): Promise<string> => {
+export const convertToMarp = (markdown: string): Promise<string> => {
   return fetchInstance()
-    .post('/api/v1/markdown', {
-      raw_body: markdown,
+    .post('/markdown-to-marp', {
+      content: markdown,
     })
-    .then((response) => response.data.raw_body)
+    .then((response) => response.data.content)
     .catch((error) => console.log(error));
 };
 
-export const convertMarp = (markdown: string): Promise<string> => {
+export const convertToMarkdown = (markdown: string): Promise<string> => {
   return fetchInstance()
-    .post('/api/v1/marp', {
-      raw_body: markdown,
+    .post('/marp-to-markdown', {
+      content: markdown,
     })
-    .then((response) => response.data.raw_body)
+    .then((response) => response.data.content)
     .catch((error) => console.log(error));
 };
