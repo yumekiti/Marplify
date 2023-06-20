@@ -39,7 +39,7 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   };
 
   return (
-    <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll'>
+    <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll shadow-md'>
       <div className='w-full h-full rounded-lg px-6 pt-4 markdown' style={{ whiteSpace: 'pre-line' }}>
         {marp ? (
           <Presentation content={content} />

@@ -11,9 +11,11 @@ type Props = {
 
 const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   const handleConvertClick = async () => {
-    if (!isMarpMarkdown(content)) setContent(await convertMarp(content));
-    else setContent(await convertMarkdown(content));
-    setMarp(!isMarpMarkdown(content));
+    let newContent = '';
+    if (isMarpMarkdown(content)) newContent = await convertMarkdown(content);
+    else newContent = await convertMarp(content);
+    setContent(newContent);
+    setMarp(isMarpMarkdown(newContent));
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,7 +24,7 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   };
 
   return (
-    <div className='h-full w-full bg-cardBackground rounded-lg relative'>
+    <div className='h-full w-full bg-cardBackground rounded-lg relative shadow-md'>
       <textarea
         className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none'
         placeholder={`# Marplify\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！`}
