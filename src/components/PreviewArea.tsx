@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import Card from './Card';
+import Presentation from './Presentation';
 
 import { FaPaintRoller } from 'react-icons/fa';
 
@@ -38,13 +39,17 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll'>
       <div className='w-full h-full rounded-lg px-6 pt-4 markdown' style={{ whiteSpace: 'pre-line' }}>
-        <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={content} />
+        {marp ? (
+          <Presentation content={content} />
+        ) : (
+          <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={content} />
+        )}
       </div>
       <div className='absolute bottom-20 right-24 rounded-b-lg'>
         <div className='fixed'>{displayStyleList()}</div>
       </div>
-      <div className='absolute bottom-8 right-10 rounded-b-lg'>
-        <button onClick={handleStyleClick} className='group hover:opacity-80'>
+      <div className='absolute bottom-24 right-20 rounded-b-lg'>
+        <button onClick={handleStyleClick} className='fixed group hover:opacity-80'>
           <Card>
             <div className='py-2'>
               <FaPaintRoller className='w-8 h-8 text-headline' />
