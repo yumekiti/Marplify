@@ -51,9 +51,9 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
         <div className='fixed'>{displayStyleList()}</div>
       </div>
       <div className='absolute bottom-24 right-24 rounded-b-lg'>
-        <div onClick={handleStyleClick} className='fixed group'>
+        <div className='fixed group'>
           <Card>
-            <div className='mt-2'>
+            <div className='my-2'>
               <IconButton
                 active={true}
                 onClick={handleStyleClick}
