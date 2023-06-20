@@ -24,3 +24,23 @@ export const convertMarp = (markdown: string): Promise<string> => {
     .then((response) => response.data.raw_body)
     .catch((error) => console.log(error));
 };
+
+export const exportMarkdown = (markdown: string, exportFormat: string): Promise<string> => {
+  return fetchInstance()
+    .post('/api/v1/md_export', {
+      raw_body: markdown,
+      format: exportFormat,
+    })
+    .then((response) => response.data.raw_body)
+    .catch((error) => console.log(error));
+};
+
+export const exportMarp = (markdown: string, exportFormat: string): Promise<string> => {
+  return fetchInstance()
+    .post('/api/v1/marp_export', {
+      raw_body: markdown,
+      format: exportFormat,
+    })
+    .then((response) => response.data)
+    .catch((error) => console.log(error));
+};
