@@ -2,6 +2,8 @@ import { FC } from 'react';
 
 import { isMarpMarkdown, convertMarkdown, convertMarp } from '../../libs/markdown';
 import { AiOutlineRetweet } from 'react-icons/ai';
+import { MdOutlineContentCopy } from 'react-icons/md';
+import { IoMdHelpCircle } from 'react-icons/io';
 
 type Props = {
   content: string;
@@ -23,6 +25,41 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
     setMarp(isMarpMarkdown(e.target.value));
   };
 
+  const copyToClipboard = async () => {
+    await global.navigator.clipboard.writeText(content);
+  };
+
+  const onClickHelp = () => {
+    const exampleText = `
+## タイトル
+
+- 作成日
+- メンバー
+
+
+## テーマ
+
+###  　　　　　　〇〇〇〇
+
+
+## 背景
+
+□□□□□□□□□□□
+
+
+## 問題定義
+- ??????
+- △△△△△△
+- ++++++
+
+
+## 概要
+
+□□□□□□□□□□□
+`;
+    setContent(exampleText);
+  };
+
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative shadow-md'>
       <textarea
@@ -32,9 +69,13 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
         onChange={handleContentChange}
       ></textarea>
       <div className='absolute top-4 right-24 rounded-b-lg'>
-        <div className='fixed'>
-          <div>Copy</div>
-          <div>Help</div>
+        <div className='flex fixed'>
+          <button onClick={copyToClipboard}>
+            <MdOutlineContentCopy className='w-6 h-10 mr-4 hover:opacity-50' />
+          </button>
+          <button onClick={onClickHelp}>
+            <IoMdHelpCircle className='w-7 h-10 hover:opacity-50' />
+          </button>
         </div>
       </div>
       <div className='absolute bottom-20 right-44 rounded-b-lg'>
