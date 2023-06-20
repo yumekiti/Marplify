@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchInstance = () => {
   return axios.create({
-    baseURL: 'http://localhost:8000/',
+    baseURL: 'https://marplify-api.yumekiti.net/',
     headers: {
       'Content-Type': 'application/json',
     },
