@@ -1,4 +1,4 @@
-import Card from './Card';
+import Card from '../organisms/Card';
 
 import { BsDisplay } from 'react-icons/bs';
 import { TbFileExport } from 'react-icons/tb';

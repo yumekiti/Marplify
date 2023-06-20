@@ -5,6 +5,8 @@ import gfm from 'remark-gfm';
 import Card from './Card';
 import Presentation from './Presentation';
 
+import IconButton from '../atoms/IconButton';
+
 import { FaPaintRoller } from 'react-icons/fa';
 
 type Props = {
@@ -48,17 +50,19 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
       <div className='absolute bottom-20 right-24 rounded-b-lg'>
         <div className='fixed'>{displayStyleList()}</div>
       </div>
-      <div className='absolute bottom-24 right-20 rounded-b-lg'>
-        <button onClick={handleStyleClick} className='fixed group hover:opacity-80'>
+      <div className='absolute bottom-24 right-24 rounded-b-lg'>
+        <div onClick={handleStyleClick} className='fixed group'>
           <Card>
-            <div className='py-2'>
-              <FaPaintRoller className='w-8 h-8 text-headline' />
+            <div className='mt-2'>
+              <IconButton
+                active={true}
+                onClick={handleStyleClick}
+                icon={<FaPaintRoller className='w-8 h-8 text-headline' />}
+                hoverText='Style'
+              />
             </div>
           </Card>
-          <span className='absolute -bottom-6 left-0 right-0 bg-icons-highlight text-icons-main rounded px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition-all duration-300'>
-            Style
-          </span>
-        </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Marp } from '@marp-team/marp-core';
+import '../../styles/marp.css';
 
 type Props = {
   content: string;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { isMarpMarkdown, convertMarkdown, convertMarp } from '../libs/markdown';
+import { isMarpMarkdown, convertMarkdown, convertMarp } from '../../libs/markdown';
 import { AiOutlineRetweet } from 'react-icons/ai';
 
 type Props = {

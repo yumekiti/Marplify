@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Icon from '../assets/icon.svg';
+import Icon from '../../assets/icon.svg';
 import { BsShareFill } from 'react-icons/bs';
 
 type Props = {
