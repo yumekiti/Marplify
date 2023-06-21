@@ -1,9 +1,10 @@
 import Card from '../organisms/Card';
 
-import { BsDisplay, BsFillFilePdfFill, BsFillFileEarmarkCodeFill } from 'react-icons/bs';
+import { BsDisplay, BsFillFilePdfFill, BsFillFileEarmarkCodeFill, BsLock } from 'react-icons/bs';
 import { TbFileExport } from 'react-icons/tb';
 import { exportMarkdown, exportMarp, isMarpMarkdown } from '../../libs/markdown';
 import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type Props = {
   content: string;
@@ -19,13 +20,21 @@ const ToolBar: FC<Props> = ({ content }) => {
     }
   };
 
+  const deactiveStyle = isMarpMarkdown(content) ? {} : { color: 'gray' };
   return (
     <div className='flex gap-4'>
       <Card>
-        <button className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
-          <BsDisplay className='w-8 h-10' />
-          <p className='text-sm'>Presentation</p>
-        </button>
+        <Link
+          to={{ pathname: '/presentation', state: content }}
+          style={isMarpMarkdown(content) ? {} : { pointerEvents: 'none' }}
+        >
+          <button className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
+            <BsDisplay className='w-8 h-10' style={deactiveStyle} />
+            <p className='text-sm' style={deactiveStyle}>
+              Presentation
+            </p>
+          </button>
+        </Link>
       </Card>
       <Card>
         <div className='flex'>
