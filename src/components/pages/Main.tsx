@@ -17,7 +17,7 @@ const Main: FC = () => {
     <Layout>
       <div className='flex justify-between items-start flex-col gap-2 md:flex-row md:items-end'>
         <ModeSwitchBar mode={mode} setMode={setMode} />
-        <ToolBar />
+        <ToolBar content={content} />
       </div>
       <div className='h-5/6 flex gap-4 mt-4 py-2'>
         {(mode === modes.Edit || mode === modes.Both) && (
