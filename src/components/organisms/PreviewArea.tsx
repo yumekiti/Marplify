@@ -4,10 +4,9 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import Card from './Card';
 import Presentation from './Presentation';
-
 import IconButton from '../atoms/IconButton';
-
 import { FaPaintRoller } from 'react-icons/fa';
+import { selectTheme } from '../../libs/markdown';
 
 type Props = {
   content: string;
@@ -17,23 +16,53 @@ type Props = {
 
 const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false);
+  const [selectedCss, setSelectedCss] = useState<string | null>(null);
+  const [centerNum, setCenterNum] = useState<number>(1);
 
   //Styleボタンが押されたとき
   const handleStyleClick = () => {
     setIsDisplayedStyle(!isDisplayedStyle);
   };
 
+  //StyleToolTip
   const displayStyleList = () => {
+    const themelist = ['Theme1', 'Theme2', 'Theme3', 'Theme4'];
+    const handleSelectedTheme = async (index: number) => {
+      //apiでthemeのcss取得
+      setSelectedCss(await selectTheme(themelist[index]));
+      //contentのthemeを変更
+      const themeRow = content.match(/theme: [A-Za-z0-9]*/) ?? '';
+      setContent(content.replace(themeRow[0], `theme: ${themelist[index]}`));
+    };
+
+    const onClickLeft = () => {
+      setCenterNum((num) => (num != 0 ? (num - 1) % themelist.length : themelist.length - 1));
+    };
+    const onClickRight = () => {
+      setCenterNum((num) => (num + 1) % themelist.length);
+    };
+
+    const leftNum = centerNum != 0 ? (centerNum - 1) % themelist.length : themelist.length - 1;
+    const rightNum = (centerNum + 1) % themelist.length;
+    const displayNumList = [leftNum, centerNum, rightNum];
+
     if (isDisplayedStyle) {
       return (
-        <ul className='flex'>
-          <li className='pr-2'>
-            {/* <button onClick={() => selectStyle(content, Theme.gaia, setContent)}>{Theme.gaia}</button> */}
-          </li>
-          <li className=''>
-            {/* <button onClick={() => selectStyle(content, Theme.gaia, setContent)}>{Theme.default}</button> */}
-          </li>
-        </ul>
+        <div className='flex bg-slate-800 rounded'>
+          <button className='w-10 text-white' onClick={onClickLeft}>
+            ＜
+          </button>
+          <ul className='flex py-4 h-24 space-x-4'>
+            {displayNumList.map((index) => (
+              <button className='w-24 bg-gray-300' onClick={() => handleSelectedTheme(index)}>
+                <li>{themelist[index]}</li>
+              </button>
+            ))}
+          </ul>
+          <button className='w-10 text-white' onClick={onClickRight}>
+            ＞
+          </button>
+        </div>
       );
     }
   };
@@ -42,12 +71,12 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
     <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll shadow-md'>
       <div className='w-full h-full rounded-lg px-6 pt-4 markdown' style={{ whiteSpace: 'pre-line' }}>
         {marp ? (
-          <Presentation content={content} />
+          <Presentation content={content} selectedCss={selectedCss} />
         ) : (
           <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={content} />
         )}
       </div>
-      <div className='absolute bottom-20 right-24 rounded-b-lg'>
+      <div className='absolute bottom-48 right-96 rounded-b-lg'>
         <div className='fixed'>{displayStyleList()}</div>
       </div>
       <div className='absolute bottom-24 right-24 rounded-b-lg'>
