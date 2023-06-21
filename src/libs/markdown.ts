@@ -44,3 +44,12 @@ export const exportMarp = (markdown: string, exportFormat: string): Promise<stri
     .then((response) => response.data)
     .catch((error) => console.log(error));
 };
+
+export const selectTheme = (theme: string): Promise<string> => {
+  return fetchInstance()
+    .post('/api/v1/marp_export', {
+      theme: theme,
+    })
+    .then((response) => response.data)
+    .catch((error) => console.log(error));
+};

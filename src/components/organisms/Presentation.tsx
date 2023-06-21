@@ -4,9 +4,10 @@ import '../../styles/marp.css';
 
 type Props = {
   content: string;
+  selectedCss: string;
 };
 
-const Presentation: FC<Props> = ({ content }) => {
+const Presentation: FC<Props> = ({ content, selectedCss }) => {
   const marp = new Marp();
   const { html, css } = marp.render(content);
 
