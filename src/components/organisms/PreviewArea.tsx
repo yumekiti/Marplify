@@ -16,7 +16,7 @@ type Props = {
 
 const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false);
-  const [selectedCss, setSelectedCss] = useState<string>('');
+  const [selectedCss, setSelectedCss] = useState<string | null>(null);
   const [centerNum, setCenterNum] = useState<number>(1);
 
   //Styleボタンが押されたとき

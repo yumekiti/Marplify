@@ -4,7 +4,7 @@ import '../../styles/marp.css';
 
 type Props = {
   content: string;
-  selectedCss: string;
+  selectedCss: string | null;
 };
 
 const Presentation: FC<Props> = ({ content, selectedCss }) => {
@@ -14,7 +14,7 @@ const Presentation: FC<Props> = ({ content, selectedCss }) => {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <style dangerouslySetInnerHTML={{ __html: css }} />
+      <style dangerouslySetInnerHTML={{ __html: selectedCss ?? css }} />
     </>
   );
 };
