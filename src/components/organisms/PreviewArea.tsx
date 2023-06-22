@@ -5,7 +5,9 @@ import gfm from 'remark-gfm';
 import Card from './Card';
 import Presentation from './Presentation';
 import IconButton from '../atoms/IconButton';
-import { FaPaintRoller } from 'react-icons/fa';
+
+import StyleIcon from '../../assets/style.svg';
+
 import { selectTheme } from '../../libs/markdown';
 
 type Props = {
@@ -81,16 +83,17 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
       </div>
       <div className='absolute bottom-24 right-24 rounded-b-lg'>
         <div className='fixed group'>
-          <Card>
-            <div className='my-2'>
-              <IconButton
-                active={true}
-                onClick={handleStyleClick}
-                icon={<FaPaintRoller className='w-8 h-8 text-headline' />}
-                hoverText='Style'
-              />
-            </div>
-          </Card>
+          <button onClick={handleStyleClick}>
+            <Card>
+              <div className='my-2'>
+                <IconButton
+                  active={true}
+                  icon={<img src={StyleIcon} alt='style' className='w-8 h-8 text-headline' />}
+                  hoverText='Style'
+                />
+              </div>
+            </Card>
+          </button>
         </div>
       </div>
     </div>

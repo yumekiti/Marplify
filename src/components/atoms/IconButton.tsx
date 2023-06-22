@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 type Props = {
   active: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   icon: JSX.Element;
   hoverText: string;
 };

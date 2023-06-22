@@ -1,9 +1,10 @@
 import { FC } from 'react';
 
 import { isMarpMarkdown, convertToMarkdown, convertToMarp } from '../../libs/markdown';
-import { AiOutlineRetweet } from 'react-icons/ai';
-import { MdOutlineContentCopy } from 'react-icons/md';
-import { IoMdHelpCircle } from 'react-icons/io';
+
+import CopyIcon from '../../assets/copy.svg';
+import HelpIcon from '../../assets/help.svg';
+import ConvertIcon from '../../assets/convert.svg';
 
 import exampleText from '../../constant/exampleText';
 
@@ -44,12 +45,12 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
         onChange={handleContentChange}
       ></textarea>
       <div className='absolute top-4 right-24 rounded-b-lg'>
-        <div className='flex fixed'>
+        <div className='flex fixed gap-4'>
           <button onClick={copyToClipboard}>
-            <MdOutlineContentCopy className='w-6 h-10 mr-4 hover:opacity-50' />
+            <img src={CopyIcon} alt='copy' className='w-6 h-6 opacity-50 hover:opacity-100' />
           </button>
           <button onClick={onClickHelp}>
-            <IoMdHelpCircle className='w-7 h-10 hover:opacity-50' />
+            <img src={HelpIcon} alt='help' className='w-6 h-6 opacity-50 hover:opacity-100' />
           </button>
         </div>
       </div>
@@ -57,9 +58,9 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
         <div className='fixed'>
           <button
             onClick={handleConvertClick}
-            className='bg-icons-tertiary text-icons-main text-xl rounded-lg px-4 py-2 font-bold flex items-center gap-2 shadow-md hover:opacity-80'
+            className='bg-icons-tertiary text-icons-main text-xl rounded-lg px-4 py-2 font-bold flex items-center gap-2 shadow-md hover:opacity-70'
           >
-            <AiOutlineRetweet className='w-8 h-8' />
+            <img src={ConvertIcon} alt='convert' className='w-6 h-6' />
             Convert
           </button>
         </div>

@@ -9,7 +9,6 @@ import Layout from '../templates/Layout';
 
 const Main: FC = () => {
   const [mode, setMode] = useState(modes.Both);
-  const [share, setShare] = useState(false);
   const [content, setContent] = useState<string>('');
   const [marp, setMarp] = useState<boolean>(false);
 

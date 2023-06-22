@@ -1,11 +1,12 @@
 import Card from '../organisms/Card';
 
-import { BsDisplay, BsFillFilePdfFill, BsFillFileEarmarkCodeFill, BsLock } from 'react-icons/bs';
-import { AiFillFilePdf, AiFillFilePpt } from 'react-icons/ai';
-import { TbFileExport } from 'react-icons/tb';
 import { exportMarkdown, exportMarp, isMarpMarkdown } from '../../libs/markdown';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import PresentationIcon from '../../assets/presentation.svg';
+import ExportIcon from '../../assets/export.svg';
+import FileIcon from '../../assets/file.svg';
 
 type Props = {
   content: string;
@@ -13,12 +14,12 @@ type Props = {
 
 const ToolBar: FC<Props> = ({ content }) => {
   const formatList = [
-    { icon: <BsFillFileEarmarkCodeFill className='w-7 h-10 mx-auto' />, text: 'HTML' },
-    { icon: <AiFillFilePdf className='w-8 h-10 mx-auto' />, text: 'PDF' },
-    { icon: <AiFillFilePpt className='w-8 h-10 mx-auto' />, text: 'PPT' },
+    { icon: <img src={FileIcon} alt='file' className='w-7 h-10 mx-auto' />, text: 'HTML' },
+    { icon: <img src={FileIcon} alt='file' className='w-8 h-10 mx-auto' />, text: 'PDF' },
+    { icon: <img src={FileIcon} alt='file' className='w-8 h-10 mx-auto' />, text: 'PPT' },
   ];
   const [exportFormat, setExportFormat] = useState<{ icon: JSX.Element; text: string }>(formatList[0]);
-  const [isDisplayedFormat, setIsDisplayedFormat] = useState<Boolean>(true);
+  const [isDisplayedFormat, setIsDisplayedFormat] = useState<Boolean>(false);
 
   //Exportボタンが押された時
   const handleExportClick = async () => {
@@ -69,10 +70,8 @@ const ToolBar: FC<Props> = ({ content }) => {
             style={isMarpMarkdown(content) ? {} : { pointerEvents: 'none' }}
           >
             <button className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
-              <BsDisplay className='w-8 h-10' style={deactiveStyle} />
-              <p className='text-sm' style={deactiveStyle}>
-                Presentation
-              </p>
+              <img src={PresentationIcon} alt='presentation' className='w-10 h-10' />
+              <p className='text-sm font-semibold'>Presentation</p>
             </button>
           </Link>
         </Card>
@@ -89,8 +88,8 @@ const ToolBar: FC<Props> = ({ content }) => {
               onClick={handleExportClick}
               className='flex justify-between items-center flex-col text-icons-highlight hover:opacity-60'
             >
-              <TbFileExport className='w-8 h-10' />
-              <p className='text-sm'>Export</p>
+              <img src={ExportIcon} alt='export' className='w-8 h-10' />
+              <p className='text-sm font-semibold'>Export</p>
             </button>
           </div>
         </Card>

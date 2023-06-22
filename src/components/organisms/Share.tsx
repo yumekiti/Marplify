@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { BsShareFill } from 'react-icons/bs';
-import { RxCross2 } from 'react-icons/rx';
 import Modal from './Modal';
+
+import ModalShareIcon from '../../assets/modalShare.svg';
+import ExitIcon from '../../assets/exit.svg';
 
 type Props = {
   url: string;
@@ -23,11 +24,11 @@ const Share: FC<Props> = ({ url, setShare }) => {
         <div className='h-full w-full bg-cardBackground rounded-lg px-4 py-2 flex flex-col'>
           <div className='h-1/4 flex justify-between items-start'>
             <div className='flex justify-start items-center gap-2 m-2'>
-              <BsShareFill className='text-icons-stroke text-2xl' />
+              <img src={ModalShareIcon} alt='share' className='text-icons-stroke w-8 h-8' />
               <h1 className='text-headline text-2xl font-bold'>Share</h1>
             </div>
             <button className='text-icons-main rounded-md' onClick={() => setShare(false)}>
-              <RxCross2 className='text-headline h-12 w-12' />
+              <img src={ExitIcon} alt='exit' className='text-headline h-10 w-10 m-2' />
             </button>
           </div>
           <div className='h-3/4'>
