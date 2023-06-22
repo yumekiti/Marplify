@@ -5,6 +5,8 @@ import { AiOutlineRetweet } from 'react-icons/ai';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { IoMdHelpCircle } from 'react-icons/io';
 
+import exampleText from '../../constant/exampleText';
+
 type Props = {
   content: string;
   setContent: (content: string) => void;
@@ -30,33 +32,6 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   };
 
   const onClickHelp = () => {
-    const exampleText = `
-## タイトル
-
-- 作成日
-- メンバー
-
-
-## テーマ
-
-###  　　　　　　〇〇〇〇
-
-
-## 背景
-
-□□□□□□□□□□□
-
-
-## 問題定義
-- ??????
-- △△△△△△
-- ++++++
-
-
-## 概要
-
-□□□□□□□□□□□
-`;
     setContent(exampleText);
   };
 
