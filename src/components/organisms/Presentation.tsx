@@ -1,20 +1,28 @@
 import { FC } from 'react';
 import { Marp } from '@marp-team/marp-core';
-import '../../styles/marp.css';
 
 type Props = {
   content: string;
-  selectedCss: string | null;
+  style?: string;
 };
 
-const Presentation: FC<Props> = ({ content, selectedCss }) => {
-  const marp = new Marp();
+const Presentation: FC<Props> = ({ content, style }) => {
+  const marp = new Marp({
+    html: true,
+    emoji: {
+      shortcode: true,
+      unicode: false,
+      twemoji: {
+        base: '/resources/twemoji/',
+      },
+    },
+  });
   const { html, css } = marp.render(content);
 
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <style dangerouslySetInnerHTML={{ __html: selectedCss ?? css }} />
+      <style dangerouslySetInnerHTML={{ __html: style || css }} />
     </>
   );
 };

@@ -7,6 +7,9 @@ import ToolBar from '../molecules/ToolBar';
 import modes from '../../constant/modes';
 import Layout from '../templates/Layout';
 
+import '../../styles/markdown.css';
+import '../../styles/marp.css';
+
 const Main: FC = () => {
   const [mode, setMode] = useState(modes.Both);
   const [content, setContent] = useState<string>('');

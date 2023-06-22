@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { Marp } from '@marp-team/marp-core';
-import '../../styles/marp.css';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { useKey } from 'react-use';
 

@@ -1,7 +1,7 @@
-import 'github-markdown-css/github-markdown.css';
 import { FC, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import Card from './Card';
 import Presentation from './Presentation';
 import IconButton from '../atoms/IconButton';
@@ -18,7 +18,7 @@ type Props = {
 
 const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
   const [isDisplayedStyle, setIsDisplayedStyle] = useState<Boolean>(false);
-  const [selectedCss, setSelectedCss] = useState<string | null>(null);
+  const [selectedCss, setSelectedCss] = useState<string>('');
   const [centerNum, setCenterNum] = useState<number>(1);
 
   //Styleボタンが押されたとき
@@ -71,11 +71,16 @@ const PreviewArea: FC<Props> = ({ content, setContent, marp }) => {
 
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll shadow-md'>
-      <div className='w-full h-full rounded-lg px-6 pt-4 markdown' style={{ whiteSpace: 'pre-line' }}>
+      <div className='w-full h-full rounded-lg px-6 pt-4'>
         {marp ? (
-          <Presentation content={content} selectedCss={selectedCss} />
+          <Presentation content={content} style={selectedCss} />
         ) : (
-          <ReactMarkdown className='markdown-body p-3' remarkPlugins={[gfm]} children={content} />
+          <ReactMarkdown
+            className='markdown-body'
+            remarkPlugins={[gfm]}
+            rehypePlugins={[rehypeRaw]}
+            children={content}
+          />
         )}
       </div>
       <div className='absolute bottom-48 right-96 rounded-b-lg'>
