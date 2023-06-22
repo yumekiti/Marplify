@@ -1,12 +1,8 @@
 import { FC } from 'react';
 
 import { isMarpMarkdown, convertToMarkdown, convertToMarp } from '../../libs/markdown';
-
-import CopyIcon from '../../assets/copy.svg';
-import HelpIcon from '../../assets/help.svg';
 import ConvertIcon from '../../assets/convert.svg';
-
-import exampleText from '../../constant/exampleText';
+import CopyAndHelp from '../molecules/CopyAndHelp';
 
 type Props = {
   content: string;
@@ -16,9 +12,9 @@ type Props = {
 
 const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   const handleConvertClick = async () => {
-    let newContent = '';
-    if (isMarpMarkdown(content)) newContent = await convertToMarkdown(content);
-    else newContent = await convertToMarp(content);
+    let newContent = content;
+    if (isMarpMarkdown(content)) newContent = (await convertToMarkdown(content)) || content;
+    else newContent = (await convertToMarp(content)) || content;
     setContent(newContent);
     setMarp(isMarpMarkdown(newContent));
   };
@@ -26,14 +22,6 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
     setMarp(isMarpMarkdown(e.target.value));
-  };
-
-  const copyToClipboard = async () => {
-    await global.navigator.clipboard.writeText(content);
-  };
-
-  const onClickHelp = () => {
-    setContent(exampleText);
   };
 
   return (
@@ -46,12 +34,7 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
       ></textarea>
       <div className='absolute top-4 right-24 rounded-b-lg'>
         <div className='flex fixed gap-4'>
-          <button onClick={copyToClipboard}>
-            <img src={CopyIcon} alt='copy' className='w-6 h-6 opacity-50 hover:opacity-100' />
-          </button>
-          <button onClick={onClickHelp}>
-            <img src={HelpIcon} alt='help' className='w-6 h-6 opacity-50 hover:opacity-100' />
-          </button>
+          <CopyAndHelp content={content} setContent={setContent} setMarp={setMarp} />
         </div>
       </div>
       <div className='absolute bottom-20 right-44 rounded-b-lg'>
