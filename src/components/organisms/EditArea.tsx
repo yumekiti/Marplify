@@ -4,6 +4,8 @@ import { isMarpMarkdown, convertToMarkdown, convertToMarp } from '../../libs/mar
 import ConvertIcon from '../../assets/convert.svg';
 import CopyAndHelp from '../molecules/CopyAndHelp';
 
+import { placeholder } from '../../constant/exampleText';
+
 type Props = {
   content: string;
   setContent: (content: string) => void;
@@ -28,7 +30,7 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
     <div className='h-full w-full bg-cardBackground rounded-lg relative shadow-md'>
       <textarea
         className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none text-headline'
-        placeholder={`# Marplify\nMarkdown形式のドキュメントとスライドの相互変換ツール。\n\n## Marpに変換したいMarkdownを入力してください。\n便利な体験をお楽しみください！`}
+        placeholder={placeholder}
         value={content}
         onChange={handleContentChange}
       ></textarea>

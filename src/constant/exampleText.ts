@@ -169,4 +169,14 @@ UXの向上とさらなる便利さを提供
 </style>
 `;
 
-export default exampleText;
+const placeholder = `# Marplify
+Markdown形式のドキュメントとスライドの相互変換ツール。
+
+## Marpに変換したいMarkdownを入力してください。
+便利な体験をお楽しみください！
+
+## 分からない場合
+右上の「？」アイコンをクリックしてから、Convertボタンを押してみてください。
+`;
+
+export { exampleText, placeholder };

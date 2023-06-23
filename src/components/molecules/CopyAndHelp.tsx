@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { isMarpMarkdown } from '../../libs/markdown';
 import CopyIcon from '../../assets/copy.svg';
 import HelpIcon from '../../assets/help.svg';
-import exampleText from '../../constant/exampleText';
+import { exampleText } from '../../constant/exampleText';
 
 type Props = {
   content: string;
