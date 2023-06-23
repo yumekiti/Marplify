@@ -17,6 +17,7 @@ const StyleList: FC<Props> = ({ setStyle, setDisplayStyle, content, setContent }
   const [centerNum, setCenterNum] = useState<number>(1);
 
   const handleSelectedTheme = async (index: number) => {
+    localStorage.setItem('theme', themes[index]);
     content = content.replace(/theme: .*/, `theme: ${themes[index]}`);
     setContent(content);
     setStyle(await selectTheme(themes[index]));

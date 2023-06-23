@@ -20,6 +20,7 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
     let newContent = content;
     if (isMarpMarkdown(content)) newContent = (await convertToMarkdown(content)) || content;
     else newContent = (await convertToMarp(content)) || content;
+    newContent = newContent.replace(/theme: .*/, `theme: ${localStorage.getItem('theme') || 'default'}`);
     setContent(newContent);
     setMarp(isMarpMarkdown(newContent));
     setIsLoading(false);

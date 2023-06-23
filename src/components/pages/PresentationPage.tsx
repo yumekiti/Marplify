@@ -2,6 +2,7 @@ import Presentation from '../organisms/Presentation';
 import { FC, useEffect, useState, useCallback } from 'react';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { useLocation } from 'react-router-dom';
+import { isMarpMarkdown, convertToMarp } from '../../libs/markdown';
 
 import LeftIcon from '../../assets/left.svg';
 import RightIcon from '../../assets/right.svg';
@@ -31,6 +32,7 @@ const PresentationPage: FC = () => {
   const [totalPages, setTotalPages] = useState(0);
   const { state } = useLocation() as { state: { content: string; style: string } };
   const { content, style } = state;
+  const [marpContent, setMarpContent] = useState(content);
   const handle = useFullScreenHandle();
   const svgs = document.getElementsByTagName('svg');
 
@@ -65,6 +67,22 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
+    const checkAndConvertToMarp = async () => {
+      if (!isMarpMarkdown(content)) {
+        let convertedContent = await convertToMarp(content);
+
+        convertedContent = convertedContent.replace(
+          /theme: .*/,
+          `theme: ${localStorage.getItem('theme') || 'default'}`,
+        );
+        setMarpContent(convertedContent);
+      }
+    };
+
+    checkAndConvertToMarp();
+  }, [content]);
+
+  useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
@@ -78,7 +96,7 @@ const PresentationPage: FC = () => {
 
   return (
     <FullScreen handle={handle} className='absolute buttom-0 left-0 right-0 z-10'>
-      <Presentation content={content} style={style} />
+      <Presentation content={marpContent} style={style} />
       <div className='absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           <img src={LeftIcon} alt='left' className='w-6 h-6' />
