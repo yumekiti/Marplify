@@ -34,22 +34,22 @@ const PresentationPage: FC = () => {
   const handle = useFullScreenHandle();
   const svgs = document.getElementsByTagName('svg');
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     if (currentPage < svgs.length) {
       setCurrentPage(currentPage + 1);
     }
-  };
+  }, [currentPage, svgs.length]);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback(() => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
-  };
+  }, [currentPage]);
 
-  const fullScreen = () => {
+  const fullScreen = useCallback(() => {
     if (!handle.active) handle.enter();
     else handle.exit();
-  };
+  }, [handle]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -74,7 +74,7 @@ const PresentationPage: FC = () => {
   useEffect(() => {
     generatePageStyle(currentPage);
     setTotalPages(svgs.length);
-  }, [currentPage]);
+  }, [currentPage, svgs.length]);
 
   return (
     <FullScreen handle={handle} className='absolute buttom-0 left-0 right-0 z-10'>

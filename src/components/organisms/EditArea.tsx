@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 import { isMarpMarkdown, convertToMarkdown, convertToMarp } from '../../libs/markdown';
 import ConvertIcon from '../../assets/convert.svg';
@@ -13,12 +13,16 @@ type Props = {
 };
 
 const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleConvertClick = async () => {
+    setIsLoading(true);
     let newContent = content;
     if (isMarpMarkdown(content)) newContent = (await convertToMarkdown(content)) || content;
     else newContent = (await convertToMarp(content)) || content;
     setContent(newContent);
     setMarp(isMarpMarkdown(newContent));
+    setIsLoading(false);
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -28,6 +32,11 @@ const EditArea: FC<Props> = ({ content, setContent, setMarp }) => {
 
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative shadow-md'>
+      {isLoading && (
+        <div className='flex justify-center items-center h-full w-full absolute z-10 top-0 left-0 bg-icons-secondary bg-opacity-30'>
+          <div className='animate-spin h-10 w-10 border-4 border-icons-highlight rounded-full border-t-transparent'></div>
+        </div>
+      )}
       <textarea
         className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none text-headline'
         placeholder={placeholder}

@@ -48,17 +48,16 @@ const PreviewArea: FC<Props> = ({ content, setContent, style, setStyle, marp }) 
       )}
       <div className='absolute bottom-24 right-24 rounded-b-lg'>
         <div className='fixed group'>
-          <button onClick={handleStyleClick}>
-            <Card>
-              <div className='my-2'>
-                <IconButton
-                  active={true}
-                  icon={<img src={StyleIcon} alt='style' className='w-8 h-8 text-headline' />}
-                  hoverText='Style'
-                />
-              </div>
-            </Card>
-          </button>
+          <Card>
+            <div className='my-2'>
+              <IconButton
+                active={true}
+                icon={<img src={StyleIcon} alt='style' className='w-8 h-8 text-headline' />}
+                hoverText='Style'
+                onClick={handleStyleClick}
+              />
+            </div>
+          </Card>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ const Header: FC<Props> = ({ setShare }) => {
             className='flex gap-2 bg-icons-highlight px-4 py-2 rounded-md text-icons-main items-center hover:opacity-80 shadow-md text-sm tracking-wider'
             onClick={() => setShare(true)}
           >
-            <img src={ShareIcon} className='w-5 h-5 text-icons-main' />
+            <img src={ShareIcon} alt='share' className='w-5 h-5 text-icons-main' />
             Share
           </button>
         </div>
