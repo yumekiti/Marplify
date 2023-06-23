@@ -1,5 +1,4 @@
-const exampleText = `
-# HackU_2023
+const exampleText = `# HackU_2023
 
 Hack ID 4 : _楽し(み)たい_
 

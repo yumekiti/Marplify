@@ -2,7 +2,7 @@ import Card from '../organisms/Card';
 
 import { exportMarkdown, exportMarp, isMarpMarkdown } from '../../libs/markdown';
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import PresentationIcon from '../../assets/presentation.svg';
 import ExportIcon from '../../assets/export.svg';
@@ -10,9 +10,12 @@ import FileIcon from '../../assets/file.svg';
 
 type Props = {
   content: string;
+  style: string;
 };
 
-const ToolBar: FC<Props> = ({ content }) => {
+const ToolBar: FC<Props> = ({ content, style }) => {
+  const history = useHistory();
+
   const formatList = [
     { icon: <img src={FileIcon} alt='file' className='w-7 h-10 mx-auto' />, text: 'HTML' },
     { icon: <img src={FileIcon} alt='file' className='w-8 h-10 mx-auto' />, text: 'PDF' },
@@ -43,7 +46,6 @@ const ToolBar: FC<Props> = ({ content }) => {
 
   //FileFormatTooltip
   const fileFormatList = () => {
-    console.log('fileFormat');
     if (isDisplayedFormat) {
       return (
         <div className='flex bg-slate-800 w-60 rounded'>
@@ -60,21 +62,21 @@ const ToolBar: FC<Props> = ({ content }) => {
     }
   };
 
-  const deactiveStyle = isMarpMarkdown(content) ? {} : { color: 'gray' };
+  const handlePresentationClick = () => {
+    history.push('/presentation', { content: content, style: '' });
+  };
+
   return (
     <div>
       <div className='flex gap-4'>
-        <Card>
-          <Link
-            to={{ pathname: '/presentation', state: content }}
-            style={isMarpMarkdown(content) ? {} : { pointerEvents: 'none' }}
-          >
-            <button className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
+        <button onClick={handlePresentationClick}>
+          <Card>
+            <div className='flex justify-between items-center flex-col text-icons-tertiary hover:opacity-60'>
               <img src={PresentationIcon} alt='presentation' className='w-10 h-10' />
               <p className='text-sm font-semibold'>Presentation</p>
-            </button>
-          </Link>
-        </Card>
+            </div>
+          </Card>
+        </button>
         <Card>
           <div className='flex'>
             <button

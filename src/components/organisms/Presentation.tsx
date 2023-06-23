@@ -9,6 +9,7 @@ type Props = {
 const Presentation: FC<Props> = ({ content, style }) => {
   const marp = new Marp({
     html: true,
+    math: 'katex',
     emoji: {
       shortcode: true,
       unicode: false,

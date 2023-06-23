@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { FC } from 'react';
-import Main from './components/pages/Main';
+import MainPage from './components/pages/MainPage';
 import PresentationPage from './components/pages/PresentationPage';
 
 const App: FC = () => {
@@ -9,7 +9,7 @@ const App: FC = () => {
       <Switch>
         <Route exact path='/'>
           <div className='App h-screen'>
-            <Main />
+            <MainPage />
           </div>
         </Route>
         <Route exact path='/presentation'>
