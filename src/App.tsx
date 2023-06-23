@@ -5,20 +5,18 @@ import PresentationPage from './components/pages/PresentationPage';
 
 const App: FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path='/'>
-          <div className='App h-screen'>
+    <div className='App h-screen'>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/'>
             <MainPage />
-          </div>
-        </Route>
-        <Route exact path='/presentation'>
-          <div className='h-screen'>
+          </Route>
+          <Route exact path='/presentation'>
             <PresentationPage />
-          </div>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 };
 
