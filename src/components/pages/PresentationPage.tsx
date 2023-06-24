@@ -76,11 +76,12 @@ const PresentationPage: FC = () => {
         if (!res) return;
         let convertedContent = res.content;
         if (!isMarpMarkdown(convertedContent)) {
+          setMarpContent(await convertToMarp(convertedContent));
+
           convertedContent = convertedContent.replace(
             /theme: .*/,
             `theme: ${localStorage.getItem('theme') || 'default'}`,
           );
-          setMarpContent(await convertToMarp(convertedContent));
         } else setMarpContent(convertedContent);
 
         setMarpStyle(res.style);
