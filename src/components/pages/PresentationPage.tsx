@@ -37,6 +37,7 @@ const PresentationPage: FC = () => {
   const [marpStyle, setMarpStyle] = useState('');
   const handle = useFullScreenHandle();
   const svgs = document.getElementsByTagName('svg');
+  const theme = localStorage.getItem('theme') || 'default';
 
   const handleNextPage = useCallback(() => {
     if (currentPage < svgs.length) {
@@ -76,12 +77,7 @@ const PresentationPage: FC = () => {
         if (!res) return;
         let convertedContent = res.content;
         if (!isMarpMarkdown(convertedContent)) {
-          setMarpContent(await convertToMarp(convertedContent));
-
-          convertedContent = convertedContent.replace(
-            /theme: .*/,
-            `theme: ${localStorage.getItem('theme') || 'default'}`,
-          );
+          setMarpContent((await convertToMarp(convertedContent)).replace(/theme: .*/, `theme: ${theme}`));
         } else setMarpContent(convertedContent);
 
         setMarpStyle(res.style);
