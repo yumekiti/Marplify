@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import EditArea from '../organisms/EditArea';
 import PreviewArea from '../organisms/PreviewArea';
@@ -7,11 +7,30 @@ import ToolBar from '../molecules/ToolBar';
 import modes from '../../constant/modes';
 import Layout from '../templates/Layout';
 
+import { isMarpMarkdown } from '../../libs/markdown';
+import { getPost } from '../../libs/post';
+
 const MainPage: FC = () => {
   const [mode, setMode] = useState(modes.Both);
   const [content, setContent] = useState<string>('');
   const [style, setStyle] = useState<string>('');
   const [marp, setMarp] = useState<boolean>(false);
+
+  useEffect(() => {
+    const uuid = window.location.pathname.split('/')[1];
+    if (uuid) {
+      getPost(uuid).then((res: any) => {
+        if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
+          window.location.href = '/';
+        }
+        if (res) {
+          setContent(res.content);
+          setStyle(res.style);
+          setMarp(isMarpMarkdown(res.content));
+        }
+      });
+    }
+  }, []);
 
   return (
     <Layout>
