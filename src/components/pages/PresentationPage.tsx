@@ -81,10 +81,6 @@ const PresentationPage: FC = () => {
         }
       });
     };
-    getPages();
-  }, [uuid, marpContent, marpStyle]);
-
-  useEffect(() => {
     const checkAndConvertToMarp = async () => {
       if (!isMarpMarkdown(marpContent)) {
         let convertedContent = await convertToMarp(marpContent);
@@ -96,8 +92,11 @@ const PresentationPage: FC = () => {
         setMarpContent(convertedContent);
       }
     };
-    checkAndConvertToMarp();
-  }, [marpContent]);
+
+    getPages().then(() => {
+      checkAndConvertToMarp();
+    });
+  }, [uuid, marpContent, marpStyle]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
