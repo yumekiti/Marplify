@@ -3,6 +3,7 @@ import Card from '../organisms/Card';
 import { exportMarkdown, exportMarp, isMarpMarkdown } from '../../libs/markdown';
 import { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { createPost } from '../../libs/post';
 
 import PresentationIcon from '../../assets/presentation.svg';
 import ExportIcon from '../../assets/export.svg';
@@ -63,8 +64,9 @@ const ToolBar: FC<Props> = ({ content, style, uuid }) => {
     }
   };
 
-  const handlePresentationClick = () => {
-    history.push(uuid + '/presentation', { content: content, style: '' });
+  const handlePresentationClick = async () => {
+    await createPost(uuid, content, style);
+    window.open(uuid + '/presentation', '_blank');
   };
 
   return (
