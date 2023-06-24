@@ -9,11 +9,12 @@ import ExportIcon from '../../assets/export.svg';
 import FileIcon from '../../assets/file.svg';
 
 type Props = {
+  uuid: string;
   content: string;
   style: string;
 };
 
-const ToolBar: FC<Props> = ({ content, style }) => {
+const ToolBar: FC<Props> = ({ content, style, uuid }) => {
   const history = useHistory();
 
   const formatList = [
@@ -63,7 +64,7 @@ const ToolBar: FC<Props> = ({ content, style }) => {
   };
 
   const handlePresentationClick = () => {
-    history.push('/presentation', { content: content, style: '' });
+    history.push(uuid + '/presentation', { content: content, style: '' });
   };
 
   return (
