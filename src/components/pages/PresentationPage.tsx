@@ -69,34 +69,25 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
-    if (!uuid && marpContent !== '' && marpStyle !== '') return;
+    if (marpContent && marpStyle) return;
 
     const getPages = async () => {
-      await getPost(uuid).then((res: any) => {
-        if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
-          window.location.href = '/';
-        }
-        if (res) {
-          setMarpContent(res.content);
-          setMarpStyle(res.style);
-        }
+      await getPost(uuid).then(async (res: any) => {
+        if (!res) return;
+        let convertedContent = res.content;
+        if (!isMarpMarkdown(convertedContent)) {
+          convertedContent = convertedContent.replace(
+            /theme: .*/,
+            `theme: ${localStorage.getItem('theme') || 'default'}`,
+          );
+          setMarpContent(await convertToMarp(convertedContent));
+        } else setMarpContent(convertedContent);
+
+        setMarpStyle(res.style);
       });
     };
-    const checkAndConvertToMarp = async () => {
-      if (!isMarpMarkdown(marpContent)) {
-        let convertedContent = await convertToMarp(marpContent);
 
-        convertedContent = convertedContent.replace(
-          /theme: .*/,
-          `theme: ${localStorage.getItem('theme') || 'default'}`,
-        );
-        setMarpContent(convertedContent);
-      }
-    };
-
-    getPages().then(() => {
-      checkAndConvertToMarp();
-    });
+    getPages();
   }, [uuid, marpContent, marpStyle]);
 
   useEffect(() => {
