@@ -69,17 +69,20 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
-    if (!uuid) return;
-    getPost(uuid).then((res: any) => {
-      if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
-        window.location.href = '/';
-      }
-      if (res) {
-        setMarpContent(res.content);
-        setMarpStyle(res.style);
-      }
-    });
-  }, [uuid]);
+    const getPages = async () => {
+      if (!uuid && marpContent !== '' && marpStyle !== '') return;
+      await getPost(uuid).then((res: any) => {
+        if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
+          window.location.href = '/';
+        }
+        if (res) {
+          setMarpContent(res.content);
+          setMarpStyle(res.style);
+        }
+      });
+    };
+    getPages();
+  }, [uuid, marpContent, marpStyle]);
 
   useEffect(() => {
     const checkAndConvertToMarp = async () => {
