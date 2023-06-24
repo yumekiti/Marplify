@@ -69,8 +69,9 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
+    if (!uuid && marpContent !== '' && marpStyle !== '') return;
+
     const getPages = async () => {
-      if (!uuid && marpContent !== '' && marpStyle !== '') return;
       await getPost(uuid).then((res: any) => {
         if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
           window.location.href = '/';
