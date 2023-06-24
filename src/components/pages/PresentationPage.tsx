@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import Presentation from '../organisms/Presentation';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { useLocation } from 'react-router-dom';
 import { isMarpMarkdown, convertToMarp } from '../../libs/markdown';
 import { getPost } from '../../libs/post';
 
@@ -34,7 +33,6 @@ const PresentationPage: FC = () => {
   const { uuid } = useParams<{ uuid: string }>();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const { state } = useLocation() as { state: { content: string; style: string } };
   const [marpContent, setMarpContent] = useState('');
   const [marpStyle, setMarpStyle] = useState('');
   const handle = useFullScreenHandle();
@@ -71,23 +69,17 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
-    if (state) {
-      setMarpContent(state.content);
-      setMarpStyle(state.style);
-    } else {
-      if (uuid) {
-        getPost(uuid).then((res: any) => {
-          if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
-            window.location.href = '/';
-          }
-          if (res) {
-            setMarpContent(res.content);
-            setMarpStyle(res.style);
-          }
-        });
+    if (!uuid) return;
+    getPost(uuid).then((res: any) => {
+      if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
+        window.location.href = '/';
       }
-    }
-  }, [state, uuid]);
+      if (res) {
+        setMarpContent(res.content);
+        setMarpStyle(res.style);
+      }
+    });
+  }, [uuid]);
 
   useEffect(() => {
     const checkAndConvertToMarp = async () => {
