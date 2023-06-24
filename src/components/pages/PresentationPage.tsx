@@ -35,9 +35,8 @@ const PresentationPage: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { state } = useLocation() as { state: { content: string; style: string } };
-  const { content, style } = state;
-  const [marpContent, setMarpContent] = useState(content);
-  const [marpStyle, setMarpStyle] = useState(style);
+  const [marpContent, setMarpContent] = useState('');
+  const [marpStyle, setMarpStyle] = useState('');
   const handle = useFullScreenHandle();
   const svgs = document.getElementsByTagName('svg');
 
@@ -72,23 +71,28 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
-    if (uuid) {
-      getPost(uuid).then((res: any) => {
-        if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
-          window.location.href = '/';
-        }
-        if (res) {
-          setMarpContent(res.content);
-          setMarpStyle(res.style);
-        }
-      });
+    if (state) {
+      setMarpContent(state.content);
+      setMarpStyle(state.style);
+    } else {
+      if (uuid) {
+        getPost(uuid).then((res: any) => {
+          if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
+            window.location.href = '/';
+          }
+          if (res) {
+            setMarpContent(res.content);
+            setMarpStyle(res.style);
+          }
+        });
+      }
     }
-  }, [uuid]);
+  }, [state, uuid]);
 
   useEffect(() => {
     const checkAndConvertToMarp = async () => {
-      if (!isMarpMarkdown(content)) {
-        let convertedContent = await convertToMarp(content);
+      if (!isMarpMarkdown(marpContent)) {
+        let convertedContent = await convertToMarp(marpContent);
 
         convertedContent = convertedContent.replace(
           /theme: .*/,
@@ -97,9 +101,8 @@ const PresentationPage: FC = () => {
         setMarpContent(convertedContent);
       }
     };
-
     checkAndConvertToMarp();
-  }, [content]);
+  }, [marpContent]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -115,7 +118,7 @@ const PresentationPage: FC = () => {
 
   return (
     <FullScreen handle={handle} className='absolute buttom-0 left-0 right-0 z-10'>
-      <Presentation content={marpContent} style={marpStyle} />
+      {marpContent && <Presentation content={marpContent} style={marpStyle} />}
       <div className='absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           <img src={LeftIcon} alt='left' className='w-6 h-6' />
