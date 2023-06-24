@@ -83,7 +83,7 @@ const PresentationPage: FC = () => {
         }
       });
     }
-  }, []);
+  }, [uuid]);
 
   useEffect(() => {
     const checkAndConvertToMarp = async () => {
