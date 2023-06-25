@@ -65,8 +65,9 @@ const ToolBar: FC<Props> = ({ content, style, uuid }) => {
   };
 
   const handlePresentationClick = async () => {
-    await createPost(uuid, content, style);
-    window.open(uuid + '/presentation', '_blank');
+    await createPost(uuid, content, style).then((res) => {
+      window.open(uuid + '/presentation', '_blank');
+    });
   };
 
   return (
