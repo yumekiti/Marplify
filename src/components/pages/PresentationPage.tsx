@@ -76,7 +76,7 @@ const PresentationPage: FC = () => {
   );
 
   useEffect(() => {
-    if (marpContent && marpStyle) return;
+    if (!uuid && marpContent && marpStyle) return;
 
     const getPages = async () => {
       await getPost(uuid).then(async (res: any) => {
@@ -86,12 +86,13 @@ const PresentationPage: FC = () => {
           setMarpContent((await convertToMarp(convertedContent)).replace(/theme: .*/, `theme: ${theme}`));
         } else setMarpContent(convertedContent);
 
+        setTotalPages(svgs.length);
         setMarpStyle(res.style);
       });
     };
 
     getPages();
-  }, [uuid, marpContent, marpStyle]);
+  }, [uuid, marpContent, marpStyle, svgs.length, theme]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -102,8 +103,7 @@ const PresentationPage: FC = () => {
 
   useEffect(() => {
     generatePageStyle(currentPage);
-    setTotalPages(svgs.length);
-  }, [currentPage, svgs.length]);
+  }, [currentPage]);
 
   return (
     <div className='relative w-full h-full flex justify-center items-center'>
@@ -111,7 +111,7 @@ const PresentationPage: FC = () => {
         <FullScreen handle={handle}>
           {ratioObj.x && ratioObj.y && (
             <div
-              className='mx-auto max-w-full overflow-hidden'
+              className='relative mx-auto max-w-full overflow-hidden'
               style={{
                 maxHeight: '100vh',
                 maxWidth: `${(100 * ratioObj.x) / ratioObj.y}vh`,
@@ -120,24 +120,25 @@ const PresentationPage: FC = () => {
               {marpContent && <Presentation content={marpContent} style={marpStyle} />}
             </div>
           )}
+          <div className='h-20 absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
+            <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+              <img src={LeftIcon} alt='left' className='w-6 h-6' />
+            </button>
+            <span>
+              {currentPage}&nbsp;/&nbsp;{totalPages}
+            </span>
+            <button onClick={handleNextPage} disabled={currentPage === svgs.length}>
+              <img src={RightIcon} alt='right' className='w-6 h-6' />
+            </button>
+          </div>
         </FullScreen>
+      </div>
+      <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center px-4 z-20 md:hidden'>
+        <button onClick={handlePreviousPage} className='w-full h-full' />
+        <button onClick={handleNextPage} className='w-full h-full' />
       </div>
     </div>
   );
 };
 
 export default PresentationPage;
-
-{
-  /* <div className='h-20 absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
-<button onClick={handlePreviousPage} disabled={currentPage === 1}>
-  <img src={LeftIcon} alt='left' className='w-6 h-6' />
-</button>
-<span>
-  {currentPage}&nbsp;/&nbsp;{totalPages}
-</span>
-<button onClick={handleNextPage} disabled={currentPage === svgs.length}>
-  <img src={RightIcon} alt='right' className='w-6 h-6' />
-</button>
-</div> */
-}

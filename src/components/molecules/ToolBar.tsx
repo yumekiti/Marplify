@@ -2,7 +2,6 @@ import Card from '../organisms/Card';
 
 import { exportMarkdown, exportMarp, isMarpMarkdown } from '../../libs/markdown';
 import { FC, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { createPost } from '../../libs/post';
 
 import PresentationIcon from '../../assets/presentation.svg';
@@ -16,8 +15,6 @@ type Props = {
 };
 
 const ToolBar: FC<Props> = ({ content, style, uuid }) => {
-  const history = useHistory();
-
   const formatList = [
     { icon: <img src={FileIcon} alt='file' className='w-7 h-10 mx-auto' />, text: 'HTML' },
     { icon: <img src={FileIcon} alt='file' className='w-8 h-10 mx-auto' />, text: 'PDF' },

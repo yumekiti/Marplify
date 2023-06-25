@@ -30,19 +30,19 @@ const MainPage: FC = () => {
   };
 
   useEffect(() => {
-    if (uuid) {
-      getPost(uuid).then((res: any) => {
-        if (res && new Date().getTime() - new Date(res.created_at).getTime() > 30 * 60 * 1000) {
-          window.location.href = '/';
-        }
-        if (res) {
-          setContent(res.content);
-          setStyle(res.style);
-          setMarp(isMarpMarkdown(res.content));
-        }
+    if (!uuid && content && style) return;
+
+    const getPages = async () => {
+      await getPost(uuid).then(async (res: any) => {
+        if (!res) return;
+        setContent(res.content);
+        setStyle(res.style);
+        setMarp(isMarpMarkdown(res.content));
       });
-    }
-  }, []);
+    };
+
+    getPages();
+  }, [uuid, content, style]);
 
   return (
     <>
