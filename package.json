@@ -36,7 +36,6 @@
     "qrcode.react": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-full-screen": "^1.1.1",
     "react-markdown": "^8.0.7",
     "react-router-dom": "^5.3.4",
     "react-scripts": "4.0.3",

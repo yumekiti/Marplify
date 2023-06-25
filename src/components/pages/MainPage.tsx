@@ -30,7 +30,7 @@ const MainPage: FC = () => {
   };
 
   useEffect(() => {
-    if (!uuid && content && style) return;
+    if (!uuid) return;
 
     const getPages = async () => {
       await getPost(uuid).then(async (res: any) => {
@@ -42,7 +42,7 @@ const MainPage: FC = () => {
     };
 
     getPages();
-  }, [uuid, content, style]);
+  }, [uuid]);
 
   return (
     <>
