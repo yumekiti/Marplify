@@ -38,6 +38,12 @@ const PresentationPage: FC = () => {
   const handle = useFullScreenHandle();
   const svgs = document.getElementsByTagName('svg');
   const theme = localStorage.getItem('theme') || 'default';
+  const ratio = marpContent
+    .match(/size: \d+:\d+/)?.[0]
+    .split(' ')[1]
+    .split(':')
+    .map((n) => parseInt(n));
+  const ratioObj = { x: ratio?.[0], y: ratio?.[1] };
 
   const handleNextPage = useCallback(() => {
     if (currentPage < svgs.length) {
@@ -100,21 +106,38 @@ const PresentationPage: FC = () => {
   }, [currentPage, svgs.length]);
 
   return (
-    <FullScreen handle={handle} className='absolute buttom-0 left-0 right-0 z-10'>
-      {marpContent && <Presentation content={marpContent} style={marpStyle} />}
-      <div className='absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-          <img src={LeftIcon} alt='left' className='w-6 h-6' />
-        </button>
-        <span>
-          {currentPage}&nbsp;/&nbsp;{totalPages}
-        </span>
-        <button onClick={handleNextPage} disabled={currentPage === svgs.length}>
-          <img src={RightIcon} alt='right' className='w-6 h-6' />
-        </button>
+    <div className='relative w-full h-full flex justify-center items-center'>
+      <div className='absolute left-0 right-0 z-10'>
+        <FullScreen handle={handle}>
+          {ratioObj.x && ratioObj.y && (
+            <div
+              className='mx-auto max-w-full overflow-hidden'
+              style={{
+                maxHeight: '100vh',
+                maxWidth: `${(100 * ratioObj.x) / ratioObj.y}vh`,
+              }}
+            >
+              {marpContent && <Presentation content={marpContent} style={marpStyle} />}
+            </div>
+          )}
+        </FullScreen>
       </div>
-    </FullScreen>
+    </div>
   );
 };
 
 export default PresentationPage;
+
+{
+  /* <div className='h-20 absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
+<button onClick={handlePreviousPage} disabled={currentPage === 1}>
+  <img src={LeftIcon} alt='left' className='w-6 h-6' />
+</button>
+<span>
+  {currentPage}&nbsp;/&nbsp;{totalPages}
+</span>
+<button onClick={handleNextPage} disabled={currentPage === svgs.length}>
+  <img src={RightIcon} alt='right' className='w-6 h-6' />
+</button>
+</div> */
+}
