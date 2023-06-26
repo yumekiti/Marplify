@@ -6,9 +6,10 @@
 
 body {
   margin: 0;
-  height: 100dvh;
   font-family: 'Quicksand', sans-serif;
   background-color: #d8eefe;
+
+  -webkit-text-size-adjust: 100%;
 }
 
 ::-webkit-scrollbar {
