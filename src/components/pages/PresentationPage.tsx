@@ -129,7 +129,7 @@ const PresentationPage: FC = () => {
           </button>
         </div>
       </div>
-      <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center z-20 md:hidden'>
+      <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center z-20 xl:hidden'>
         <button onClick={handlePreviousPage} className='w-full h-full' />
         <button onClick={handleNextPage} className='w-full h-full' />
       </div>
