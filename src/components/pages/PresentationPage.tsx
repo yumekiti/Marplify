@@ -113,13 +113,7 @@ const PresentationPage: FC = () => {
     <div className='relative w-full h-full flex justify-center items-center'>
       <div className='absolute left-0 right-0 z-10'>
         {ratioObj.x && ratioObj.y && (
-          <div
-            className='relative mx-auto max-w-full overflow-hidden'
-            style={{
-              maxHeight: '100vh',
-              maxWidth: `${(100 * ratioObj.x) / ratioObj.y}vh`,
-            }}
-          >
+          <div className={`relative mx-auto overflow-hidden h-full max-w-[${(100 * ratioObj.x) / ratioObj.y}vh]`}>
             {marpContent && <Presentation content={marpContent} style={marpStyle} />}
           </div>
         )}
@@ -135,7 +129,7 @@ const PresentationPage: FC = () => {
           </button>
         </div>
       </div>
-      <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center px-4 z-20 md:hidden'>
+      <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center z-20 md:hidden'>
         <button onClick={handlePreviousPage} className='w-full h-full' />
         <button onClick={handleNextPage} className='w-full h-full' />
       </div>
