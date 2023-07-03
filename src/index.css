@@ -30,7 +30,8 @@ body > iframe {
 svg {
   width: 100%;
   height: 100%;
-  display: block;
-  overflow-x: initial;
-  overflow-y: initial;
+}
+
+[id*='mermaid-'] {
+  margin: 0 auto;
 }

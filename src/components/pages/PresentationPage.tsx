@@ -11,18 +11,11 @@ import RightIcon from '../../assets/right.svg';
 const generatePageStyle = (currentPage: number) => {
   const style = document.createElement('style');
   style.innerHTML = `
-    .marpit svg {
+    .marpit > svg:not(:nth-child(${currentPage})) {
       display: none;
     }
-    
-    .marpit svg:nth-child(${currentPage}) {
+    .marpit > svg:nth-child(${currentPage}){
       display: block;
-    }
-    .marpit svg:nth-child(${currentPage - 1}) {
-      display: none;
-    }
-    .marpit svg:nth-child(${currentPage + 1}) {
-      display: none;
     }
   `;
   document.head.appendChild(style);

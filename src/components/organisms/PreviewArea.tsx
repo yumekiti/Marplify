@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useEffect, FC, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -26,6 +26,13 @@ const PreviewArea: FC<Props> = ({ content, setContent, style, setStyle, marp }) 
   const handleStyleClick = () => {
     setDisplayStyle(!isDisplayStyle);
   };
+
+  useEffect(() => {
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    mermaid.init(undefined, '.language-mermaid');
+  }, [content]);
 
   return (
     <div className='h-full w-full bg-cardBackground rounded-lg relative overflow-y-scroll shadow-md'>

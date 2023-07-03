@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Marp } from '@marp-team/marp-core';
 
 type Props = {
@@ -19,6 +19,13 @@ const Presentation: FC<Props> = ({ content, style }) => {
     },
   });
   const { html, css } = marp.render(content);
+
+  useEffect(() => {
+    mermaid.initialize({
+      startOnLoad: true,
+    });
+    mermaid.init(undefined, '.language-mermaid');
+  }, [content]);
 
   return (
     <>
