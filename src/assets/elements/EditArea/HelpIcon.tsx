@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Icon = () => (
-  <svg width='35' height='35' viewBox='0 0 35 35' fill='none' xmlns='http://www.w3.org/2000/svg'>
+  <svg width='24' height='24' viewBox='0 0 35 35' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <mask id='mask0_69_13' maskUnits='userSpaceOnUse' x='0' y='0' width='35' height='35'>
       <path d='M35 0H0V35H35V0Z' fill='#D9D9D9' />
     </mask>
