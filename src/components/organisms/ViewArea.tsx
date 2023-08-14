@@ -1,4 +1,7 @@
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../../store';
 
 import Card from '../templates/Card';
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
@@ -6,6 +9,7 @@ import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
 import StyleIcon from '../../assets/elements/ViewArea/StyleIcon';
 
 const Component: FC = () => {
+  const { content } = useSelector((state: RootState) => state.content);
   return (
     <Card>
       <div className='w-full h-full rounded-lg px-6 pt-4'>
@@ -13,7 +17,7 @@ const Component: FC = () => {
           <Presentation content={content} style={style} />
         </div> */}
         {/* <ReactMarkdown /> */}
-        contnet
+        {content}
       </div>
       {/* {isDisplayStyle && (
         <div className='absolute bottom-48 left-0 lg:left-20 xl:left-48 2xl:left-80'>

@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import Layout from '../templates/Layout';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 import ModeSwitchBar from '../organisms/ModeSwitchBar';
 import ActionPanel from '../organisms/ActionPanel';
@@ -7,6 +9,8 @@ import EditArea from '../organisms/EditArea';
 import ViewArea from '../organisms/ViewArea';
 
 const MainPage: FC = () => {
+  const { mode } = useSelector((state: RootState) => state.view);
+
   return (
     <Layout>
       <div className='h-full container mx-auto px-4 py-4'>
@@ -18,12 +22,12 @@ const MainPage: FC = () => {
 
         {/* ここから編集画面 */}
         <div className='h-5/6 flex gap-4 py-4'>
-          {true && (
+          {mode !== 'view' && (
             <div className='w-full relative'>
               <EditArea />
             </div>
           )}
-          {true && (
+          {mode !== 'edit' && (
             <div className='w-full relative overflow-y-scroll shadow-md'>
               <ViewArea />
             </div>
