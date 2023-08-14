@@ -7,7 +7,6 @@ import { RootState } from '../../store';
 import HighlightedIconButton from '../atoms/HighlightedIconButton';
 import Loading from '../atoms/Loading';
 import CopyAndHelp from '../molecules/CopyAndHelp';
-import Card from '../templates/Card';
 
 import ConvertIcon from '../../assets/elements/EditArea/ConvertIcon';
 
@@ -16,10 +15,10 @@ const Component: FC = () => {
   const { content } = useSelector((state: RootState) => state.content);
 
   return (
-    <Card>
+    <div className='w-full relative'>
       {false && <Loading />}
       <textarea
-        className='w-full h-full pt-4 pl-6 rounded-lg resize-none outline-none text-headline'
+        className='w-full h-full pt-4 pl-6 rounded-lg text-Subheadline'
         placeholder=''
         defaultValue={content}
         onChange={(e) => dispatch(contentSlice.actions.setContent(e.target.value))}
@@ -32,7 +31,7 @@ const Component: FC = () => {
           <HighlightedIconButton Icon={ConvertIcon} text='Convert' onClick={() => console.log('convert')} tertiary />
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

@@ -22,16 +22,8 @@ const MainPage: FC = () => {
 
         {/* ここから編集画面 */}
         <div className='h-5/6 flex gap-4 py-4'>
-          {mode !== 'view' && (
-            <div className='w-full relative'>
-              <EditArea />
-            </div>
-          )}
-          {mode !== 'edit' && (
-            <div className='w-full relative overflow-y-scroll shadow-md'>
-              <ViewArea />
-            </div>
-          )}
+          {mode !== 'view' && <EditArea />}
+          {mode !== 'edit' && <ViewArea />}
         </div>
       </div>
     </Layout>

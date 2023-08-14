@@ -44,7 +44,7 @@ const Component: FC = () => {
             {/* QRcode */}
             {/* <img src='https://placehold.jp/150x150.png' alt='QRcode' /> */}
             <QRCode value={url} size={150} />
-            <div className='w-10/12 mt-16 border rounded-md flex justify-between items-center'>
+            <div className='w-10/12 mt-12 border rounded-md flex justify-between items-center'>
               <input className='rounded-l-md px-4 py-2 w-full' type='text' readOnly defaultValue={url} />
               <button
                 className='bg-icons-highlight text-icons-main rounded-r-md px-4 py-2 hover:opacity-80'
