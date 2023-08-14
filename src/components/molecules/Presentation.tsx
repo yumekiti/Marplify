@@ -4,7 +4,7 @@ import marpStyle from '../../styles/marp.module.css';
 
 type Props = {
   content: string;
-  style?: string;
+  style: string;
 };
 
 const Presentation: FC<Props> = ({ content, style }) => {
@@ -31,7 +31,8 @@ const Presentation: FC<Props> = ({ content, style }) => {
   return (
     <div className={marpStyle.marpit}>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-      <style dangerouslySetInnerHTML={{ __html: style || css }} />
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+      <style dangerouslySetInnerHTML={{ __html: style }} />
     </div>
   );
 };

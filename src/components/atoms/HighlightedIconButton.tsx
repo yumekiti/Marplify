@@ -10,7 +10,9 @@ type Props = {
 const Component: FC<Props> = ({ text, Icon, onClick, tertiary = false }) => (
   <button
     onClick={onClick}
-    className={`text-icons-main rounded-md shadow-md ${tertiary ? 'bg-icons-tertiary' : 'bg-icons-highlight'}`}
+    className={`active:scale-90 duration-100 text-icons-main rounded-md shadow-md ${
+      tertiary ? 'bg-icons-tertiary' : 'bg-icons-highlight'
+    }`}
   >
     <div className='flex gap-1 px-4 py-2 items-center hover:opacity-80 text-base tracking-wider'>
       <Icon />
