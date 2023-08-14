@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import remarkEmoji from 'remark-emoji';
 
 import markdownStyle from '../../styles/markdown.module.css';
 
@@ -14,12 +15,22 @@ import StyleIcon from '../../assets/elements/ViewArea/StyleIcon';
 
 const Component: FC = () => {
   const { content } = useSelector((state: RootState) => state.content);
+
+  useEffect(() => {
+    mermaid.initialize({ startOnLoad: true });
+    mermaid.run({ querySelector: '.language-mermaid' });
+  }, [content]);
+
   return (
     <div className='w-full relative h-full bg-cardBackground overflow-y-scroll h-full bg-cardBackground rounded-lg px-4 py-2 shadow-md'>
       {/* <div className={marpStyle.marpit}>
         <Presentation content={content} style={style} />
       </div> */}
-      <ReactMarkdown className={markdownStyle.markdown} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+      <ReactMarkdown
+        className={markdownStyle.markdown}
+        remarkPlugins={[remarkGfm, remarkEmoji]}
+        rehypePlugins={[rehypeRaw]}
+      >
         {content}
       </ReactMarkdown>
       {/* {isDisplayStyle && (
