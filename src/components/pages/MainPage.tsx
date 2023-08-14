@@ -1,16 +1,14 @@
 import { FC } from 'react';
 import ReactMarkdown from 'react-markdown';
 import modes from '../../constant/modes';
-import Background from '../../assets/background.svg';
+import Background from '../../assets/Background';
 
 const MainPage: FC = () => {
   return (
     <>
-      <img
-        src={Background}
-        alt='background'
-        className='absolute buttom-0 left-0 right-0 h-full w-full object-cover -z-10'
-      />
+      <div className='absolute buttom-0 left-0 right-0 h-full w-full object-cover -z-10'>
+        <Background />
+      </div>
       {false && (
         <div className='h-screen w-screen bg-background fixed top-0 left-0 z-50 bg-opacity-60'>
           <div className='h-full w-full flex justify-center items-center'>
