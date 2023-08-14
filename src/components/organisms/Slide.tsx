@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { Marp } from '@marp-team/marp-core';
-import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { useKey } from 'react-use';
 
 type Props = {
@@ -15,9 +14,6 @@ const Slide: FC<Props> = ({ markdowns }: Props) => {
   //スライドで表示するページ数を管理
   const [page, setPage] = useState(0);
   const maxPage = htmls.length;
-
-  //フルスクリーン用関数
-  const handle = useFullScreenHandle();
 
   //1ページ進む
   const nextPage = () => {
@@ -39,22 +35,12 @@ const Slide: FC<Props> = ({ markdowns }: Props) => {
     });
   };
 
-  //フルスクリーン・解除
-  const fullScreen = () => {
-    if (!handle.active) {
-      handle.enter();
-    } else {
-      handle.exit();
-    }
-  };
-
   useKey('ArrowLeft', returnPage);
   useKey('ArrowRight', nextPage);
-  useKey('f', fullScreen);
 
   return (
     <>
-      <FullScreen handle={handle} className='w-full h-full flex'>
+      <div className='w-full h-full flex'>
         <div className='w-full my-auto'>
           <div dangerouslySetInnerHTML={{ __html: htmls[page] }} />
           <style dangerouslySetInnerHTML={{ __html: css }} />
@@ -70,7 +56,7 @@ const Slide: FC<Props> = ({ markdowns }: Props) => {
             ＞
           </button>
         </div>
-      </FullScreen>
+      </div>
     </>
   );
 };

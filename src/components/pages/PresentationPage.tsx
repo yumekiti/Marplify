@@ -5,8 +5,8 @@ import Presentation from '../organisms/Presentation';
 import { isMarpMarkdown, convertToMarp } from '../../libs/markdown';
 import { getPost } from '../../libs/post';
 
-import LeftIcon from '../../assets/left.svg';
-import RightIcon from '../../assets/right.svg';
+// import LeftIcon from '../../assets/left.svg';
+// import RightIcon from '../../assets/right.svg';
 
 const generatePageStyle = (currentPage: number) => {
   const style = document.createElement('style');
@@ -112,13 +112,13 @@ const PresentationPage: FC = () => {
         )}
         <div className='h-20 absolute bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300'>
           <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-            <img src={LeftIcon} alt='left' className='w-6 h-6' />
+            {/* <img src={LeftIcon} alt='left' className='w-6 h-6' /> */}
           </button>
           <span>
             {currentPage}&nbsp;/&nbsp;{totalPages}
           </span>
           <button onClick={handleNextPage} disabled={currentPage === svgs.length}>
-            <img src={RightIcon} alt='right' className='w-6 h-6' />
+            {/* <img src={RightIcon} alt='right' className='w-6 h-6' /> */}
           </button>
         </div>
       </div>
