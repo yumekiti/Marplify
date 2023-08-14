@@ -4,14 +4,12 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import remarkEmoji from 'remark-emoji';
-
 import markdownStyle from '../../styles/markdown.module.css';
-
 import { RootState } from '../../store';
-
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
-
 import StyleIcon from '../../assets/elements/ViewArea/StyleIcon';
+import { isMarpSlide } from '../../libs/markdown';
+import Presentation from '../molecules/Presentation';
 
 const Component: FC = () => {
   const { content } = useSelector((state: RootState) => state.content);
@@ -23,16 +21,19 @@ const Component: FC = () => {
 
   return (
     <div className='w-full relative h-full bg-cardBackground overflow-y-scroll h-full bg-cardBackground rounded-lg px-4 py-2 shadow-md'>
-      {/* <div className={marpStyle.marpit}>
-        <Presentation content={content} style={style} />
-      </div> */}
-      <ReactMarkdown
-        className={markdownStyle.markdown}
-        remarkPlugins={[remarkGfm, remarkEmoji]}
-        rehypePlugins={[rehypeRaw]}
-      >
-        {content}
-      </ReactMarkdown>
+      <div className='markdown-body'>
+        {isMarpSlide(content) ? (
+          <Presentation content={content} />
+        ) : (
+          <ReactMarkdown
+            className={markdownStyle.markdown}
+            remarkPlugins={[remarkGfm, remarkEmoji]}
+            rehypePlugins={[rehypeRaw]}
+          >
+            {content}
+          </ReactMarkdown>
+        )}
+      </div>
       {/* {isDisplayStyle && (
         <div className='absolute bottom-48 left-0 lg:left-20 xl:left-48 2xl:left-80'>
           <div className='fixed'>

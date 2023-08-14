@@ -35,3 +35,11 @@ svg {
 [id*='mermaid-'] {
   margin: 0 auto;
 }
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}

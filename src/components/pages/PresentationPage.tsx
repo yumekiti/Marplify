@@ -1,8 +1,8 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Presentation from '../organisms/Presentation';
-import { isMarpMarkdown, convertToMarp } from '../../libs/markdown';
+import Presentation from '../molecules/Presentation';
+// import { isMarpMarkdown, convertToMarp } from '../../libs/markdown';
 import { getPost } from '../../libs/post';
 
 // import LeftIcon from '../../assets/left.svg';
@@ -72,24 +72,24 @@ const PresentationPage: FC = () => {
     [handlePreviousPage, handleNextPage, fullScreen],
   );
 
-  useEffect(() => {
-    if (!uuid && marpContent) return;
+  // useEffect(() => {
+  //   if (!uuid && marpContent) return;
 
-    const getPages = async () => {
-      await getPost(uuid).then(async (res: any) => {
-        if (!res) return;
-        let convertedContent = res.content;
-        if (!isMarpMarkdown(convertedContent)) {
-          setMarpContent((await convertToMarp(convertedContent)).replace(/theme: .*/, `theme: ${theme}`));
-        } else setMarpContent(convertedContent);
+  //   const getPages = async () => {
+  //     await getPost(uuid).then(async (res: any) => {
+  //       if (!res) return;
+  //       let convertedContent = res.content;
+  //       if (!isMarpMarkdown(convertedContent)) {
+  //         setMarpContent((await convertToMarp(convertedContent)).replace(/theme: .*/, `theme: ${theme}`));
+  //       } else setMarpContent(convertedContent);
 
-        setTotalPages(svgs.length);
-        setMarpStyle(res.style);
-      });
-    };
+  //       setTotalPages(svgs.length);
+  //       setMarpStyle(res.style);
+  //     });
+  //   };
 
-    getPages();
-  }, [uuid, marpContent, svgs.length, theme]);
+  //   getPages();
+  // }, [uuid, marpContent, svgs.length, theme]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
