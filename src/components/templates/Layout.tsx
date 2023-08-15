@@ -1,22 +1,17 @@
 import { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { viewSlice } from '../../features/view';
 
-import HighlightedIconButton from '../atoms/HighlightedIconButton';
 import Share from '../organisms/Share';
 import Header from '../organisms/Header';
 
 import Background from '../../assets/Background.png';
-import Icon from '../../assets/Icon';
-import ShareIcon from '../../assets/elements/ShareIcon';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Layout: FC<Props> = ({ children }) => {
-  const dispatch = useDispatch();
   const { modal } = useSelector((state: RootState) => state.view);
 
   return (

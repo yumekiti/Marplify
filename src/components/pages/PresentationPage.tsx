@@ -51,13 +51,13 @@ const PresentationPage: FC = () => {
     generatePageStyle(page);
   }, [page]);
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback(() => {
     setPage((prev) => (prev === 1 ? prev : prev - 1));
-  };
+  }, []);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     setPage((prev) => (prev === totalPage ? prev : prev + 1));
-  };
+  }, [totalPage]);
 
   const fullScreen = useCallback(() => {
     const doc = document as any;
