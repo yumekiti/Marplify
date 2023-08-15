@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 type Props = {
   text: string;
   Icon: FC;
-  onClick: () => void;
+  onClick?: () => void;
   opacity?: boolean;
 };
 

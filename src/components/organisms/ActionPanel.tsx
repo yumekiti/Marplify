@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
@@ -22,14 +23,11 @@ const Component: FC = () => {
 
   return (
     <div className='h-full flex gap-4'>
-      <Card>
-        <IconButtonWithLabel
-          Icon={PresentationIcon}
-          text='Presentation'
-          onClick={() => console.log('presentation')}
-          tertiary
-        />
-      </Card>
+      <a href={`${window.location.origin}/presentation`} target='_blank' rel='noreferrer'>
+        <Card>
+          <IconButtonWithLabel Icon={PresentationIcon} text='Presentation' tertiary />
+        </Card>
+      </a>
       <Card>
         <IconButtonWithLabel Icon={ExportIcon} text='Export' onClick={handleExport} />
       </Card>

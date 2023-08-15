@@ -19,8 +19,9 @@ export const markdownToMarp = (markdown: string): string => {
     const line = lines[i];
     if (line.startsWith('# ')) {
       if (!isFirstHeader) {
-        result += `---\n\n<!--\n_class: headline\n-->\n\n`;
+        result += `---\n\n`;
       }
+      result += `<!--\n_class: headline\n-->\n\n`;
       isFirstHeader = false;
       currentH1 = line.substring(2);
     } else if (line.startsWith('## ')) {
