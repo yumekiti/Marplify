@@ -1,6 +1,6 @@
 const exampleText = `# HackU_2023
 
-Hack ID 4 : _楽し(み)たい_
+チーム名 : _楽し(み)たい_
 
 ## 目次
 
@@ -219,6 +219,17 @@ UXの向上とさらなる便利さを提供
         display: none;
     }
 </style>
+
+<!--
+<style>
+    .markdown-body > div > :not(.cheating) {
+        display: none;
+    }
+    .cheating {
+        margin-top: 2.25rem;
+    }
+</style>
+-->
 `;
 
 const placeholder = `# Marplify
