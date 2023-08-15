@@ -8,6 +8,7 @@ import { isMarpSlide, markdownToMarp } from '../../libs/markdown';
 
 import LeftIcon from '../../assets/elements/ViewArea/LeftIcon';
 import RightIcon from '../../assets/elements/ViewArea/RightIcon';
+import FullScreenIcon from '../../assets/elements/ViewArea/FullScreenIcon';
 
 const generatePageStyle = (currentPage: number) => {
   const style = document.createElement('style');
@@ -90,19 +91,26 @@ const PresentationPage: FC = () => {
   }, [handleKeyDown]);
 
   return (
-    <div className='relative w-full h-full flex justify-center items-center'>
+    <div className='relative w-full h-full flex justify-center items-center group'>
       <Presentation content={content} style={theme} />
       {/* ページ */}
-      <div className='h-20 bottom-0 left-0 right-0 flex justify-center items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 py-2 gap-4 hover:bg-opacity-50 hover:opacity-100 transition-all duration-300 fixed'>
-        <button onClick={handlePreviousPage} disabled={page === 1}>
-          <LeftIcon />
-        </button>
-        <span>
-          {page}&nbsp;/&nbsp;{totalPage}
-        </span>
-        <button onClick={handleNextPage} disabled={page === totalPage}>
-          <RightIcon />
-        </button>
+      <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed'>
+        <div className='flex justify-center items-center mx-auto'>
+          <button className='active:opacity-50' onClick={handlePreviousPage} disabled={page === 1}>
+            <LeftIcon />
+          </button>
+          <span className='text-justify mx-4'>
+            {page}&nbsp;/&nbsp;{totalPage}
+          </span>
+          <button className='active:opacity-50' onClick={handleNextPage} disabled={page === totalPage}>
+            <RightIcon />
+          </button>
+        </div>
+        <div className='flex justify-center items-end mx-12'>
+          <button className='active:opacity-50' onClick={fullScreen}>
+            <FullScreenIcon />
+          </button>
+        </div>
       </div>
       {/* スマホ */}
       <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-between items-center z-20 xl:hidden'>

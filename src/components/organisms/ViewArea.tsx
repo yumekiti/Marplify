@@ -19,7 +19,7 @@ const Component: FC = () => {
   }, [content]);
 
   return (
-    <div className='w-full relative h-full bg-cardBackground overflow-y-scroll h-full bg-cardBackground rounded-lg px-4 py-2 shadow-md'>
+    <div className='w-full relative bg-cardBackground overflow-y-scroll h-full bg-cardBackground rounded-lg px-4 py-2 shadow-md'>
       <div className='markdown-body'>
         {isMarpSlide(content) ? (
           <Presentation content={content} style={theme} />

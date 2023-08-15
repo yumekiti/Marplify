@@ -56,27 +56,32 @@ const Component: FC = () => {
   return (
     <div className='absolute bottom-24 right-24'>
       {isDisplayStyle && (
-        <div className='w-96 absolute bottom-2 -right-16 flex justify-center items-center bg-icons-stroke rounded z-30'>
-          <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickLeft}>
-            <LeftIcon />
-          </button>
-          <ul className='flex w-full py-4 space-x-4 justify-center items-center'>
-            {themes[page].map((theme, index) => (
-              <li key={index} className='list-none'>
-                <button className='rounded-lg active:scale-75 duration-100' onClick={() => handleSelectTheme(theme)}>
-                  <img src={theme.img} alt={theme.name} className='w-32 h-20 rounded-lg' />
-                  <p className='text-center text-icons-main text-sm'>{theme.name}</p>
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickRight}>
-            <RightIcon />
-          </button>
+        <div className='fixed'>
+          <div className='w-96 absolute bottom-2 -right-16 flex justify-center items-center bg-icons-stroke rounded'>
+            <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickLeft}>
+              <LeftIcon />
+            </button>
+            <ul className='flex w-full py-4 space-x-4 justify-center items-center'>
+              {themes[page].map((theme, index) => (
+                <li key={index} className='list-none'>
+                  <button className='rounded-lg active:scale-75 duration-100' onClick={() => handleSelectTheme(theme)}>
+                    <img src={theme.img} alt={theme.name} className='w-32 h-20 rounded-lg' />
+                    <p className='text-center text-icons-main text-sm'>{theme.name}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickRight}>
+              <RightIcon />
+            </button>
+          </div>
         </div>
       )}
-      <div className='fixed bg-cardBackground rounded-lg p-4 shadow-md flex justify-center items-center'>
-        <IconButtonWithTooltip Icon={StyleIcon} text='Style' onClick={handleClickStyle} />
+      <div
+        className='fixed bg-cardBackground rounded-lg p-4 shadow-md flex justify-center items-center'
+        onClick={handleClickStyle}
+      >
+        <IconButtonWithTooltip Icon={StyleIcon} text='Style' onClick={() => {}} />
       </div>
     </div>
   );
