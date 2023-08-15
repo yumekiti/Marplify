@@ -16,6 +16,8 @@ const Component: FC = () => {
   const { content } = useSelector((state: RootState) => state.content);
 
   const handleConvert = () => {
+    if (!content) return;
+
     if (isMarpSlide(content)) {
       const markdown = marpToMarkdown(content);
       dispatch(contentSlice.actions.setContent(markdown));

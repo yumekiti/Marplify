@@ -28,11 +28,14 @@ const Presentation: FC<Props> = ({ content, style }) => {
     mermaid.init(undefined, '.language-mermaid');
   }, [content]);
 
+  console.log(style);
+
   return (
     <div className={marpStyle.marpit}>
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      <style dangerouslySetInnerHTML={{ __html: style }} />
+      {/* <style dangerouslySetInnerHTML={{ __html: style }} /> */}
+      <link rel='stylesheet' href={style} />
     </div>
   );
 };

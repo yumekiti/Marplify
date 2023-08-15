@@ -23,8 +23,8 @@ const Component: FC = () => {
 
   const themesData = [
     {
-      name: 'default',
-      style: '',
+      name: 'yumekiti',
+      style: '/marp_themes/yumekiti.css',
       img: 'https://user-images.githubusercontent.com/3993388/48039490-53be1b80-e1b8-11e8-8179-0e6c11d285e2.png',
     },
     {
@@ -62,16 +62,18 @@ const Component: FC = () => {
   };
 
   const handleSelectTheme = (theme: any) => {
-    dispatch(contentSlice.actions.setTheme(theme));
+    dispatch(contentSlice.actions.setTheme(theme.style));
 
     const newContent = content.replace(/theme: .*\n/, `theme: ${theme.name}\n`);
     dispatch(contentSlice.actions.setContent(newContent));
+
+    setIsDisplayStyle(false);
   };
 
   return (
     <div className='absolute bottom-24 right-24'>
       {isDisplayStyle && (
-        <div className='w-96 absolute bottom-0 right-0 flex justify-center items-center bg-icons-stroke rounded z-30'>
+        <div className='w-96 absolute bottom-2 -right-16 flex justify-center items-center bg-icons-stroke rounded z-30'>
           <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickLeft}>
             <LeftIcon />
           </button>
