@@ -36,9 +36,17 @@ spec:
         app: api
     spec:
       initContainers:
-        - name: marplify-api-init
-          image: yumekiti/marplify-api:latest
-          command: ['sh', '-c', 'cd /app && yarn keystone prisma migrate dev --name init']
+        - name: init-migration
+          image: yumekiti/marplify-api:e3d9b98
+          command: ["yarn", "keystone", "prisma", "migrate", "dev", "--name", "init"]
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 5"]
+      containers:
+        - name: marplify-api
+          image: yumekiti/marplify-api:e3d9b98
+
       containers:
       - name: marplify-api
         image: yumekiti/marplify-api:e3d9b98
