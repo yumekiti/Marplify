@@ -19,8 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "pretty": "prettier --write 'src/**/*.{html,css,scss,js,jsx,ts,tsx,json}' README.md",
-    "prepare": "npx husky install"
+    "pretty": "prettier --write 'src/**/*.{html,css,scss,js,jsx,ts,tsx,json}' README.md"
   },
   "dependencies": {
     "@marp-team/marp-core": "^3.7.0",
@@ -32,7 +31,6 @@
     "@types/shortid": "^0.0.29",
     "@uiw/react-md-editor": "^3.23.5",
     "axios": "^1.4.0",
-    "husky": "^4.3.6",
     "markdown-it-plantuml": "^1.4.1",
     "prettier": "^2.2.1",
     "qrcode.react": "^3.1.0",
@@ -80,7 +78,5 @@
       "prettier --write"
     ]
   },
-  "devDependencies": {
-    "husky": "^4.3.6"
-  }
+  "devDependencies": {}
 }
