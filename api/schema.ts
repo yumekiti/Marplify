@@ -6,7 +6,7 @@
 // - https://keystonejs.com/docs/config/lists
 
 import { list } from '@keystone-6/core';
-import { allowAll } from '@keystone-6/core/access';
+import { allowAll, denyAll } from '@keystone-6/core/access';
 
 // see https://keystonejs.com/docs/fields/overview for the full list of fields
 //   this is a few common fields for an example
@@ -25,6 +25,58 @@ import { document } from '@keystone-6/fields-document';
 // when using Typescript, you can refine your types to a stricter subset by importing
 // the generated types from '.keystone/types'
 import type { Lists } from '.keystone/types';
+
+export type Session = {
+  id: string
+  admin: boolean
+  moderator: null | { id: string }
+  contributor: null | { id: string }
+}
+
+type Has<T, K extends keyof T> = {
+  [key in keyof T]: key extends K ? Exclude<T[key], null | undefined> : T[key];
+}
+
+function isAdmin<T extends Session> (session?: T): session is T & { admin: true } {
+  return session?.admin === true
+}
+function isModerator<T extends Session> (session?: T): session is Has<T, 'moderator'> {
+  return session?.moderator !== null
+}
+function isContributor<T extends Session> (session?: T): session is Has<T, 'contributor'> {
+  return session?.contributor !== null
+}
+
+function forUsers<T> ({
+  admin,
+  moderator,
+  contributor,
+  default: _default,
+}: {
+  admin?: ({ session }: { session: Session & { admin: true } }) => T
+  moderator?: ({ session }: { session: Has<Session, 'moderator'> }) => T
+  contributor?: ({ session }: { session: Has<Session, 'contributor'> }) => T
+  default: () => T
+}) {
+  return ({ session }: { session?: Session }): T => {
+    if (!session) return _default()
+    if (admin && isAdmin(session)) return admin({ session })
+    if (moderator && isModerator(session)) return moderator({ session })
+    if (contributor && isContributor(session)) return contributor({ session })
+    return _default()
+  }
+}
+
+const adminOnly = forUsers({
+  admin: allowAll,
+  default: denyAll,
+})
+
+const moderatorsOrAbove = forUsers({
+  admin: allowAll,
+  moderator: allowAll,
+  default: denyAll,
+})
 
 export const lists: Lists = {
   User: list({
@@ -49,9 +101,9 @@ export const lists: Lists = {
 
       password: password({ validation: { isRequired: true } }),
 
-      // we can use this field to see what Posts this User has authored
-      //   more on that in the Post list below
-      posts: relationship({ ref: 'Post.author', many: true }),
+      // we can use this field to see what Slides this User has authored
+      //   more on that in the Slide list below
+      slides: relationship({ ref: 'Slide.author', many: true }),
 
       createdAt: timestamp({
         // this sets the timestamp to Date.now() when the user is first created
@@ -60,14 +112,21 @@ export const lists: Lists = {
     },
   }),
 
-  Post: list({
+  Slide: list({
     // WARNING
     //   for this starter project, anyone can create, query, update and delete anything
     //   if you want to prevent random people on the internet from accessing your data,
     //   you can find out more at https://keystonejs.com/docs/guides/auth-and-access-control
-    access: allowAll,
+    access: {
+      operation: {
+        query: moderatorsOrAbove,
+        create: adminOnly,
+        update: moderatorsOrAbove,
+        delete: adminOnly,
+      }
+    },
 
-    // this is the fields for our Post list
+    // this is the fields for our Slide list
     fields: {
       title: text({ validation: { isRequired: true } }),
 
@@ -86,10 +145,10 @@ export const lists: Lists = {
         dividers: true,
       }),
 
-      // with this field, you can set a User as the author for a Post
+      // with this field, you can set a User as the author for a Slide
       author: relationship({
         // we could have used 'User', but then the relationship would only be 1-way
-        ref: 'User.posts',
+        ref: 'User.slides',
 
         // this is some customisations for changing how this will look in the AdminUI
         ui: {
@@ -100,17 +159,17 @@ export const lists: Lists = {
           inlineConnect: true,
         },
 
-        // a Post can only have one author
+        // a Slide can only have one author
         //   this is the default, but we show it here for verbosity
         many: false,
       }),
 
-      // with this field, you can add some Tags to Posts
+      // with this field, you can add some Tags to Slides
       tags: relationship({
         // we could have used 'Tag', but then the relationship would only be 1-way
-        ref: 'Tag.posts',
+        ref: 'Tag.slides',
 
-        // a Post can have many Tags, not just one
+        // a Slide can have many Tags, not just one
         many: true,
 
         // this is some customisations for changing how this will look in the AdminUI
@@ -142,8 +201,8 @@ export const lists: Lists = {
     // this is the fields for our Tag list
     fields: {
       name: text(),
-      // this can be helpful to find out all the Posts associated with a Tag
-      posts: relationship({ ref: 'Post.tags', many: true }),
+      // this can be helpful to find out all the Slides associated with a Tag
+      slides: relationship({ ref: 'Slide.tags', many: true }),
     },
   }),
 };
