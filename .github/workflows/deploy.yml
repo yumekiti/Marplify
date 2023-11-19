@@ -30,8 +30,8 @@ jobs:
           DOCKER_TAG=$(git rev-parse --short HEAD)
           # docker buildx build --tag yumekiti/marplify-$directory:${DOCKER_TAG} --file Dockerfile --platform linux/amd64,linux/arm64 --push .
           docker buildx build --tag yumekiti/marplify-$directory:${DOCKER_TAG} --file Dockerfile --platform linux/arm64 --push .
-          sed -i "s/yumekiti\/marplify-$directory:.*/yumekiti\/marplify-$directory:${DOCKER_TAG}/" .argocd/deployment.yaml
           cd ..
+          sed -i "s/yumekiti\/marplify-$directory:.*/yumekiti\/marplify-$directory:${DOCKER_TAG}/" .argocd/deployment.yaml
         done
 
     - name: Commit and push changes to deploy branch
