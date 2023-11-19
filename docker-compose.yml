@@ -13,3 +13,23 @@ services:
         yarn &&
         yarn start
       "
+  api:
+    image: node:18.18.2-alpine
+    working_dir: /api
+    volumes:
+      - ./api:/api
+    ports:
+      - '8080:3000'
+    command: >
+      sh -c "
+        yarn build &&
+        yarn start
+      "
+    depends_on:
+      - db
+  db:
+    image: postgres:16.0-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keystone
