@@ -1,20 +1,43 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: marplify
+  name: web-deployment
   namespace: marplify
 spec:
   selector:
     matchLabels:
-      app: marplify
+      app: web
   replicas: 2
   template:
     metadata:
       labels:
-        app: marplify
+        app: web
     spec:
       containers:
-      - name: marplify
-        image: yumekiti/marplify:latest
+      - name: marplify-web
+        image: yumekiti/marplify-web:latest
         ports:
         - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: marplify
+spec:
+  selector:
+    matchLabels:
+      app: api
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: marplify-api
+        image: yumekiti/marplify-api:latest
+        ports:
+        - containerPort: 3000
+---

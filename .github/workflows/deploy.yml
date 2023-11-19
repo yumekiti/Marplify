@@ -21,18 +21,22 @@ jobs:
       run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
     - name: Build and push Docker image
-      id: build-image
+      id: build-and-push-image
       run: |
-        DOCKER_TAG=$(git rev-parse --short HEAD)
-        docker buildx build --tag yumekiti/marplify:${DOCKER_TAG} --file Dockerfile --platform linux/amd64,linux/arm64 --push .
+        directories=("api" "web")
 
-    - name: Update ArgoCD version in deployment manifest
-      id: update-argocd-version
+        for directory in "${directories[@]}"; do
+          cd $directory
+          DOCKER_TAG=$(git rev-parse --short HEAD)
+          docker buildx build --tag yumekiti/marplify-$directory:${DOCKER_TAG} --file Dockerfile --platform linux/amd64,linux/arm64 --push .
+          sed -i "s/yumekiti\/marplify-$directory:.*/yumekiti\/marplify-$directory:${DOCKER_TAG}/" .argocd/deployment.yaml
+          cd ..
+        done
+
+    - name: Commit and push changes to deploy branch
       run: |
-        DOCKER_TAG=$(git rev-parse --short HEAD)
-        sed -i "s/yumekiti\/marplify:.*/yumekiti\/marplify:${DOCKER_TAG}/" .argocd/deployment.yaml
         git config --global user.name '${{ secrets.GIT_USERNAME }}'
         git config --global user.email '${{ secrets.GIT_USEREMAIL }}'
-        git add .argocd/deployment.yaml
-        git commit --no-verify -m "Update ArgoCD version to ${DOCKER_TAG}"
+        git add .
+        git commit --no-verify -m "Update Docker images and ArgoCD versions"
         git push origin deploy
