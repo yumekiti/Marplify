@@ -30,6 +30,42 @@ var import_core = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
+function isAdmin(session2) {
+  return session2?.admin === true;
+}
+function isModerator(session2) {
+  return session2?.moderator !== null;
+}
+function isContributor(session2) {
+  return session2?.contributor !== null;
+}
+function forUsers({
+  admin,
+  moderator,
+  contributor,
+  default: _default
+}) {
+  return ({ session: session2 }) => {
+    if (!session2)
+      return _default();
+    if (admin && isAdmin(session2))
+      return admin({ session: session2 });
+    if (moderator && isModerator(session2))
+      return moderator({ session: session2 });
+    if (contributor && isContributor(session2))
+      return contributor({ session: session2 });
+    return _default();
+  };
+}
+var adminOnly = forUsers({
+  admin: import_access.allowAll,
+  default: import_access.denyAll
+});
+var moderatorsOrAbove = forUsers({
+  admin: import_access.allowAll,
+  moderator: import_access.allowAll,
+  default: import_access.denyAll
+});
 var lists = {
   User: (0, import_core.list)({
     // WARNING
@@ -49,22 +85,29 @@ var lists = {
         isIndexed: "unique"
       }),
       password: (0, import_fields.password)({ validation: { isRequired: true } }),
-      // we can use this field to see what Posts this User has authored
-      //   more on that in the Post list below
-      posts: (0, import_fields.relationship)({ ref: "Post.author", many: true }),
+      // we can use this field to see what Slides this User has authored
+      //   more on that in the Slide list below
+      slides: (0, import_fields.relationship)({ ref: "Slide.author", many: true }),
       createdAt: (0, import_fields.timestamp)({
         // this sets the timestamp to Date.now() when the user is first created
         defaultValue: { kind: "now" }
       })
     }
   }),
-  Post: (0, import_core.list)({
+  Slide: (0, import_core.list)({
     // WARNING
     //   for this starter project, anyone can create, query, update and delete anything
     //   if you want to prevent random people on the internet from accessing your data,
     //   you can find out more at https://keystonejs.com/docs/guides/auth-and-access-control
-    access: import_access.allowAll,
-    // this is the fields for our Post list
+    access: {
+      operation: {
+        query: moderatorsOrAbove,
+        create: adminOnly,
+        update: moderatorsOrAbove,
+        delete: adminOnly
+      }
+    },
+    // this is the fields for our Slide list
     fields: {
       title: (0, import_fields.text)({ validation: { isRequired: true } }),
       // the document field can be used for making rich editable content
@@ -81,10 +124,10 @@ var lists = {
         links: true,
         dividers: true
       }),
-      // with this field, you can set a User as the author for a Post
+      // with this field, you can set a User as the author for a Slide
       author: (0, import_fields.relationship)({
         // we could have used 'User', but then the relationship would only be 1-way
-        ref: "User.posts",
+        ref: "User.slides",
         // this is some customisations for changing how this will look in the AdminUI
         ui: {
           displayMode: "cards",
@@ -93,15 +136,15 @@ var lists = {
           linkToItem: true,
           inlineConnect: true
         },
-        // a Post can only have one author
+        // a Slide can only have one author
         //   this is the default, but we show it here for verbosity
         many: false
       }),
-      // with this field, you can add some Tags to Posts
+      // with this field, you can add some Tags to Slides
       tags: (0, import_fields.relationship)({
         // we could have used 'Tag', but then the relationship would only be 1-way
-        ref: "Tag.posts",
-        // a Post can have many Tags, not just one
+        ref: "Tag.slides",
+        // a Slide can have many Tags, not just one
         many: true,
         // this is some customisations for changing how this will look in the AdminUI
         ui: {
@@ -129,8 +172,8 @@ var lists = {
     // this is the fields for our Tag list
     fields: {
       name: (0, import_fields.text)(),
-      // this can be helpful to find out all the Posts associated with a Tag
-      posts: (0, import_fields.relationship)({ ref: "Post.tags", many: true })
+      // this can be helpful to find out all the Slides associated with a Tag
+      slides: (0, import_fields.relationship)({ ref: "Slide.tags", many: true })
     }
   })
 };

@@ -6,8 +6,8 @@ type User {
   name: String
   email: String
   password: PasswordState
-  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  postsCount(where: PostWhereInput! = {}): Int
+  slides(where: SlideWhereInput! = {}, orderBy: [SlideOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SlideWhereUniqueInput): [Slide!]
+  slidesCount(where: SlideWhereInput! = {}): Int
   createdAt: DateTime
 }
 
@@ -29,7 +29,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
-  posts: PostManyRelationFilter
+  slides: SlideManyRelationFilter
   createdAt: DateTimeNullableFilter
 }
 
@@ -78,10 +78,10 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input PostManyRelationFilter {
-  every: PostWhereInput
-  some: PostWhereInput
-  none: PostWhereInput
+input SlideManyRelationFilter {
+  every: SlideWhereInput
+  some: SlideWhereInput
+  none: SlideWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -111,15 +111,15 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyForUpdateInput
+  slides: SlideRelateToManyForUpdateInput
   createdAt: DateTime
 }
 
-input PostRelateToManyForUpdateInput {
-  disconnect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
+input SlideRelateToManyForUpdateInput {
+  disconnect: [SlideWhereUniqueInput!]
+  set: [SlideWhereUniqueInput!]
+  create: [SlideCreateInput!]
+  connect: [SlideWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -131,36 +131,36 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyForCreateInput
+  slides: SlideRelateToManyForCreateInput
   createdAt: DateTime
 }
 
-input PostRelateToManyForCreateInput {
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
+input SlideRelateToManyForCreateInput {
+  create: [SlideCreateInput!]
+  connect: [SlideWhereUniqueInput!]
 }
 
-type Post {
+type Slide {
   id: ID!
   title: String
-  content: Post_content_Document
+  content: Slide_content_Document
   author: User
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
 }
 
-type Post_content_Document {
+type Slide_content_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
-input PostWhereUniqueInput {
+input SlideWhereUniqueInput {
   id: ID
 }
 
-input PostWhereInput {
-  AND: [PostWhereInput!]
-  OR: [PostWhereInput!]
-  NOT: [PostWhereInput!]
+input SlideWhereInput {
+  AND: [SlideWhereInput!]
+  OR: [SlideWhereInput!]
+  NOT: [SlideWhereInput!]
   id: IDFilter
   title: StringFilter
   author: UserWhereInput
@@ -173,12 +173,12 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
-input PostOrderByInput {
+input SlideOrderByInput {
   id: OrderDirection
   title: OrderDirection
 }
 
-input PostUpdateInput {
+input SlideUpdateInput {
   title: String
   content: JSON
   author: UserRelateToOneForUpdateInput
@@ -198,12 +198,12 @@ input TagRelateToManyForUpdateInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input PostUpdateArgs {
-  where: PostWhereUniqueInput!
-  data: PostUpdateInput!
+input SlideUpdateArgs {
+  where: SlideWhereUniqueInput!
+  data: SlideUpdateInput!
 }
 
-input PostCreateInput {
+input SlideCreateInput {
   title: String
   content: JSON
   author: UserRelateToOneForCreateInput
@@ -223,8 +223,8 @@ input TagRelateToManyForCreateInput {
 type Tag {
   id: ID!
   name: String
-  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  postsCount(where: PostWhereInput! = {}): Int
+  slides(where: SlideWhereInput! = {}, orderBy: [SlideOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SlideWhereUniqueInput): [Slide!]
+  slidesCount(where: SlideWhereInput! = {}): Int
 }
 
 input TagWhereUniqueInput {
@@ -237,7 +237,7 @@ input TagWhereInput {
   NOT: [TagWhereInput!]
   id: IDFilter
   name: StringFilter
-  posts: PostManyRelationFilter
+  slides: SlideManyRelationFilter
 }
 
 input TagOrderByInput {
@@ -247,7 +247,7 @@ input TagOrderByInput {
 
 input TagUpdateInput {
   name: String
-  posts: PostRelateToManyForUpdateInput
+  slides: SlideRelateToManyForUpdateInput
 }
 
 input TagUpdateArgs {
@@ -257,7 +257,7 @@ input TagUpdateArgs {
 
 input TagCreateInput {
   name: String
-  posts: PostRelateToManyForCreateInput
+  slides: SlideRelateToManyForCreateInput
 }
 
 """
@@ -272,12 +272,12 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
-  createPost(data: PostCreateInput!): Post
-  createPosts(data: [PostCreateInput!]!): [Post]
-  updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
-  updatePosts(data: [PostUpdateArgs!]!): [Post]
-  deletePost(where: PostWhereUniqueInput!): Post
-  deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createSlide(data: SlideCreateInput!): Slide
+  createSlides(data: [SlideCreateInput!]!): [Slide]
+  updateSlide(where: SlideWhereUniqueInput!, data: SlideUpdateInput!): Slide
+  updateSlides(data: [SlideUpdateArgs!]!): [Slide]
+  deleteSlide(where: SlideWhereUniqueInput!): Slide
+  deleteSlides(where: [SlideWhereUniqueInput!]!): [Slide]
   createTag(data: TagCreateInput!): Tag
   createTags(data: [TagCreateInput!]!): [Tag]
   updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
@@ -310,9 +310,9 @@ type Query {
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
-  posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  post(where: PostWhereUniqueInput!): Post
-  postsCount(where: PostWhereInput! = {}): Int
+  slides(where: SlideWhereInput! = {}, orderBy: [SlideOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SlideWhereUniqueInput): [Slide!]
+  slide(where: SlideWhereUniqueInput!): Slide
+  slidesCount(where: SlideWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
