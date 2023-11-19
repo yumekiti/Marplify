@@ -43,11 +43,6 @@ jobs:
           sed -i "s/yumekiti\/marplify-$directory:.*/yumekiti\/marplify-$directory:${DOCKER_TAG}/" .argocd/deployment.yaml
         done
 
-    - name: Move cache
-      run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
     - name: Commit and push changes to deploy branch
       run: |
         git config --global user.name '${{ secrets.GIT_USERNAME }}'
