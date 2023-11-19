@@ -15,8 +15,8 @@ COPY --from=builder /usr/local/app/build /usr/share/nginx/html
 
 CMD [ "nginx", "-g", "daemon off;" ]
 
-# docker build --platform linux/arm64 -t [hoge] .
-# # operation check
-# docker run -it --rm -p 8080:80 [hoge]
-# docker tag [hoge] yumekiti/[hoge]
-# docker push yumekiti/[hoge]
+# docker build --platform linux/arm64 -t [username]/[hoge] .
+# docker push [username]/[hoge]
+
+# operation check
+# docker run -it --rm -p 8080:80 [username]/[hoge]

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: marplify
+  name: ingress
   namespace: marplify
 spec:
   ingressClassName: nginx
@@ -13,6 +13,16 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: marplify
+            name: web
             port:
               number: 80
+  - host: marplify-api.yumekiti.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api
+            port:
+              number: 3000
