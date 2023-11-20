@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: marplify-web
-        image: yumekiti/marplify-web:8e69f07
+        image: yumekiti/marplify-web:4f68803
         ports:
         - containerPort: 80
 ---
@@ -37,15 +37,15 @@ spec:
     spec:
       initContainers:
         - name: init-migration
-          image: yumekiti/marplify-api:8e69f07
+          image: yumekiti/marplify-api:4f68803
           imagePullPolicy: Always
           command: ["sh", "-c", "yarn keystone prisma migrate dev --name init"]
       containers:
         - name: marplify-api
-          image: yumekiti/marplify-api:8e69f07
+          image: yumekiti/marplify-api:4f68803
       containers:
       - name: marplify-api
-        image: yumekiti/marplify-api:8e69f07
+        image: yumekiti/marplify-api:4f68803
         ports:
         - containerPort: 3000
 ---
