@@ -35,10 +35,6 @@ spec:
       labels:
         app: api
     spec:
-      initContainers:
-      - name: prisma-init
-        image: yumekiti/marplify-api:8eb927c
-        command: ["yarn", "keystone", "prisma", "migrate", "deploy"]
       containers:
       - name: marplify-api
         image: yumekiti/marplify-api:8eb927c
