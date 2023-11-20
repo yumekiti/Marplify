@@ -11,18 +11,26 @@ jobs:
 
     steps:
     - name: Check out repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Cache Docker layers
+    - name: Cache Docker layers for api
       uses: actions/cache@v2
       with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        path: /tmp/.buildx-cache-api
+        key: ${{ runner.os }}-buildx-api-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-buildx-
+          ${{ runner.os }}-buildx-api-
+
+    - name: Cache Docker layers for web
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache-web
+        key: ${{ runner.os }}-buildx-web-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-web-
 
     - name: Login to DockerHub
       uses: docker/login-action@v1 
@@ -41,8 +49,8 @@ jobs:
         push: true
         file: ./api/Dockerfile
         platforms: linux/arm64
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+        cache-from: type=local,src=/tmp/.buildx-cache-api
+        cache-to: type=local,dest=/tmp/.buildx-cache-api-new
         tags: yumekiti/marplify-api:${{ steps.get-api-commit.outputs.commit_hash }}
 
     - name: Update deployment.yaml for api
@@ -60,18 +68,23 @@ jobs:
         push: true
         file: ./web/Dockerfile
         platforms: linux/arm64
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+        cache-from: type=local,src=/tmp/.buildx-cache-web
+        cache-to: type=local,dest=/tmp/.buildx-cache-web-new
         tags: yumekiti/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}
 
     - name: Update deployment.yaml for web
       run: |
         sed -i "s/yumekiti\/marplify-web:.*/yumekiti\/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
 
-    - name: Move cache
+    - name: Move cache for api
       run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+        rm -rf /tmp/.buildx-cache-api
+        mv /tmp/.buildx-cache-api-new /tmp/.buildx-cache-api
+
+    - name: Move cache for api
+      run: |
+        rm -rf /tmp/.buildx-cache-web
+        mv /tmp/.buildx-cache-web-new /tmp/.buildx-cache-web
 
     - name: Commit and push changes to deploy branch
       run: |
