@@ -30,6 +30,10 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Get git commit short hash for api
+      id: get-api-commit
+      run: echo "::set-output name=commit_hash::$(git -C api rev-parse --short HEAD)"
+
     - name: Build and push Docker image for api
       uses: docker/build-push-action@v2
       with:
@@ -39,10 +43,15 @@ jobs:
         platforms: linux/arm64
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-        tags: yumekiti/marplify-api:$(git -C api rev-parse --short HEAD)
+        tags: yumekiti/marplify-api:${{ steps.get-api-commit.outputs.commit_hash }}
 
     - name: Update deployment.yaml for api
-      run: sed -i "s/yumekiti\/marplify-api:.*/yumekiti\/marplify-api:$(git -C api rev-parse --short HEAD)/" .argocd/deployment.yaml
+      run: |
+        sed -i "s/yumekiti\/marplify-api:.*/yumekiti\/marplify-api:${{ steps.get-api-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
+
+    - name: Get git commit short hash for web
+      id: get-web-commit
+      run: echo "::set-output name=commit_hash::$(git -C web rev-parse --short HEAD)"
 
     - name: Build and push Docker image for web
       uses: docker/build-push-action@v2
@@ -53,10 +62,11 @@ jobs:
         platforms: linux/arm64
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-        tags: yumekiti/marplify-web:$(git -C web rev-parse --short HEAD)
+        tags: yumekiti/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}
 
     - name: Update deployment.yaml for web
-      run: sed -i "s/yumekiti\/marplify-web:.*/yumekiti\/marplify-web:$(git -C web rev-parse --short HEAD)/" .argocd/deployment.yaml
+      run: |
+        sed -i "s/yumekiti\/marplify-web:.*/yumekiti\/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
 
     - name: Move cache
       run: |
