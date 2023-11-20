@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: marplify-web
-        image: yumekiti/marplify-web:a148489
+        image: yumekiti/marplify-web:8eb927c
         ports:
         - containerPort: 80
 ---
@@ -37,11 +37,11 @@ spec:
     spec:
       initContainers:
       - name: prisma-init
-        image: yumekiti/marplify-api:a148489
+        image: yumekiti/marplify-api:8eb927c
         command: ["yarn", "keystone", "prisma", "migrate", "deploy"]
       containers:
       - name: marplify-api
-        image: yumekiti/marplify-api:a148489
+        image: yumekiti/marplify-api:8eb927c
         ports:
         - containerPort: 3000
 ---
