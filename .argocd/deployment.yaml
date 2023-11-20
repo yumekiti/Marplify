@@ -41,9 +41,6 @@ spec:
           imagePullPolicy: Always
           command: ["sh", "-c", "yarn keystone prisma migrate dev --name init"]
       containers:
-        - name: marplify-api
-          image: yumekiti/marplify-api:01d0b92
-      containers:
       - name: marplify-api
         image: yumekiti/marplify-api:01d0b92
         ports:
