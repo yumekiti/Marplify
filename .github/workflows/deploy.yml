@@ -10,86 +10,79 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Cache Docker layers for api
-      uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache-api
-        key: ${{ runner.os }}-buildx-api-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-api-
+      - name: Cache Docker layers for api
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache-api
+          key: ${{ runner.os }}-buildx-api-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-api-
 
-    - name: Cache Docker layers for web
-      uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache-web
-        key: ${{ runner.os }}-buildx-web-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-web-
+      - name: Cache Docker layers for web
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache-web
+          key: ${{ runner.os }}-buildx-web-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-web-
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Get git commit short hash for api
-      id: get-api-commit
-      run: echo "::set-output name=commit_hash::$(git -C api rev-parse --short HEAD)"
+      - name: Get git commit short hash
+        id: get-commit
+        run: echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
 
-    - name: Build and push Docker image for api
-      uses: docker/build-push-action@v2
-      with:
-        context: ./api
-        push: true
-        file: ./api/Dockerfile
-        platforms: linux/arm64
-        cache-from: type=local,src=/tmp/.buildx-cache-api
-        cache-to: type=local,dest=/tmp/.buildx-cache-api-new
-        tags: yumekiti/marplify-api:${{ steps.get-api-commit.outputs.commit_hash }}
+      - name: Build and push Docker image for api
+        uses: docker/build-push-action@v2
+        with:
+          context: ./api
+          push: true
+          file: ./api/Dockerfile
+          platforms: linux/arm64
+          cache-from: type=local,src=/tmp/.buildx-cache-api
+          cache-to: type=local,dest=/tmp/.buildx-cache-api-new
+          tags: yumekiti/marplify-api:${{ steps.get-commit.outputs.commit_hash }}
 
-    - name: Update deployment.yaml for api
-      run: |
-        sed -i "s/yumekiti\/marplify-api:.*/yumekiti\/marplify-api:${{ steps.get-api-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
+      - name: Update deployment.yaml for api
+        run: |
+          sed -i "s/yumekiti\/marplify-api:.*/yumekiti\/marplify-api:${{ steps.get-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
 
-    - name: Get git commit short hash for web
-      id: get-web-commit
-      run: echo "::set-output name=commit_hash::$(git -C web rev-parse --short HEAD)"
+      - name: Build and push Docker image for web
+        uses: docker/build-push-action@v2
+        with:
+          context: ./web
+          push: true
+          file: ./web/Dockerfile
+          platforms: linux/arm64
+          cache-from: type=local,src=/tmp/.buildx-cache-web
+          cache-to: type=local,dest=/tmp/.buildx-cache-web-new
+          tags: yumekiti/marplify-web:${{ steps.get-commit.outputs.commit_hash }}
 
-    - name: Build and push Docker image for web
-      uses: docker/build-push-action@v2
-      with:
-        context: ./web
-        push: true
-        file: ./web/Dockerfile
-        platforms: linux/arm64
-        cache-from: type=local,src=/tmp/.buildx-cache-web
-        cache-to: type=local,dest=/tmp/.buildx-cache-web-new
-        tags: yumekiti/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}
+      - name: Update deployment.yaml for web
+        run: |
+          sed -i "s/yumekiti\/marplify-web:.*/yumekiti\/marplify-web:${{ steps.get-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
 
-    - name: Update deployment.yaml for web
-      run: |
-        sed -i "s/yumekiti\/marplify-web:.*/yumekiti\/marplify-web:${{ steps.get-web-commit.outputs.commit_hash }}/" .argocd/deployment.yaml
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache-api
+          mv /tmp/.buildx-cache-api-new /tmp/.buildx-cache-api
+          rm -rf /tmp/.buildx-cache-web
+          mv /tmp/.buildx-cache-web-new /tmp/.buildx-cache-web
 
-    - name: Move cache for api
-      run: |
-        rm -rf /tmp/.buildx-cache-api
-        mv /tmp/.buildx-cache-api-new /tmp/.buildx-cache-api
-
-    - name: Move cache for api
-      run: |
-        rm -rf /tmp/.buildx-cache-web
-        mv /tmp/.buildx-cache-web-new /tmp/.buildx-cache-web
-
-    - name: Commit and push changes to deploy branch
-      run: |
-        git config --global user.name '${{ secrets.GIT_USERNAME }}'
-        git config --global user.email '${{ secrets.GIT_USEREMAIL }}'
-        git add .
-        git commit --no-verify -m "Update Docker images and ArgoCD versions"
-        git push origin deploy
+      - name: Commit and push changes to deploy branch
+        run: |
+          git config --global user.name '${{ secrets.GIT_USERNAME }}'
+          git config --global user.email '${{ secrets.GIT_USEREMAIL }}'
+          git add .
+          git commit --no-verify -m "Update Docker images and ArgoCD versions"
+          git push origin deploy
