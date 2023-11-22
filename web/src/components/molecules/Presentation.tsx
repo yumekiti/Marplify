@@ -22,10 +22,17 @@ const Presentation: FC<Props> = ({ content, style }) => {
   const { html, css } = marp.render(content);
 
   useEffect(() => {
-    mermaid.initialize({
-      startOnLoad: true,
-    });
-    mermaid.init(undefined, '.language-mermaid');
+    const runMermaid = async () => {
+      try {
+        await mermaid.run({
+          querySelector: 'code.language-mermaid',
+        });
+      } catch (error) {
+        console.error('Error running mermaid:', error);
+      }
+    };
+
+    runMermaid();
   }, [content]);
 
   return (
