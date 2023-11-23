@@ -25,5 +25,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: yarn install --frozen-lockfile
-    - run: yarn build
+    - name: Install dependencies and build
+      run: |
+        cd web
+        yarn install --frozen-lockfile
+        yarn build
