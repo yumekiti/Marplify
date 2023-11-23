@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
 import QRCode from 'qrcode.react';

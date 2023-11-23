@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Icon = () => (
   <svg width='50' height='50' viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <mask id='mask0_356_166' maskUnits='userSpaceOnUse' x='0' y='0' width='50' height='50'>

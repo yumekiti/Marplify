@@ -8,13 +8,19 @@ import LeftIcon from '../../assets/elements/ViewArea/LeftIcon';
 import RightIcon from '../../assets/elements/ViewArea/RightIcon';
 import themesData from '../../constants/themes';
 
+type Theme = {
+  name: string;
+  style: string;
+  img: string;
+};
+
 const Component: FC = () => {
   const dispatch = useDispatch();
   const { content } = useSelector((state: RootState) => state.content);
   const [isDisplayStyle, setIsDisplayStyle] = React.useState(false);
   const [page, setPage] = React.useState(0);
 
-  const splitThemes = (themes: any[]) => {
+  const splitThemes = (themes: Theme[]) => {
     const result = [];
     for (let i = 0; i < themes.length; i += 2) {
       result.push(themes.slice(i, i + 2));
@@ -44,7 +50,7 @@ const Component: FC = () => {
     }
   };
 
-  const handleSelectTheme = (theme: any) => {
+  const handleSelectTheme = (theme: Theme) => {
     dispatch(contentSlice.actions.setTheme(theme.style));
 
     const newContent = content.replace(/theme: .*\n/, `theme: ${theme.name}\n`);

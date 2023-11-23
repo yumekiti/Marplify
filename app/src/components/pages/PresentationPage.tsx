@@ -61,7 +61,7 @@ const PresentationPage: FC = () => {
   }, [totalPage]);
 
   const fullScreen = useCallback(() => {
-    const doc = document as any;
+    const doc = document;
     const elem = doc.documentElement;
     if (elem.requestFullscreen && !doc.fullscreenElement) {
       elem.requestFullscreen();

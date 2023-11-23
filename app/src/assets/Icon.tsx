@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Icon = () => (
   <svg width='40' height='34' viewBox='0 0 50 34' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path d='M33.3678 0V33.3678H0L33.3678 0Z' fill='url(#paint0_linear_72_39)' fillOpacity='0.8' />

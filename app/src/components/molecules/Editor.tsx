@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
@@ -46,7 +46,7 @@ const Component: FC = () => {
           keyCommand: 'copy',
           buttonProps: { 'aria-label': 'Copy', title: 'Copy' },
           icon: <CopyIcon />,
-          execute: (state, api) => {
+          execute: () => {
             navigator.clipboard.writeText(content);
           },
         },
@@ -55,7 +55,7 @@ const Component: FC = () => {
           keyCommand: 'help',
           buttonProps: { 'aria-label': 'Help', title: 'Help' },
           icon: <HelpIcon />,
-          execute: (state, api) => {
+          execute: () => {
             dispatch(contentSlice.actions.setContent(exampleText));
           },
         },
