@@ -13,7 +13,7 @@ export const markdownToMarp = (markdown: string): string => {
   const lines = markdown.split('\n');
   let result = `---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n`;
   let isFirstHeader = true;
-  let currentH1 = '';
+  let current = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -23,9 +23,16 @@ export const markdownToMarp = (markdown: string): string => {
       }
       result += `<!--\n_class: headline\n-->\n\n`;
       isFirstHeader = false;
-      currentH1 = line.substring(2);
+      current = line.substring(2);
     } else if (line.startsWith('## ')) {
-      result += `---\n\n<!--\n_class: general\n_header: ${currentH1}\n-->\n\n`;
+      if (!isFirstHeader) {
+        result += `---\n\n`;
+      }
+      result += `<!--\n_class: headline\n-->\n\n`;
+      isFirstHeader = false;
+      current = line.substring(2);
+    } else if (line.startsWith('### ')) {
+      result += `---\n\n<!--\n_class: general\n_header: ${current}\n-->\n\n`;
     }
     result += line + '\n';
   }

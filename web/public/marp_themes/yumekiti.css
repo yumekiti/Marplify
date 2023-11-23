@@ -1,0 +1,86 @@
+/* @theme yumekiti */
+@import "default";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap');
+
+section * {
+  color: #5f6c7b !important;
+  font-family: 'Noto Sans JP', sans-serif !important;
+}
+
+section {
+  background: #fff !important;
+
+  width: 100% !important;
+  height: 100% !important;
+}
+
+section h1 {
+  font-size: 200% !important;
+  color: #094067 !important;
+}
+
+section h2 {
+  font-size: 200% !important;
+  color: #094067 !important;
+}
+
+section h3 {
+  font-size: 200% !important;
+  color: #094067 !important;
+}
+
+section li {
+  font-size: 120% !important;
+}
+
+section li li {
+  font-size: 80% !important;
+}
+
+section ul:has(> li:nth-child(-n+3)) li {
+  font-size: 180% !important
+}
+
+section ul:has(> li:nth-child(n+4)) li  {
+  font-size: 120% !important;
+}
+
+section::after {
+  content: attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total) !important;
+  position: absolute !important;
+  bottom: 0.5rem !important;
+  right: 1rem !important;
+}
+
+/* headline */
+section.headline {
+  text-align: center !important;
+  background-image: url(https://raw.githubusercontent.com/yumekiti/marp_yumekiti_theme/main/assets/headline-backgorung.svg) !important;
+  background-size: cover !important;
+}
+
+/* general */
+section.general {
+  background-image: url(https://raw.githubusercontent.com/yumekiti/marp_yumekiti_theme/main/assets/general-backgorung.svg) !important;
+  background-size: cover !important;
+  padding-top: 15% !important;
+}
+
+section.general h3 {
+  position: absolute !important;
+  top: 10% !important;
+  left: 5% !important;
+}
+
+section strong {
+  color: #3da9fc !important;
+  font-size: 120% !important;
+}
+
+section em {
+  color: #EF4565 !important;
+}
+
+.cheating {
+  display: none !important;
+}
