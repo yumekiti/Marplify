@@ -5,8 +5,8 @@ import { contentSlice } from '../../features/content';
 import MDEditor, { commands } from '@uiw/react-md-editor';
 import { placeholder, exampleText } from '../../constants/examples';
 
-import CopyIcon from '../../assets/elements/EditArea/CopyIcon';
-import HelpIcon from '../../assets/elements/EditArea/HelpIcon';
+import copyIcon from '../../assets/elements/EditArea/copyIcon.svg';
+import helpIcon from '../../assets/elements/EditArea/helpIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const Component: FC = () => {
           name: 'copy',
           keyCommand: 'copy',
           buttonProps: { 'aria-label': 'Copy', title: 'Copy' },
-          icon: <CopyIcon />,
+          icon: <img src={copyIcon} alt='copy' className='w-3' />,
           execute: () => {
             navigator.clipboard.writeText(content);
           },
@@ -54,7 +54,7 @@ const Component: FC = () => {
           name: 'help',
           keyCommand: 'help',
           buttonProps: { 'aria-label': 'Help', title: 'Help' },
-          icon: <HelpIcon />,
+          icon: <img src={helpIcon} alt='help' className='w-3' />,
           execute: () => {
             dispatch(contentSlice.actions.setContent(exampleText));
           },

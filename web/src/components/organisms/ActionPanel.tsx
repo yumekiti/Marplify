@@ -5,8 +5,8 @@ import { RootState } from '../../store';
 import Card from '../templates/Card';
 import IconButtonWithLabel from '../atoms/IconButtonWithLabel';
 
-import PresentationIcon from '../../assets/elements/Tool/PresentationIcon';
-import ExportIcon from '../../assets/elements/Tool/ExportIcon';
+import presentationIcon from '../../assets/elements/Tool/presentationIcon.svg';
+import exportIcon from '../../assets/elements/Tool/exportIcon.svg';
 
 const Component: FC = () => {
   const { content } = useSelector((state: RootState) => state.content);
@@ -24,11 +24,11 @@ const Component: FC = () => {
     <div className='h-full flex gap-4'>
       <a href={`${window.location.origin}/presentation`} target='_blank' rel='noreferrer'>
         <Card>
-          <IconButtonWithLabel Icon={PresentationIcon} text='Presentation' tertiary />
+          <IconButtonWithLabel icon={presentationIcon} text='Presentation' tertiary />
         </Card>
       </a>
       <Card>
-        <IconButtonWithLabel Icon={ExportIcon} text='Export' onClick={handleExport} />
+        <IconButtonWithLabel icon={exportIcon} text='Export' onClick={handleExport} />
       </Card>
     </div>
   );

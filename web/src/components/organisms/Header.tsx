@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import Icon from '../../assets/Icon';
+import icon from '../../assets/icon.svg';
 
 const Component: FC = () => {
   return (
@@ -8,7 +8,7 @@ const Component: FC = () => {
       <div className='container mx-auto px-4 py-2'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center ml-2'>
-            <Icon />
+            <img src={icon} alt='icon' className='w-10' />
             <p className='text-xl font-bold ml-2 tracking-widest'>Marplify</p>
           </div>
           {/* <HighlightedIconButton

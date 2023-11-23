@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
 import QRCode from 'qrcode.react';
 
-import ExitIcon from '../../assets/elements/ExitIcon';
-import ShareIcon from '../../assets/elements/ShareArea/ShareIcon';
+import exitIcon from '../../assets/elements/exitIcon.svg';
+import shareIcon from '../../assets/elements/ShareArea/shareIcon.svg';
 
 const Component: FC = () => {
   const url = window.location.href; // 現在のURLを取得
@@ -33,11 +33,11 @@ const Component: FC = () => {
         <div className='h-full w-full bg-cardBackground rounded-lg px-4 py-2 flex flex-col'>
           <div className='h-1/4 flex justify-between items-start'>
             <div className='flex justify-start items-center gap-2 m-2'>
-              <ShareIcon />
+              <img src={shareIcon} alt='shareIcon' className='w-10' />
               <h1 className='text-headline text-2xl font-bold'>Share</h1>
             </div>
             <button className='p-2 text-icons-main rounded-md' onClick={handleCloseClick}>
-              <ExitIcon />
+              <img src={exitIcon} alt='exitIcon' className='w-6' />
             </button>
           </div>
           <div className='h-2/4 flex flex-col justify-center items-center'>

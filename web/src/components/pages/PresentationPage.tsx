@@ -6,9 +6,9 @@ import { contentSlice } from '../../features/content';
 import PresentationView from '../molecules/PresentationView';
 import { isMarpSlide, markdownToMarp } from '../../libs/markdown';
 
-import LeftIcon from '../../assets/elements/ViewArea/LeftIcon';
-import RightIcon from '../../assets/elements/ViewArea/RightIcon';
-import FullScreenIcon from '../../assets/elements/ViewArea/FullScreenIcon';
+import leftIcon from '../../assets/elements/ViewArea/leftIcon.svg';
+import rightIcon from '../../assets/elements/ViewArea/rightIcon.svg';
+import fullScreenIcon from '../../assets/elements/ViewArea/fullScreenIcon.svg';
 
 const generatePageStyle = (currentPage: number) => {
   const style = document.createElement('style');
@@ -94,21 +94,21 @@ const PresentationPage: FC = () => {
     <div className='relative w-full h-full flex justify-center items-center group'>
       <PresentationView content={content} style={theme} />
       {/* ページ */}
-      <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed'>
+      <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed group-active:bg-opacity-50 group-active:opacity-100'>
         <div className='flex justify-center items-center mx-auto'>
           <button className='active:opacity-50' onClick={handlePreviousPage} disabled={page === 1}>
-            <LeftIcon />
+            <img src={leftIcon} alt='left' className='w-8' />
           </button>
           <span className='text-justify mx-4'>
             {page}&nbsp;/&nbsp;{totalPage}
           </span>
           <button className='active:opacity-50' onClick={handleNextPage} disabled={page === totalPage}>
-            <RightIcon />
+            <img src={rightIcon} alt='right' className='w-8' />
           </button>
         </div>
         <div className='flex justify-center items-end mx-12'>
           <button className='active:opacity-50' onClick={fullScreen}>
-            <FullScreenIcon />
+            <img src={fullScreenIcon} alt='fullScreen' />
           </button>
         </div>
       </div>

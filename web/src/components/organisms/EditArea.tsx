@@ -9,7 +9,7 @@ import Loading from '../atoms/Loading';
 // import CopyAndHelp from '../molecules/CopyAndHelp';
 import Editor from '../molecules/Editor';
 
-import ConvertIcon from '../../assets/elements/EditArea/ConvertIcon';
+import convertIcon from '../../assets/elements/EditArea/convertIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Component: FC = () => {
       <Editor />
       <div className='absolute bottom-20 right-40 rounded-b-lg'>
         <div className='fixed'>
-          <HighlightedIconButton Icon={ConvertIcon} text='Convert' onClick={handleConvert} tertiary />
+          <HighlightedIconButton icon={convertIcon} text='Convert' onClick={handleConvert} tertiary />
         </div>
       </div>
     </div>
