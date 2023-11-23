@@ -94,7 +94,6 @@ const PresentationPage: FC = () => {
     <div className='relative w-full h-full flex justify-center items-center group'>
       <PresentationView content={content} style={theme} />
       {/* ページ */}
-      {/* アクティブじゃなくなったら delay-1000 */}
       <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed group-active:bg-opacity-50 group-active:opacity-100'>
         <div className='flex justify-center items-center mx-auto'>
           <button className='active:opacity-50' onClick={handlePreviousPage} disabled={page === 1}>
