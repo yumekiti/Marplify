@@ -5,9 +5,9 @@ import { viewSlice } from '../../features/view';
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
 import Card from '../templates/Card';
 
-import EditIcon from '../../assets/elements/Tool/EditIcon';
-import BothIcon from '../../assets/elements/Tool/BothIcon';
-import ViewIcon from '../../assets/elements/Tool/ViewIcon';
+import editIcon from '../../assets/elements/Tool/editIcon.svg';
+import bothIcon from '../../assets/elements/Tool/bothIcon.svg';
+import viewIcon from '../../assets/elements/Tool/viewIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -16,17 +16,17 @@ const Component: FC = () => {
     <Card>
       <div className='flex justify-between items-center gap-6 relative py-1'>
         <IconButtonWithTooltip
-          Icon={EditIcon}
+          icon={editIcon}
           text='Edit'
           onClick={() => dispatch(viewSlice.actions.setMode('edit'))}
         />
         <IconButtonWithTooltip
-          Icon={BothIcon}
+          icon={bothIcon}
           text='Edit & Preview'
           onClick={() => dispatch(viewSlice.actions.setMode('both'))}
         />
         <IconButtonWithTooltip
-          Icon={ViewIcon}
+          icon={viewIcon}
           text='Preview'
           onClick={() => dispatch(viewSlice.actions.setMode('view'))}
         />

@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { contentSlice } from '../../features/content';
 import { RootState } from '../../store';
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
-import StyleIcon from '../../assets/elements/ViewArea/StyleIcon';
-import LeftIcon from '../../assets/elements/ViewArea/LeftIcon';
-import RightIcon from '../../assets/elements/ViewArea/RightIcon';
+import styleIcon from '../../assets/elements/ViewArea/styleIcon.svg';
+import leftIcon from '../../assets/elements/ViewArea/leftIcon.svg';
+import rightIcon from '../../assets/elements/ViewArea/rightIcon.svg';
 import themesData from '../../constants/themes';
 
 type Theme = {
@@ -64,8 +64,8 @@ const Component: FC = () => {
       {isDisplayStyle && (
         <div className='fixed'>
           <div className='w-96 absolute bottom-2 -right-16 flex justify-center items-center bg-icons-stroke rounded'>
-            <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickLeft}>
-              <LeftIcon />
+            <button className='px-2 w-12 active:scale-75 duration-100' onClick={handleClickLeft}>
+              <img src={leftIcon} alt='left' />
             </button>
             <ul className='flex w-full py-4 space-x-4 justify-center items-center'>
               {themes[page].map((theme, index) => (
@@ -77,8 +77,8 @@ const Component: FC = () => {
                 </li>
               ))}
             </ul>
-            <button className='px-2 w-10 active:scale-75 duration-100' onClick={handleClickRight}>
-              <RightIcon />
+            <button className='px-2 w-12 active:scale-75 duration-100' onClick={handleClickRight}>
+              <img src={rightIcon} alt='right' />
             </button>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Component: FC = () => {
         className='fixed bg-cardBackground rounded-lg p-4 shadow-md flex justify-center items-center'
         onClick={handleClickStyle}
       >
-        <IconButtonWithTooltip Icon={StyleIcon} text='Style' onClick={() => {}} />
+        <IconButtonWithTooltip icon={styleIcon} text='Style' onClick={() => {}} />
       </div>
     </div>
   );
