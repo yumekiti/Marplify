@@ -7,8 +7,8 @@ import { exampleText } from '../../constants/examples';
 
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
 
-import CopyIcon from '../../assets/elements/EditArea/CopyIcon';
-import HelpIcon from '../../assets/elements/EditArea/HelpIcon';
+import copyIcon from '../../assets/elements/EditArea/copyIcon.svg';
+import helpIcon from '../../assets/elements/EditArea/helpIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -24,8 +24,8 @@ const Component: FC = () => {
 
   return (
     <div className='flex fixed gap-4'>
-      <IconButtonWithTooltip Icon={CopyIcon} text='Copy' onClick={handleCopy} />
-      <IconButtonWithTooltip Icon={HelpIcon} text='Help' onClick={handleHelp} />
+      <IconButtonWithTooltip icon={copyIcon} text='Copy' onClick={handleCopy} />
+      <IconButtonWithTooltip icon={helpIcon} text='Help' onClick={handleHelp} />
     </div>
   );
 };
