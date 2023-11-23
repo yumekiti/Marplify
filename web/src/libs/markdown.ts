@@ -33,6 +33,7 @@ export const markdownToMarp = (markdown: string): string => {
       current = line.substring(2);
     } else if (line.startsWith('### ')) {
       result += `---\n\n<!--\n_class: general\n_header: ${current}\n-->\n\n`;
+      isFirstHeader = false;
     }
     result += line + '\n';
   }

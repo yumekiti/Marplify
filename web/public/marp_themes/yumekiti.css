@@ -38,7 +38,11 @@ section li li {
 }
 
 section ul:has(> li:nth-child(-n+3)) li {
-  font-size: 180% !important
+  font-size: 48px !important
+}
+
+section ul ul:has(> li:nth-child(-n+3)) li {
+  font-size: 80% !important
 }
 
 section ul:has(> li:nth-child(n+4)) li  {
@@ -68,7 +72,7 @@ section.general {
 
 section.general h3 {
   position: absolute !important;
-  top: 10% !important;
+  top: 7% !important;
   left: 5% !important;
 }
 
