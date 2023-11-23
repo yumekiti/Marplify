@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
 
-import Presentation from '../molecules/Presentation';
+import PresentationView from '../molecules/PresentationView';
 import { isMarpSlide, markdownToMarp } from '../../libs/markdown';
 
 import LeftIcon from '../../assets/elements/ViewArea/LeftIcon';
@@ -92,7 +92,7 @@ const PresentationPage: FC = () => {
 
   return (
     <div className='relative w-full h-full flex justify-center items-center group'>
-      <Presentation content={content} style={theme} />
+      <PresentationView content={content} style={theme} />
       {/* ページ */}
       <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed'>
         <div className='flex justify-center items-center mx-auto'>
