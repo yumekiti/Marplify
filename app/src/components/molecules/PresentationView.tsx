@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Marp } from '@marp-team/marp-core';
 import marpStyle from '../../styles/marp.module.css';
+import mermaid from 'mermaid';
 
 type Props = {
   content: string;
