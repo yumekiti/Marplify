@@ -10,7 +10,7 @@ type UserUsecase interface {
 	FindById(id int) (*domain.User, error)
 	FindAll() (*domain.Users, error)
 	Update(user *domain.User) (*domain.User, error)
-	Delete(id int) (int, error)
+	Delete(user *domain.User) (*domain.User, error)
 }
 
 type userUsecase struct {
@@ -37,6 +37,6 @@ func (uu *userUsecase) Update(user *domain.User) (*domain.User, error) {
 	return uu.ur.Update(user)
 }
 
-func (uu *userUsecase) Delete(id int) (int, error) {
-	return uu.ur.Delete(id)
+func (uu *userUsecase) Delete(user *domain.User) (*domain.User, error) {
+	return uu.ur.Delete(user)
 }

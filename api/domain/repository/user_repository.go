@@ -7,5 +7,5 @@ type UserRepository interface {
 	FindById(id int) (*domain.User, error)
 	FindAll() (*domain.Users, error)
 	Update(user *domain.User) (*domain.User, error)
-	Delete(id int) (int, error)
+	Delete(user *domain.User) (*domain.User, error)
 }

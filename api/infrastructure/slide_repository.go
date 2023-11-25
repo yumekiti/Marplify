@@ -45,9 +45,9 @@ func (sr *slideRepository) Update(slide *domain.Slide) (*domain.Slide, error) {
 	return slide, nil
 }
 
-func (sr *slideRepository) Delete(id int) (int, error) {
-	if err := sr.db.Delete(&domain.Slide{}, id).Error; err != nil {
-		return 0, err
+func (sr *slideRepository) Delete(slide *domain.Slide) (*domain.Slide, error) {
+	if err := sr.db.Delete(&slide).Error; err != nil {
+		return nil, err
 	}
-	return id, nil
+	return slide, nil
 }

@@ -7,5 +7,5 @@ type SlideRepository interface {
 	FindById(id int) (*domain.Slide, error)
 	FindAll() (*domain.Slides, error)
 	Update(slide *domain.Slide) (*domain.Slide, error)
-	Delete(id int) (int, error)
+	Delete(slide *domain.Slide) (*domain.Slide, error)
 }

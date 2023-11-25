@@ -10,7 +10,7 @@ type SlideUsecase interface {
 	FindById(id int) (*domain.Slide, error)
 	FindAll() (*domain.Slides, error)
 	Update(slide *domain.Slide) (*domain.Slide, error)
-	Delete(id int) (int, error)
+	Delete(slide *domain.Slide) (*domain.Slide, error)
 }
 
 type slideUsecase struct {
@@ -37,6 +37,6 @@ func (su *slideUsecase) Update(slide *domain.Slide) (*domain.Slide, error) {
 	return su.sr.Update(slide)
 }
 
-func (su *slideUsecase) Delete(id int) (int, error) {
-	return su.sr.Delete(id)
+func (su *slideUsecase) Delete(slide *domain.Slide) (*domain.Slide, error) {
+	return su.sr.Delete(slide)
 }

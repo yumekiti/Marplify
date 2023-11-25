@@ -25,6 +25,19 @@ func NewSlideHandler(su usecase.SlideUsecase) SlideHandler {
 	return &slideHandler{su}
 }
 
+type requestSlide struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type responseSlide struct {
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"created_at"`
+	UpdateAt  string `json:"update_at"`
+}
+
 func (sh *slideHandler) FindAll(c echo.Context) error {
 	slides, err := sh.su.FindAll()
 	if err != nil {
@@ -43,15 +56,15 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 }
 
 func (sh *slideHandler) Store(c echo.Context) error {
-	slide := &domain.Slide{}
-	if err := c.Bind(slide); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+	var slide domain.Slide
+	if err := c.Bind(&slide); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	slide, err := sh.su.Store(slide)
+	s, err := sh.su.Store(&slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, slide)
+	return c.JSON(http.StatusOK, s)
 }
 
 func (sh *slideHandler) Update(c echo.Context) error {
@@ -63,18 +76,22 @@ func (sh *slideHandler) Update(c echo.Context) error {
 	if err := c.Bind(slide); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	slide, err = sh.su.Update(slide)
+	s, err := sh.su.Update(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, slide)
+	return c.JSON(http.StatusOK, s)
 }
 
 func (sh *slideHandler) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	_, err := sh.su.Delete(id)
+	slide, err := sh.su.FindById(id)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, id)
+	s, err := sh.su.Delete(slide)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, s)
 }

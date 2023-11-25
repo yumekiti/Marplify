@@ -45,9 +45,9 @@ func (ur *userRepository) Update(user *domain.User) (*domain.User, error) {
 	return user, nil
 }
 
-func (ur *userRepository) Delete(id int) (int, error) {
-	if err := ur.db.Delete(&domain.User{}, id).Error; err != nil {
-		return 0, err
+func (ur *userRepository) Delete(user *domain.User) (*domain.User, error) {
+	if err := ur.db.Delete(&user).Error; err != nil {
+		return nil, err
 	}
-	return id, nil
+	return user, nil
 }
