@@ -14,17 +14,12 @@ services:
         yarn dev --host 0.0.0.0
       "
   api:
-    image: node:18.18.2-alpine
-    working_dir: /api
+    build:
+      context: ./api
     volumes:
-      - ./api:/api
+      - ./api:/go/src/app
     ports:
-      - '8080:3000'
-    command: >
-      sh -c "
-        yarn build ; yarn &&
-        yarn build ; yarn start
-      "
+      - 8080:8080
     depends_on:
       - db
   db:
