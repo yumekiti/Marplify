@@ -5,7 +5,7 @@ import (
 )
 
 type Slide struct {
-	ID        int    `gorm:"primary_key"`
+	ID        int    `gorm:"primary_key,auto_increment"`
 	Title     string `gorm:"type:varchar(100)"`
 	Content   string `gorm:"type:varchar(5000)"`
 	UserID    string

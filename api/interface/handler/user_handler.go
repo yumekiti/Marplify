@@ -26,6 +26,7 @@ func NewUserHandler(uu usecase.UserUsecase) UserHandler {
 }
 
 type requestUser struct {
+	UserID   string `json:"user_id"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -45,7 +46,20 @@ func (uh *userHandler) FindAll(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, users)
+
+	res := make([]*responseUser, len(*users))
+	for i, user := range *users {
+		res[i] = &responseUser{
+			ID:        user.ID,
+			UserID:    user.UserID,
+			Name:      user.Name,
+			Email:     user.Email,
+			CreatedAt: user.CreatedAt.String(),
+			UpdateAt:  user.UpdateAt.String(),
+		}
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (uh *userHandler) FindById(c echo.Context) error {
@@ -54,35 +68,77 @@ func (uh *userHandler) FindById(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, user)
+
+	res := &responseUser{
+		ID:        user.ID,
+		UserID:    user.UserID,
+		Name:      user.Name,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt.String(),
+		UpdateAt:  user.UpdateAt.String(),
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (uh *userHandler) Store(c echo.Context) error {
-	var user domain.User
-	if err := c.Bind(&user); err != nil {
+	req := new(requestUser)
+	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	u, err := uh.uu.Store(&user)
+
+	user := &domain.User{
+		UserID:   req.UserID,
+		Name:     req.Name,
+		Email:    req.Email,
+		Password: req.Password,
+	}
+	user, err := uh.uu.Store(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, u)
+
+	res := &responseUser{
+		ID:        user.ID,
+		UserID:    user.UserID,
+		Name:      user.Name,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt.String(),
+		UpdateAt:  user.UpdateAt.String(),
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (uh *userHandler) Update(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	user, err := uh.uu.FindById(id)
+	req := new(requestUser)
+	if err := c.Bind(req); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	user := &domain.User{
+		ID:       id,
+		UserID:   req.UserID,
+		Name:     req.Name,
+		Email:    req.Email,
+		Password: req.Password,
+	}
+	user, err := uh.uu.Update(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	if err := c.Bind(user); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+
+	res := &responseUser{
+		ID:        user.ID,
+		UserID:    user.UserID,
+		Name:      user.Name,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt.String(),
+		UpdateAt:  user.UpdateAt.String(),
 	}
-	u, err := uh.uu.Update(user)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return c.JSON(http.StatusOK, u)
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (uh *userHandler) Delete(c echo.Context) error {
@@ -91,9 +147,20 @@ func (uh *userHandler) Delete(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	u, err := uh.uu.Delete(user)
+
+	user, err = uh.uu.Delete(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, u)
+
+	res := &responseUser{
+		ID:        user.ID,
+		UserID:    user.UserID,
+		Name:      user.Name,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt.String(),
+		UpdateAt:  user.UpdateAt.String(),
+	}
+
+	return c.JSON(http.StatusOK, res)
 }

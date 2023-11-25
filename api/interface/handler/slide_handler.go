@@ -43,7 +43,19 @@ func (sh *slideHandler) FindAll(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, slides)
+
+	res := make([]*responseSlide, len(*slides))
+	for i, slide := range *slides {
+		res[i] = &responseSlide{
+			ID:        slide.ID,
+			Title:     slide.Title,
+			Content:   slide.Content,
+			CreatedAt: slide.CreatedAt.String(),
+			UpdateAt:  slide.UpdateAt.String(),
+		}
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) FindById(c echo.Context) error {
@@ -52,46 +64,92 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, slide)
+
+	res := &responseSlide{
+		ID:        slide.ID,
+		Title:     slide.Title,
+		Content:   slide.Content,
+		CreatedAt: slide.CreatedAt.String(),
+		UpdateAt:  slide.UpdateAt.String(),
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Store(c echo.Context) error {
-	var slide domain.Slide
-	if err := c.Bind(&slide); err != nil {
+	req := new(requestSlide)
+	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	s, err := sh.su.Store(&slide)
+
+	slide := &domain.Slide{
+		Title:   req.Title,
+		Content: req.Content,
+	}
+
+	slide, err := sh.su.Store(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	return c.JSON(http.StatusOK, s)
+
+	res := &responseSlide{
+		ID:        slide.ID,
+		Title:     slide.Title,
+		Content:   slide.Content,
+		CreatedAt: slide.CreatedAt.String(),
+		UpdateAt:  slide.UpdateAt.String(),
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Update(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	slide, err := sh.su.FindById(id)
+	req := new(requestSlide)
+	if err := c.Bind(req); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	slide := &domain.Slide{
+		ID:      id,
+		Title:   req.Title,
+		Content: req.Content,
+	}
+
+	slide, err := sh.su.Update(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	if err := c.Bind(slide); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+
+	res := &responseSlide{
+		ID:        slide.ID,
+		Title:     slide.Title,
+		Content:   slide.Content,
+		CreatedAt: slide.CreatedAt.String(),
+		UpdateAt:  slide.UpdateAt.String(),
 	}
-	s, err := sh.su.Update(slide)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-	return c.JSON(http.StatusOK, s)
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	slide, err := sh.su.FindById(id)
+	slide := &domain.Slide{
+		ID: id,
+	}
+
+	slide, err := sh.su.Delete(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	s, err := sh.su.Delete(slide)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+
+	res := &responseSlide{
+		ID:        slide.ID,
+		Title:     slide.Title,
+		Content:   slide.Content,
+		CreatedAt: slide.CreatedAt.String(),
+		UpdateAt:  slide.UpdateAt.String(),
 	}
-	return c.JSON(http.StatusOK, s)
+
+	return c.JSON(http.StatusOK, res)
 }
