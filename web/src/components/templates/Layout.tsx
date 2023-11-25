@@ -1,9 +1,6 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-
-import Share from '../organisms/Share';
 import Header from '../organisms/Header';
+import Sidebar from '../organisms/Sidebar';
 
 import background from '../../assets/background.png';
 
@@ -12,8 +9,6 @@ type Props = {
 };
 
 const Layout: FC<Props> = ({ children }) => {
-  const { modal } = useSelector((state: RootState) => state.view);
-
   return (
     <div className='App h-screen w-full flex flex-col'>
       <img
@@ -21,9 +16,13 @@ const Layout: FC<Props> = ({ children }) => {
         src={background}
         alt='background'
       />
-      {modal && <Share />}
-      <Header />
-      <main className='flex-grow overflow-y-auto'>{children}</main>
+      <div className='flex flex-grow overflow-y-auto'>
+        <Sidebar />
+        <div className='flex flex-col w-full'>
+          <Header />
+          <main className='flex-grow overflow-y-auto'>{children}</main>
+        </div>
+      </div>
     </div>
   );
 };
