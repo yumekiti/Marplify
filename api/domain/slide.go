@@ -9,7 +9,7 @@ type Slide struct {
 	Title     string
 	Content   string
 	UserID    string
-	User      User   `gorm:"foreignkey:UserID"`
+	User      User `gorm:"foreignkey:UserID"`
 	CreatedAt time.Time
 	UpdateAt  time.Time
 }
