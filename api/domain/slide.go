@@ -5,9 +5,9 @@ import (
 )
 
 type Slide struct {
-	ID        int
-	Title     string
-	Content   string
+	ID        int    `gorm:"primary_key"`
+	Title     string `gorm:"type:varchar(100)"`
+	Content   string `gorm:"type:varchar(5000)"`
 	UserID    string
 	User      User `gorm:"foreignkey:UserID"`
 	CreatedAt time.Time
