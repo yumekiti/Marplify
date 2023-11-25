@@ -7,52 +7,47 @@ import (
 	"api/domain/repository"
 )
 
-type SlideRepository struct {
-	Conn *gorm.DB
+type slideRepository struct {
+	db *gorm.DB
 }
 
-func NewSlideRepository(conn *gorm.DB) repository.SlideRepository {
-	return &SlideRepository{Conn: conn}
+func NewSlideRepository(db *gorm.DB) repository.SlideRepository {
+	return &slideRepository{db}
 }
 
-func (sr *SlideRepository) Store(s domain.Slide) (int, error) {
-	if err := sr.Conn.Create(&s).Error; err != nil {
-		return 0, err
-	}
-
-	return s.ID, nil
-}
-
-func (sr *SlideRepository) FindById(id int) (domain.Slide, error) {
-	var s domain.Slide
-	if err := sr.Conn.First(&s, id).Error; err != nil {
-		return s, err
-	}
-
-	return s, nil
-}
-
-func (sr *SlideRepository) FindAll() (domain.Slides, error) {
-	var ss domain.Slides
-	if err := sr.Conn.Find(&ss).Error; err != nil {
+func (sr *slideRepository) Store(slide *domain.Slide) (*domain.Slide, error) {
+	if err := sr.db.Create(&slide).Error; err != nil {
 		return nil, err
 	}
-
-	return ss, nil
+	return slide, nil
 }
 
-func (sr *SlideRepository) Update(s domain.Slide) (int, error) {
-	if err := sr.Conn.Save(&s).Error; err != nil {
-		return 0, err
+func (sr *slideRepository) FindById(id int) (*domain.Slide, error) {
+	var slide domain.Slide
+	if err := sr.db.First(&slide, id).Error; err != nil {
+		return nil, err
 	}
-
-	return s.ID, nil
+	return &slide, nil
 }
 
-func (sr *SlideRepository) Delete(id int) (int, error) {
-	if err := sr.Conn.Delete(&domain.Slide{}, id).Error; err != nil {
+func (sr *slideRepository) FindAll() (*domain.Slides, error) {
+	var slides domain.Slides
+	if err := sr.db.Find(&slides).Error; err != nil {
+		return nil, err
+	}
+	return &slides, nil
+}
+
+func (sr *slideRepository) Update(slide *domain.Slide) (*domain.Slide, error) {
+	if err := sr.db.Save(&slide).Error; err != nil {
+		return nil, err
+	}
+	return slide, nil
+}
+
+func (sr *slideRepository) Delete(id int) (int, error) {
+	if err := sr.db.Delete(&domain.Slide{}, id).Error; err != nil {
 		return 0, err
 	}
-
 	return id, nil
 }

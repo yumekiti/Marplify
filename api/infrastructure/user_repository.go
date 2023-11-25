@@ -7,52 +7,47 @@ import (
 	"api/domain/repository"
 )
 
-type UserRepository struct {
-	Conn *gorm.DB
+type userRepository struct {
+	db *gorm.DB
 }
 
-func NewUserRepository(conn *gorm.DB) repository.UserRepository {
-	return &UserRepository{Conn: conn}
+func NewUserRepository(db *gorm.DB) repository.UserRepository {
+	return &userRepository{db}
 }
 
-func (ur *UserRepository) Store(u domain.User) (int, error) {
-	if err := ur.Conn.Create(&u).Error; err != nil {
-		return 0, err
-	}
-
-	return u.ID, nil
-}
-
-func (ur *UserRepository) FindById(id int) (domain.User, error) {
-	var u domain.User
-	if err := ur.Conn.First(&u, id).Error; err != nil {
-		return u, err
-	}
-
-	return u, nil
-}
-
-func (ur *UserRepository) FindAll() (domain.Users, error) {
-	var us domain.Users
-	if err := ur.Conn.Find(&us).Error; err != nil {
+func (ur *userRepository) Store(user *domain.User) (*domain.User, error) {
+	if err := ur.db.Create(&user).Error; err != nil {
 		return nil, err
 	}
-
-	return us, nil
+	return user, nil
 }
 
-func (ur *UserRepository) Update(u domain.User) (int, error) {
-	if err := ur.Conn.Save(&u).Error; err != nil {
-		return 0, err
+func (ur *userRepository) FindById(id int) (*domain.User, error) {
+	var user domain.User
+	if err := ur.db.First(&user, id).Error; err != nil {
+		return nil, err
 	}
-
-	return u.ID, nil
+	return &user, nil
 }
 
-func (ur *UserRepository) Delete(id int) (int, error) {
-	if err := ur.Conn.Delete(&domain.User{}, id).Error; err != nil {
+func (ur *userRepository) FindAll() (*domain.Users, error) {
+	var users domain.Users
+	if err := ur.db.Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return &users, nil
+}
+
+func (ur *userRepository) Update(user *domain.User) (*domain.User, error) {
+	if err := ur.db.Save(&user).Error; err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (ur *userRepository) Delete(id int) (int, error) {
+	if err := ur.db.Delete(&domain.User{}, id).Error; err != nil {
 		return 0, err
 	}
-
 	return id, nil
 }

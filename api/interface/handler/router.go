@@ -21,32 +21,34 @@ func InitRouting(
 	uh UserHandler,
 	sh SlideHandler,
 ) {
-	e.POST("/signin", func(c echo.Context) error {
+	api := e.Group("/api")
+
+	api.POST("/signin", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{
 			"message": "signin",
 		})
 	})
 
-	e.POST("/signup", func(c echo.Context) error {
+	api.POST("/signup", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{
 			"message": "signup",
 		})
 	})
 
-	e.GET("/users", uh.FindAll)
-	e.GET("/users/:id", uh.FindById)
-	e.POST("/users", uh.Store)
-	e.PUT("/users/:id", uh.Update)
-	e.DELETE("/users/:id", uh.Delete)
+	api.GET("/users", uh.FindAll)
+	api.GET("/users/:id", uh.FindById)
+	api.POST("/users", uh.Store)
+	api.PUT("/users/:id", uh.Update)
+	api.DELETE("/users/:id", uh.Delete)
 
-	e.GET("/slides", sh.FindAll)
-	e.GET("/slides/:id", sh.FindById)
-	e.POST("/slides", sh.Store)
-	e.PUT("/slides/:id", sh.Update)
-	e.DELETE("/slides/:id", sh.Delete)
+	api.GET("/slides", sh.FindAll)
+	api.GET("/slides/:id", sh.FindById)
+	api.POST("/slides", sh.Store)
+	api.PUT("/slides/:id", sh.Update)
+	api.DELETE("/slides/:id", sh.Delete)
 
 	// 以下のルーティングはJWT認証が必要
-	r := e.Group("")
+	r := api.Group("")
 	r.Use(middleware.JWTWithConfig(middleware.JWTConfig{
 		Claims:     &JwtCustomClaims{},
 		SigningKey: []byte("secret"),

@@ -5,10 +5,11 @@ import (
 )
 
 type Slide struct {
-	ID        string
+	ID        int
 	Title     string
-	Cotent    string
-	User      User
+	Content   string
+	UserID    string
+	User      User   `gorm:"foreignkey:UserID"`
 	CreatedAt time.Time
 	UpdateAt  time.Time
 }

@@ -5,38 +5,38 @@ import (
 	"api/domain/repository"
 )
 
-type SlideUsecase interface {
-	Store(domain.Slide) (int, error)
-	FindById(int) (domain.Slide, error)
-	FindAll() (domain.Slides, error)
-	Update(domain.Slide) (int, error)
-	Delete(int) (int, error)
+type UserUsecase interface {
+	Store(user *domain.User) (*domain.User, error)
+	FindById(id int) (*domain.User, error)
+	FindAll() (*domain.Users, error)
+	Update(user *domain.User) (*domain.User, error)
+	Delete(id int) (int, error)
 }
 
-type slideUsecase struct {
-	sr repository.SlideRepository
+type userUsecase struct {
+	ur repository.UserRepository
 }
 
-func NewSlideUsecase(sr repository.SlideRepository) SlideUsecase {
-	return &slideUsecase{sr}
+func NewUserUsecase(ur repository.UserRepository) UserUsecase {
+	return &userUsecase{ur}
 }
 
-func (su *slideUsecase) Store(s domain.Slide) (int, error) {
-	return su.sr.Store(s)
+func (uu *userUsecase) Store(user *domain.User) (*domain.User, error) {
+	return uu.ur.Store(user)
 }
 
-func (su *slideUsecase) FindById(id int) (domain.Slide, error) {
-	return su.sr.FindById(id)
+func (uu *userUsecase) FindById(id int) (*domain.User, error) {
+	return uu.ur.FindById(id)
 }
 
-func (su *slideUsecase) FindAll() (domain.Slides, error) {
-	return su.sr.FindAll()
+func (uu *userUsecase) FindAll() (*domain.Users, error) {
+	return uu.ur.FindAll()
 }
 
-func (su *slideUsecase) Update(s domain.Slide) (int, error) {
-	return su.sr.Update(s)
+func (uu *userUsecase) Update(user *domain.User) (*domain.User, error) {
+	return uu.ur.Update(user)
 }
 
-func (su *slideUsecase) Delete(id int) (int, error) {
-	return su.sr.Delete(id)
+func (uu *userUsecase) Delete(id int) (int, error) {
+	return uu.ur.Delete(id)
 }
