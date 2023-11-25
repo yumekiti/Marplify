@@ -85,4 +85,4 @@ jobs:
           git config --global user.email '${{ secrets.GIT_USEREMAIL }}'
           git add .
           git commit --no-verify -m "Update Docker images and ArgoCD versions"
-          git push origin deploy
+          git push --force origin deploy
