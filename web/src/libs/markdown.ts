@@ -12,29 +12,24 @@ export const isMarpSlide = (markdown: string): boolean => {
 export const markdownToMarp = (markdown: string): string => {
   const lines = markdown.split('\n');
   let result = `---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n`;
-  let isFirstHeader = true;
+  let isFirst = true;
   let current = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (line.startsWith('# ')) {
-      if (!isFirstHeader) {
-        result += `---\n\n`;
-      }
+      if (!isFirst) result += `---\n\n`;
       result += `<!--\n_class: headline\n-->\n\n`;
-      isFirstHeader = false;
       current = line.substring(2);
     } else if (line.startsWith('## ')) {
-      if (!isFirstHeader) {
-        result += `---\n\n`;
-      }
+      if (!isFirst) result += `---\n\n`;
       result += `<!--\n_class: headline\n-->\n\n`;
-      isFirstHeader = false;
-      current = line.substring(2);
+      current = line.substring(3);
     } else if (line.startsWith('### ')) {
-      result += `---\n\n<!--\n_class: general\n_header: ${current}\n-->\n\n`;
-      isFirstHeader = false;
+      if (!isFirst) result += `---\n\n`;
+      result += `<!--\n_class: general\n_header: ${current}\n-->\n\n`;
     }
+    isFirst = false;
     result += line + '\n';
   }
 
