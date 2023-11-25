@@ -1,4 +1,5 @@
 import React from 'react';
+import plusIcon from '../../assets/elements/Tool/plusIcon.svg';
 
 const Component = () => {
   return (
@@ -10,13 +11,7 @@ const Component = () => {
             // onClick={handleCreate}
             className='w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none'
           >
-            <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5 mr-2' viewBox='0 0 20 20' fill='currentColor'>
-              <path
-                fillRule='evenodd'
-                d='M17 9h-6V3a1 1 0 00-2 0v6H3a1 1 0 000 2h6v6a1 1 0 102 0v-6h6a1 1 0 100-2z'
-                clipRule='evenodd'
-              />
-            </svg>
+            <img src={plusIcon} alt='plus' className='w-4 h-4 mr-2 object-contain' />
             作成
           </button>
         </li>
