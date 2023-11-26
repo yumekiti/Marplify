@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
+
 	"api/domain"
 	"api/usecase"
-	"github.com/labstack/echo/v4"
 )
 
 type SlideHandler interface {
@@ -31,11 +33,11 @@ type requestSlide struct {
 }
 
 type responseSlide struct {
-	ID        int    `json:"id"`
+	ID        uint   `json:"id"`
 	Title     string `json:"title"`
 	Content   string `json:"content"`
 	CreatedAt string `json:"created_at"`
-	UpdateAt  string `json:"update_at"`
+	UpdatedAt string `json:"update_at"`
 }
 
 func (sh *slideHandler) FindAll(c echo.Context) error {
@@ -51,10 +53,9 @@ func (sh *slideHandler) FindAll(c echo.Context) error {
 			Title:     slide.Title,
 			Content:   slide.Content,
 			CreatedAt: slide.CreatedAt.String(),
-			UpdateAt:  slide.UpdateAt.String(),
+			UpdatedAt: slide.UpdatedAt.String(),
 		}
 	}
-
 	return c.JSON(http.StatusOK, res)
 }
 
@@ -62,6 +63,9 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	slide, err := sh.su.FindById(id)
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
@@ -70,23 +74,21 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 		Title:     slide.Title,
 		Content:   slide.Content,
 		CreatedAt: slide.CreatedAt.String(),
-		UpdateAt:  slide.UpdateAt.String(),
+		UpdatedAt: slide.UpdatedAt.String(),
 	}
-
 	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Store(c echo.Context) error {
 	req := new(requestSlide)
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	slide := &domain.Slide{
 		Title:   req.Title,
 		Content: req.Content,
 	}
-
 	slide, err := sh.su.Store(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -97,9 +99,8 @@ func (sh *slideHandler) Store(c echo.Context) error {
 		Title:     slide.Title,
 		Content:   slide.Content,
 		CreatedAt: slide.CreatedAt.String(),
-		UpdateAt:  slide.UpdateAt.String(),
+		UpdatedAt: slide.UpdatedAt.String(),
 	}
-
 	return c.JSON(http.StatusOK, res)
 }
 
@@ -107,15 +108,14 @@ func (sh *slideHandler) Update(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	req := new(requestSlide)
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	slide := &domain.Slide{
-		ID:      id,
+		Model:   gorm.Model{ID: uint(id)},
 		Title:   req.Title,
 		Content: req.Content,
 	}
-
 	slide, err := sh.su.Update(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -126,18 +126,16 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		Title:     slide.Title,
 		Content:   slide.Content,
 		CreatedAt: slide.CreatedAt.String(),
-		UpdateAt:  slide.UpdateAt.String(),
+		UpdatedAt: slide.UpdatedAt.String(),
 	}
-
 	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	slide := &domain.Slide{
-		ID: id,
+		Model: gorm.Model{ID: uint(id)},
 	}
-
 	slide, err := sh.su.Delete(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -148,8 +146,7 @@ func (sh *slideHandler) Delete(c echo.Context) error {
 		Title:     slide.Title,
 		Content:   slide.Content,
 		CreatedAt: slide.CreatedAt.String(),
-		UpdateAt:  slide.UpdateAt.String(),
+		UpdatedAt: slide.UpdatedAt.String(),
 	}
-
 	return c.JSON(http.StatusOK, res)
 }

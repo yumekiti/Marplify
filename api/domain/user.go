@@ -1,15 +1,14 @@
 package domain
 
-import "time"
+import "gorm.io/gorm"
 
 type User struct {
-	ID        int    `gorm:"primary_key,auto_increment"`
-	Email     string `gorm:"unique,type:varchar(100)"`
-	UserID    string `gorm:"unique"`
-	Name      string `gorm:"type:varchar(100)"`
-	Password  string `gorm:"type:varchar(100)"`
-	CreatedAt time.Time
-	UpdateAt  time.Time
+	gorm.Model
+	Email    string   `gorm:"unique,type:varchar(100)"`
+	UserID   string   `gorm:"unique"`
+	Name     string   `gorm:"type:varchar(100)"`
+	Password string   `gorm:"type:varchar(100)"`
+	Slides   []*Slide `gorm:"foreignKey:UserID"`
 }
 
 type Users []*User

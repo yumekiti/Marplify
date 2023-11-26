@@ -1,17 +1,12 @@
 package domain
 
-import (
-	"time"
-)
+import "gorm.io/gorm"
 
 type Slide struct {
-	ID        int    `gorm:"primary_key,auto_increment"`
-	Title     string `gorm:"type:varchar(100)"`
-	Content   string `gorm:"type:varchar(5000)"`
-	UserID    string
-	User      User `gorm:"foreignkey:UserID"`
-	CreatedAt time.Time
-	UpdateAt  time.Time
+	gorm.Model
+	Title   string `gorm:"type:varchar(100)"`
+	Content string `gorm:"type:varchar(5000)"`
+	UserID  uint
 }
 
 type Slides []*Slide

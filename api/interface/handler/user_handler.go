@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
+
 	"api/domain"
 	"api/usecase"
-	"github.com/labstack/echo/v4"
 )
 
 type UserHandler interface {
@@ -33,12 +35,12 @@ type requestUser struct {
 }
 
 type responseUser struct {
-	ID        int    `json:"id"`
+	ID        uint   `json:"id"`
 	UserID    string `json:"user_id"`
 	Name      string `json:"name"`
 	Email     string `json:"email"`
 	CreatedAt string `json:"created_at"`
-	UpdateAt  string `json:"update_at"`
+	UpdatedAt string `json:"update_at"`
 }
 
 func (uh *userHandler) FindAll(c echo.Context) error {
@@ -55,7 +57,7 @@ func (uh *userHandler) FindAll(c echo.Context) error {
 			Name:      user.Name,
 			Email:     user.Email,
 			CreatedAt: user.CreatedAt.String(),
-			UpdateAt:  user.UpdateAt.String(),
+			UpdatedAt: user.UpdatedAt.String(),
 		}
 	}
 
@@ -75,7 +77,7 @@ func (uh *userHandler) FindById(c echo.Context) error {
 		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
-		UpdateAt:  user.UpdateAt.String(),
+		UpdatedAt: user.UpdatedAt.String(),
 	}
 
 	return c.JSON(http.StatusOK, res)
@@ -104,7 +106,7 @@ func (uh *userHandler) Store(c echo.Context) error {
 		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
-		UpdateAt:  user.UpdateAt.String(),
+		UpdatedAt: user.UpdatedAt.String(),
 	}
 
 	return c.JSON(http.StatusOK, res)
@@ -118,7 +120,7 @@ func (uh *userHandler) Update(c echo.Context) error {
 	}
 
 	user := &domain.User{
-		ID:       id,
+		Model:    gorm.Model{ID: uint(id)},
 		UserID:   req.UserID,
 		Name:     req.Name,
 		Email:    req.Email,
@@ -135,7 +137,7 @@ func (uh *userHandler) Update(c echo.Context) error {
 		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
-		UpdateAt:  user.UpdateAt.String(),
+		UpdatedAt: user.UpdatedAt.String(),
 	}
 
 	return c.JSON(http.StatusOK, res)
@@ -159,7 +161,7 @@ func (uh *userHandler) Delete(c echo.Context) error {
 		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
-		UpdateAt:  user.UpdateAt.String(),
+		UpdatedAt: user.UpdatedAt.String(),
 	}
 
 	return c.JSON(http.StatusOK, res)
