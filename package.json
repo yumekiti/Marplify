@@ -1,7 +1,7 @@
 {
   "scripts": {
     "prepare": "husky install",
-    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,md}\" --ignore-path ./.prettierignore"
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,md,yml,yaml,css,html}\" --ignore-path ./.prettierignore"
   },
   "devDependencies": {
     "husky": "^8.0.0",

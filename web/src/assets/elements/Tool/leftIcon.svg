@@ -1,0 +1,38 @@
+<svg
+  width="50"
+  height="50"
+  viewBox="0 0 50 50"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <mask
+    id="mask0_503_8"
+    style="mask-type: alpha"
+    maskUnits="userSpaceOnUse"
+    x="0"
+    y="0"
+    width="50"
+    height="50"
+  >
+    <rect
+      x="50"
+      y="50"
+      width="50"
+      height="50"
+      transform="rotate(-180 50 50)"
+      fill="#D9D9D9"
+    />
+  </mask>
+  <g mask="url(#mask0_503_8)">
+    <mask id="path-2-inside-1_503_8" fill="white">
+      <path
+        d="M33.6881 47L11.3762 24.6881L33.6881 2.37621L56 24.6881L33.6881 47Z"
+      />
+    </mask>
+    <path
+      d="M11.3762 24.6881L4.30515 17.617L-2.76592 24.6881L4.30515 31.7592L11.3762 24.6881ZM40.7592 39.9289L18.4473 17.617L4.30515 31.7592L26.617 54.0711L40.7592 39.9289ZM18.4473 31.7592L40.7592 9.44728L26.617 -4.69486L4.30515 17.617L18.4473 31.7592Z"
+      fill="#094067"
+      mask="url(#path-2-inside-1_503_8)"
+    />
+  </g>
+</svg>
