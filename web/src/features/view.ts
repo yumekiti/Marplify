@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export type View = {
   mode: string;
   modal: boolean;
+  sidebar: boolean;
 };
 
 export type ViewState = View;
@@ -10,6 +11,7 @@ export type ViewState = View;
 const initialState: ViewState = {
   mode: 'both',
   modal: false,
+  sidebar: true,
 };
 
 export const viewSlice = createSlice({
@@ -21,6 +23,9 @@ export const viewSlice = createSlice({
     },
     toggleModal: (state) => {
       state.modal = !state.modal;
+    },
+    toggleSidebar: (state) => {
+      state.sidebar = !state.sidebar;
     },
   },
 });
