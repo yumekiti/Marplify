@@ -139,7 +139,7 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		CreatedAt: slide.CreatedAt.String(),
 		UpdatedAt: slide.UpdatedAt.String(),
 	}
-	
+
 	return c.JSON(http.StatusOK, res)
 }
 
