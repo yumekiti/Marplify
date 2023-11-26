@@ -11,7 +11,7 @@ export type ViewState = View;
 const initialState: ViewState = {
   mode: 'both',
   modal: false,
-  sidebar: true,
+  sidebar: false,
 };
 
 export const viewSlice = createSlice({
