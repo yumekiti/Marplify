@@ -68,6 +68,9 @@ func (uh *userHandler) FindById(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	user, err := uh.uu.FindById(id)
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
@@ -113,20 +116,28 @@ func (uh *userHandler) Store(c echo.Context) error {
 }
 
 func (uh *userHandler) Update(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
+	user, err := uh.uu.FindById(id)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
 	req := new(requestUser)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	user := &domain.User{
-		Model:    gorm.Model{ID: uint(id)},
+	user = &domain.User{
+		Model:    user.Model,
 		UserID:   req.UserID,
 		Name:     req.Name,
 		Email:    req.Email,
 		Password: req.Password,
 	}
-	user, err := uh.uu.Update(user)
+	user, err = uh.uu.Update(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -147,6 +158,9 @@ func (uh *userHandler) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
 	user, err := uh.uu.FindById(id)
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 

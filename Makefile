@@ -22,4 +22,10 @@ logs:
 app:
 	$(dc) exec app /bin/sh
 
-.PHONY:	up down restart reup rm logs app
+api:
+	$(dc) exec api /bin/sh
+
+db:
+	$(dc) exec db /bin/sh
+
+.PHONY:	up down restart reup rm logs app api db

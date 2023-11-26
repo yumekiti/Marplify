@@ -56,6 +56,7 @@ func (sh *slideHandler) FindAll(c echo.Context) error {
 			UpdatedAt: slide.UpdatedAt.String(),
 		}
 	}
+
 	return c.JSON(http.StatusOK, res)
 }
 
@@ -76,13 +77,14 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 		CreatedAt: slide.CreatedAt.String(),
 		UpdatedAt: slide.UpdatedAt.String(),
 	}
+
 	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Store(c echo.Context) error {
 	req := new(requestSlide)
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	slide := &domain.Slide{
@@ -101,22 +103,31 @@ func (sh *slideHandler) Store(c echo.Context) error {
 		CreatedAt: slide.CreatedAt.String(),
 		UpdatedAt: slide.UpdatedAt.String(),
 	}
+
 	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Update(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	req := new(requestSlide)
-	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+	slide, err := sh.su.FindById(id)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	slide := &domain.Slide{
-		Model:   gorm.Model{ID: uint(id)},
+	req := new(requestSlide)
+	if err := c.Bind(req); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	slide = &domain.Slide{
+		Model:   slide.Model,
 		Title:   req.Title,
 		Content: req.Content,
 	}
-	slide, err := sh.su.Update(slide)
+	slide, err = sh.su.Update(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -128,15 +139,21 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		CreatedAt: slide.CreatedAt.String(),
 		UpdatedAt: slide.UpdatedAt.String(),
 	}
+	
 	return c.JSON(http.StatusOK, res)
 }
 
 func (sh *slideHandler) Delete(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	slide := &domain.Slide{
-		Model: gorm.Model{ID: uint(id)},
+	slide, err := sh.su.FindById(id)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-	slide, err := sh.su.Delete(slide)
+
+	slide, err = sh.su.Delete(slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -148,5 +165,6 @@ func (sh *slideHandler) Delete(c echo.Context) error {
 		CreatedAt: slide.CreatedAt.String(),
 		UpdatedAt: slide.UpdatedAt.String(),
 	}
+
 	return c.JSON(http.StatusOK, res)
 }
