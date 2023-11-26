@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export type View = {
   mode: string;
-  modal: boolean;
+  loginModal: boolean;
   sidebar: boolean;
 };
 
@@ -10,7 +10,7 @@ export type ViewState = View;
 
 const initialState: ViewState = {
   mode: 'both',
-  modal: false,
+  loginModal: false,
   sidebar: false,
 };
 
@@ -21,8 +21,8 @@ export const viewSlice = createSlice({
     setMode: (state, action) => {
       state.mode = action.payload;
     },
-    toggleModal: (state) => {
-      state.modal = !state.modal;
+    toggleLoginModal: (state) => {
+      state.loginModal = !state.loginModal;
     },
     toggleSidebar: (state) => {
       state.sidebar = !state.sidebar;

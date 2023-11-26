@@ -10,14 +10,12 @@ const Component = () => {
 
   return (
     <div
-      className={`bg-cardBackground py-4 px-2 h-full border-r border-subheadline relative transition-all duration-200 ${
+      className={`flex flex-col bg-cardBackground py-4 px-2 h-full border-r border-subheadline relative transition-all duration-200 ${
         sidebar ? 'w-1/6' : 'w-20'
       }`}
     >
-      <div className='h-full flex flex-col'>
-        <UserPanel sidebar={sidebar} />
-        <Navigation sidebar={sidebar} />
-      </div>
+      <UserPanel sidebar={sidebar} />
+      <Navigation sidebar={sidebar} />
       <SidebarToggle sidebar={sidebar} />
     </div>
   );

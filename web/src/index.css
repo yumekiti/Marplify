@@ -29,10 +29,6 @@ body {
   border: solid 4px transparent;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
 body > iframe {
   display: none;
 }
