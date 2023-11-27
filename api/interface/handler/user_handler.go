@@ -35,7 +35,6 @@ type requestUser struct {
 }
 
 type responseUser struct {
-	ID        uint   `json:"id"`
 	UserName  string `json:"user_name"`
 	Name      string `json:"name"`
 	Email     string `json:"email"`
@@ -52,7 +51,6 @@ func (uh *userHandler) FindAll(c echo.Context) error {
 	res := make([]*responseUser, len(*users))
 	for i, user := range *users {
 		res[i] = &responseUser{
-			ID:        user.ID,
 			UserName:  user.UserName,
 			Name:      user.Name,
 			Email:     user.Email,
@@ -75,7 +73,6 @@ func (uh *userHandler) FindById(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		ID:        user.ID,
 		UserName:  user.UserName,
 		Name:      user.Name,
 		Email:     user.Email,
@@ -104,7 +101,6 @@ func (uh *userHandler) Store(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		ID:        user.ID,
 		UserName:  user.UserName,
 		Name:      user.Name,
 		Email:     user.Email,
@@ -143,7 +139,6 @@ func (uh *userHandler) Update(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		ID:        user.ID,
 		UserName:  user.UserName,
 		Name:      user.Name,
 		Email:     user.Email,
@@ -170,7 +165,6 @@ func (uh *userHandler) Delete(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		ID:        user.ID,
 		UserName:  user.UserName,
 		Name:      user.Name,
 		Email:     user.Email,
