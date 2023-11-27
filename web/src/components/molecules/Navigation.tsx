@@ -21,7 +21,7 @@ const Component: FC<Props> = ({ sidebar }) => {
       <div className='mb-2'>
         <button
           // onClick={handleCreate}
-          className={`w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2 ${
+          className={`overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2 ${
             !sidebar && 'justify-center'
           }`}
         >
@@ -41,7 +41,7 @@ const Component: FC<Props> = ({ sidebar }) => {
       </ul>
       <button
         onClick={handleLoginButton}
-        className={`w-full flex items-center py-2 px-4 bg-icons-tertiary hover:bg-icons-secondary text-white rounded focus:outline-none gap-2 ${
+        className={`overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-tertiary hover:bg-icons-secondary text-white rounded focus:outline-none gap-2 ${
           !sidebar && 'justify-center'
         }`}
       >

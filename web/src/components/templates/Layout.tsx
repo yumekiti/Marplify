@@ -1,6 +1,12 @@
 import { FC } from 'react';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+
 import Header from '../organisms/Header';
 import Sidebar from '../organisms/Sidebar';
+import Login from '../organisms/Login';
+import Register from '../organisms/Register';
 
 import background from '../../assets/background.png';
 
@@ -9,6 +15,8 @@ type Props = {
 };
 
 const Layout: FC<Props> = ({ children }) => {
+  const { loginModal, registerModal } = useSelector((state: RootState) => state.view);
+
   return (
     <div className='App h-screen w-full flex flex-col'>
       <img
@@ -23,6 +31,8 @@ const Layout: FC<Props> = ({ children }) => {
           <main className='flex-grow overflow-y-auto'>{children}</main>
         </div>
       </div>
+      {!registerModal && loginModal && <Login />}
+      {registerModal && <Register />}
     </div>
   );
 };
