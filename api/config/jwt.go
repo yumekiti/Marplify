@@ -8,6 +8,7 @@ import (
 )
 
 type JwtCustomClaims struct {
+	domain.User
 	jwt.StandardClaims
 }
 
@@ -20,6 +21,7 @@ func GenerateToken(user *domain.User) (string, error) {
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(JwtSecret)
 }

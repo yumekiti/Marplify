@@ -14,12 +14,15 @@ func main() {
 	// repository
 	userRepository := infrastructure.NewUserRepository(config.NewDB())
 	slideRepository := infrastructure.NewSlideRepository(config.NewDB())
+	authRepository := infrastructure.NewAuthRepository(config.NewDB())
 	// usecase
 	userUsecase := usecase.NewUserUsecase(userRepository)
 	slideUsecase := usecase.NewSlideUsecase(slideRepository)
+	authUsecase := usecase.NewAuthUsecase(authRepository)
 	// handler
 	userHandler := handler.NewUserHandler(userUsecase)
 	slideHandler := handler.NewSlideHandler(slideUsecase)
+	authHandler := handler.NewAuthHandler(authUsecase)
 
 	// Echo instance
 	e := echo.New()
@@ -38,6 +41,7 @@ func main() {
 		e,
 		userHandler,
 		slideHandler,
+		authHandler,
 	)
 
 	// Start server
