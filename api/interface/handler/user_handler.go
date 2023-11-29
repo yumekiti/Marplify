@@ -28,15 +28,11 @@ func NewUserHandler(uu usecase.UserUsecase) UserHandler {
 }
 
 type requestUser struct {
-	UserName string `json:"user_name"`
-	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
 type responseUser struct {
-	UserName  string `json:"user_name"`
-	Name      string `json:"name"`
 	Email     string `json:"email"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"update_at"`
@@ -51,8 +47,6 @@ func (uh *userHandler) FindAll(c echo.Context) error {
 	res := make([]*responseUser, len(*users))
 	for i, user := range *users {
 		res[i] = &responseUser{
-			UserName:  user.UserName,
-			Name:      user.Name,
 			Email:     user.Email,
 			CreatedAt: user.CreatedAt.String(),
 			UpdatedAt: user.UpdatedAt.String(),
@@ -73,8 +67,6 @@ func (uh *userHandler) FindById(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
-		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
@@ -90,8 +82,6 @@ func (uh *userHandler) Store(c echo.Context) error {
 	}
 
 	user := &domain.User{
-		UserName: req.UserName,
-		Name:     req.Name,
 		Email:    req.Email,
 		Password: req.Password,
 	}
@@ -101,8 +91,6 @@ func (uh *userHandler) Store(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
-		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
@@ -128,8 +116,6 @@ func (uh *userHandler) Update(c echo.Context) error {
 
 	user = &domain.User{
 		Model:    user.Model,
-		UserName: req.UserName,
-		Name:     req.Name,
 		Email:    req.Email,
 		Password: req.Password,
 	}
@@ -139,8 +125,6 @@ func (uh *userHandler) Update(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
-		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
@@ -165,8 +149,6 @@ func (uh *userHandler) Delete(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
-		Name:      user.Name,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
