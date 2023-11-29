@@ -51,7 +51,7 @@ const Component: FC = () => {
           setMessage('登録が完了しました');
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setMessage('登録に失敗しました');
       });
   };
