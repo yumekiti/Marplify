@@ -15,8 +15,8 @@ func InitRouting(
 ) {
 	api := e.Group("/api")
 
-	api.POST("/login", authHandler.Login)
-	api.POST("/register", authHandler.Register)
+	api.POST("/auth/login", authHandler.Login)
+	api.POST("/auth/register", authHandler.Register)
 
 	api.Use(middleware.JWTWithConfig(*config.JWTConfig()))
 
