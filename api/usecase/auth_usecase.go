@@ -35,6 +35,7 @@ func (au *authUsecase) Register(user *domain.User) (string, error) {
 	}
 
 	token, err := au.authRepo.Register(&domain.User{
+		UserName: user.UserName,
 		Email:    user.Email,
 		Password: hashedPassword,
 	})

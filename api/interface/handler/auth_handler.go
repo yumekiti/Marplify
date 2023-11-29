@@ -23,6 +23,7 @@ func NewAuthHandler(au usecase.AuthUsecase) AuthHandler {
 }
 
 type requestAuth struct {
+	UserName string `json:"user_name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
@@ -52,6 +53,7 @@ func (ah *authHandler) Register(c echo.Context) error {
 	}
 
 	token, err := ah.au.Register(&domain.User{
+		UserName: req.UserName,
 		Email:    req.Email,
 		Password: req.Password,
 	})
