@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/golang-jwt/jwt"
+	"github.com/labstack/echo/v4/middleware"
 
 	"api/domain"
 	"time"
@@ -13,6 +14,13 @@ type JwtCustomClaims struct {
 }
 
 var JwtSecret = []byte("secret")
+
+func JWTConfig() *middleware.JWTConfig {
+	return &middleware.JWTConfig{
+		Claims:     &JwtCustomClaims{},
+		SigningKey: JwtSecret,
+	}
+}
 
 func GenerateToken(user *domain.User) (string, error) {
 	claims := JwtCustomClaims{

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"api/config"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -17,7 +18,7 @@ func InitRouting(
 	api.POST("/login", authHandler.Login)
 	api.POST("/register", authHandler.Register)
 
-	api.Use(middleware.JWT([]byte("secret")))
+	api.Use(middleware.JWTWithConfig(*config.JWTConfig()))
 
 	api.GET("/users", userHandler.FindAll)
 	api.GET("/users/:id", userHandler.FindById)
