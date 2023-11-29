@@ -6,23 +6,20 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: marplify.yumekiti.net
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: web
-            port:
-              number: 80
-  - host: marplify-api.yumekiti.net
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: api
-            port:
-              number: 3000
+    - host: marplify.yumekiti.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 8080

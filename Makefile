@@ -2,7 +2,6 @@ dc := docker-compose -f ./docker-compose.yml
 
 up:
 	$(dc) up -d
-	$(dc) exec api yarn keystone prisma migrate deploy
 
 down:
 	$(dc) down
@@ -23,4 +22,10 @@ logs:
 app:
 	$(dc) exec app /bin/sh
 
-.PHONY:	up down restart reup rm logs app
+api:
+	$(dc) exec api /bin/sh
+
+db:
+	$(dc) exec db /bin/sh
+
+.PHONY:	up down restart reup rm logs app api db

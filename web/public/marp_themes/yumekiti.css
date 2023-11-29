@@ -1,5 +1,5 @@
 /* @theme yumekiti */
-@import "default";
+@import 'default';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap');
 
 section * {
@@ -37,15 +37,15 @@ section li li {
   font-size: 80% !important;
 }
 
-section ul:has(> li:nth-child(-n+3)) li {
-  font-size: 48px !important
+section ul:has(> li:nth-child(-n + 3)) li {
+  font-size: 48px !important;
 }
 
-section ul ul:has(> li:nth-child(-n+3)) li {
-  font-size: 80% !important
+section ul ul:has(> li:nth-child(-n + 3)) li {
+  font-size: 80% !important;
 }
 
-section ul:has(> li:nth-child(n+4)) li  {
+section ul:has(> li:nth-child(n + 4)) li {
   font-size: 120% !important;
 }
 
@@ -82,7 +82,7 @@ section strong {
 }
 
 section em {
-  color: #EF4565 !important;
+  color: #ef4565 !important;
 }
 
 .cheating {

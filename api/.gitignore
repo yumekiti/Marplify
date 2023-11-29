@@ -1,4 +1,4 @@
-node_modules
-.keystone/admin
-keystone.db
-*.log
+data.db
+build
+tmp
+.env

@@ -1,12 +1,15 @@
-FROM node:18.18.2-alpine
+FROM golang:1.21.4-alpine
 
-WORKDIR /app
+ENV TZ /usr/share/zoneinfo/Asia/Tokyo
+ENV GO111MODULE=on
 
+WORKDIR /go/src/app
 COPY . .
 
-RUN yarn --frozen-lockfile && \
-    yarn build
+EXPOSE 8080
 
-EXPOSE 3000
+# Install libraries for testing
+RUN apk add --no-cache gcc musl-dev
 
-CMD ["yarn", "start"]
+RUN go install github.com/cosmtrek/air@latest
+CMD ["air"]

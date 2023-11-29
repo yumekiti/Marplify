@@ -15,7 +15,7 @@ const exampleText = `# HackU_2023
 
 ### :eyes: 頻繁に発表している方
 
-**スライド作り大変じゃないですか？**
+- **スライド作り大変じゃないですか？**
 
 ### :thumbsdown: スライドはすぐに作れない
 
@@ -190,7 +190,7 @@ UX向上と便利さを提供できたら良いなと考えています。
 
 ### ぜひ使ってみてください
 
-[https://marplify.yumekiti.net/](https://marplify.yumekiti.net/)
+- [https://marplify.yumekiti.net/](https://marplify.yumekiti.net/)
 
 # :bow: ご清聴ありがとうございました！
 

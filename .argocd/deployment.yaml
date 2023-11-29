@@ -15,10 +15,10 @@ spec:
         app: web
     spec:
       containers:
-      - name: marplify-web
-        image: yumekiti/marplify-web:380b8cc
-        ports:
-        - containerPort: 80
+        - name: marplify-web
+          image: yumekiti/marplify-web:8eb927c
+          ports:
+            - containerPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,10 +36,10 @@ spec:
         app: api
     spec:
       containers:
-      - name: marplify-api
-        image: yumekiti/marplify-api:380b8cc
-        ports:
-        - containerPort: 3000
+        - name: marplify-api
+          image: yumekiti/marplify-api:8eb927c
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,7 +63,7 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: keystone
+              value: database
             - name: POSTGRES_USER
               value: user
             - name: POSTGRES_PASSWORD
