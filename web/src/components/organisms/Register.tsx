@@ -41,7 +41,7 @@ const Component: FC = () => {
     }
 
     fetchInstance()
-      .post('/api/auth/register', {
+      .post('/auth/register', {
         username: username,
         email: email,
         password: password,
