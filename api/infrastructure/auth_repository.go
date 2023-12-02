@@ -17,6 +17,18 @@ func NewAuthRepository(db *gorm.DB) repository.AuthRepository {
 }
 
 func (r *authRepository) Register(user *domain.User) (string, error) {
+	if err := r.db.Where("username = ? OR email = ?", user.Username, user.Email).First(&domain.User{}).Error; err == nil {
+		return "", err
+	}
+
+	// パスワードをハッシュ化する
+	hashedPassword, err := config.PasswordEncrypt(user.Password)
+	if err != nil {
+		return "", err
+	}
+
+	// ユーザーをデータベースに保存する
+	user.Password = hashedPassword
 	if err := r.db.Create(&user).Error; err != nil {
 		return "", err
 	}
@@ -26,12 +38,12 @@ func (r *authRepository) Register(user *domain.User) (string, error) {
 		return "", err
 	}
 
-	return token, nil
+	return token, err
 }
 
-func (r *authRepository) Login(email string, password string) (string, error) {
+func (r *authRepository) Login(identifier string, password string) (string, error) {
 	var user domain.User
-	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+	if err := r.db.Where("username = ? OR email = ?", identifier, identifier).First(&user).Error; err != nil {
 		return "", err
 	}
 

@@ -7,6 +7,7 @@ import (
 
 	"api/domain"
 	"api/usecase"
+	"api/config"
 )
 
 type UserHandler interface {
@@ -24,23 +25,28 @@ func NewUserHandler(uu usecase.UserUsecase) UserHandler {
 }
 
 type requestUser struct {
-	UserName string `json:"user_name"`
+	Username string `json:"username"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
 type responseUser struct {
-	UserName  string `json:"user_name"`
+	Username  string `json:"username"`
 	Email     string `json:"email"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"update_at"`
 }
 
 func (uh *userHandler) Me(c echo.Context) error {
-	user := c.Get("user").(*domain.User)
+	user := config.GetCurrentUser(c)
+
+	user, err := uh.uu.Me(user)
+	if err != nil {
+		return err
+	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
+		Username:  user.Username,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
@@ -59,7 +65,7 @@ func (uh *userHandler) Update(c echo.Context) error {
 
 	user = &domain.User{
 		Model:    user.Model,
-		UserName: req.UserName,
+		Username: req.Username,
 		Email:    req.Email,
 		Password: req.Password,
 	}
@@ -70,7 +76,7 @@ func (uh *userHandler) Update(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
+		Username:  user.Username,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
@@ -88,7 +94,7 @@ func (uh *userHandler) Delete(c echo.Context) error {
 	}
 
 	res := &responseUser{
-		UserName:  user.UserName,
+		Username:  user.Username,
 		Email:     user.Email,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),

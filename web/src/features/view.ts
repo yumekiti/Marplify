@@ -23,6 +23,10 @@ export const viewSlice = createSlice({
     setMode: (state, action) => {
       state.mode = action.payload;
     },
+    resetModal: (state) => {
+      state.loginModal = false;
+      state.registerModal = false;
+    },
     toggleLoginModal: (state) => {
       state.loginModal = !state.loginModal;
     },

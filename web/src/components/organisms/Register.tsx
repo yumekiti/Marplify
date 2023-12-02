@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { viewSlice } from '../../features/view';
+import { userSlice } from '../../features/user';
 import { fetchInstance } from '../../libs/fetchInstance';
 
 import Modal from '../templates/Modal';
@@ -30,10 +31,6 @@ const Component: FC = () => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleCloseClick = () => {
-    dispatch(viewSlice.actions.toggleRegisterModal());
-  };
-
   const handleLoginClick = () => {
     if (password !== confirmPassword) {
       setMessage('パスワードが一致しません');
@@ -48,7 +45,8 @@ const Component: FC = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          setMessage('登録が完了しました');
+          dispatch(userSlice.actions.setToken(res.data.token));
+          dispatch(viewSlice.actions.resetModal());
         }
       })
       .catch(() => {
@@ -57,7 +55,7 @@ const Component: FC = () => {
   };
 
   return (
-    <Modal text='登録' handleClick={handleCloseClick}>
+    <Modal text='登録'>
       <div className='flex flex-col justify-center items-center gap-4 mb-12'>
         <div className='flex flex-col justify-center items-start'>
           <p className='text-headline font-bold'>ユーザー名</p>
