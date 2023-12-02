@@ -24,9 +24,9 @@ func NewAuthHandler(au usecase.AuthUsecase) AuthHandler {
 
 type requestAuth struct {
 	Identifier string `json:"identifier"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Username   string `json:"username"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
 }
 
 type responseAuth struct {

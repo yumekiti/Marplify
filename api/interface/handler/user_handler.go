@@ -5,9 +5,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"api/config"
 	"api/domain"
 	"api/usecase"
-	"api/config"
 )
 
 type UserHandler interface {
@@ -69,7 +69,7 @@ func (uh *userHandler) Update(c echo.Context) error {
 		Email:    req.Email,
 		Password: req.Password,
 	}
-	
+
 	user, err := uh.uu.Update(user)
 	if err != nil {
 		return err
