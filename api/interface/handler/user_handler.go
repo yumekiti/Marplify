@@ -2,19 +2,15 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 
 	"api/domain"
 	"api/usecase"
 )
 
 type UserHandler interface {
-	FindAll(c echo.Context) error
-	FindById(c echo.Context) error
-	Store(c echo.Context) error
+	Me(c echo.Context) error
 	Update(c echo.Context) error
 	Delete(c echo.Context) error
 }
@@ -40,60 +36,8 @@ type responseUser struct {
 	UpdatedAt string `json:"update_at"`
 }
 
-func (uh *userHandler) FindAll(c echo.Context) error {
-	users, err := uh.uu.FindAll()
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	res := make([]*responseUser, len(*users))
-	for i, user := range *users {
-		res[i] = &responseUser{
-			UserName:  user.UserName,
-			Email:     user.Email,
-			CreatedAt: user.CreatedAt.String(),
-			UpdatedAt: user.UpdatedAt.String(),
-		}
-	}
-
-	return c.JSON(http.StatusOK, res)
-}
-
-func (uh *userHandler) FindById(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	user, err := uh.uu.FindById(id)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusNotFound, err.Error())
-		}
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	res := &responseUser{
-		UserName:  user.UserName,
-		Email:     user.Email,
-		CreatedAt: user.CreatedAt.String(),
-		UpdatedAt: user.UpdatedAt.String(),
-	}
-
-	return c.JSON(http.StatusOK, res)
-}
-
-func (uh *userHandler) Store(c echo.Context) error {
-	req := new(requestUser)
-	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
-
-	user := &domain.User{
-		UserName: req.UserName,
-		Email:    req.Email,
-		Password: req.Password,
-	}
-	user, err := uh.uu.Store(user)
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
+func (uh *userHandler) Me(c echo.Context) error {
+	user := c.Get("user").(*domain.User)
 
 	res := &responseUser{
 		UserName:  user.UserName,
@@ -106,18 +50,11 @@ func (uh *userHandler) Store(c echo.Context) error {
 }
 
 func (uh *userHandler) Update(c echo.Context) error {
-	id, err := strconv.Atoi(c.Param("id"))
-	user, err := uh.uu.FindById(id)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusNotFound, err.Error())
-		}
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
+	user := c.Get("user").(*domain.User)
 
-	req := new(requestUser)
+	req := &requestUser{}
 	if err := c.Bind(req); err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	user = &domain.User{
@@ -126,9 +63,10 @@ func (uh *userHandler) Update(c echo.Context) error {
 		Email:    req.Email,
 		Password: req.Password,
 	}
-	user, err = uh.uu.Update(user)
+	
+	user, err := uh.uu.Update(user)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	res := &responseUser{
@@ -142,18 +80,11 @@ func (uh *userHandler) Update(c echo.Context) error {
 }
 
 func (uh *userHandler) Delete(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	user, err := uh.uu.FindById(id)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusNotFound, err.Error())
-		}
-		return c.JSON(http.StatusInternalServerError, err.Error())
-	}
+	user := c.Get("user").(*domain.User)
 
-	user, err = uh.uu.Delete(user)
+	user, err := uh.uu.Delete(user)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	res := &responseUser{

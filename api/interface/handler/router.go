@@ -20,11 +20,9 @@ func InitRouting(
 
 	api.Use(middleware.JWTWithConfig(*config.JWTConfig()))
 
-	api.GET("/users", userHandler.FindAll)
-	api.GET("/users/:id", userHandler.FindById)
-	api.POST("/users", userHandler.Store)
-	api.PUT("/users/:id", userHandler.Update)
-	api.DELETE("/users/:id", userHandler.Delete)
+	api.GET("/me", userHandler.Me)
+	api.PUT("me", userHandler.Update)
+	api.DELETE("/me", userHandler.Delete)
 
 	api.GET("/slides", slideHandler.FindAll)
 	api.GET("/slides/:id", slideHandler.FindById)
