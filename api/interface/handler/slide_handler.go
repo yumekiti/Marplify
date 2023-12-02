@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 
+	"api/config"
 	"api/domain"
 	"api/usecase"
 )
@@ -41,7 +42,12 @@ type responseSlide struct {
 }
 
 func (sh *slideHandler) FindAll(c echo.Context) error {
-	slides, err := sh.su.FindAll()
+	user := config.GetCurrentUser(c)
+	if user == nil {
+		return c.JSON(http.StatusInternalServerError, "user not found")
+	}
+
+	slides, err := sh.su.FindAll(user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -61,8 +67,17 @@ func (sh *slideHandler) FindAll(c echo.Context) error {
 }
 
 func (sh *slideHandler) FindById(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	slide, err := sh.su.FindById(id)
+	user := config.GetCurrentUser(c)
+	if user == nil {
+		return c.JSON(http.StatusInternalServerError, "user not found")
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	slide, err := sh.su.FindById(user, id)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.JSON(http.StatusNotFound, err.Error())
@@ -82,6 +97,11 @@ func (sh *slideHandler) FindById(c echo.Context) error {
 }
 
 func (sh *slideHandler) Store(c echo.Context) error {
+	user := config.GetCurrentUser(c)
+	if user == nil {
+		return c.JSON(http.StatusInternalServerError, "user not found")
+	}
+
 	req := new(requestSlide)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
@@ -90,8 +110,10 @@ func (sh *slideHandler) Store(c echo.Context) error {
 	slide := &domain.Slide{
 		Title:   req.Title,
 		Content: req.Content,
+		UserID:  user.ID,
 	}
-	slide, err := sh.su.Store(slide)
+
+	slide, err := sh.su.Store(user, slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -108,12 +130,13 @@ func (sh *slideHandler) Store(c echo.Context) error {
 }
 
 func (sh *slideHandler) Update(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	slide, err := sh.su.FindById(id)
+	user := config.GetCurrentUser(c)
+	if user == nil {
+		return c.JSON(http.StatusInternalServerError, "user not found")
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusNotFound, err.Error())
-		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
@@ -122,12 +145,14 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	slide = &domain.Slide{
-		Model:   slide.Model,
+	slide := &domain.Slide{
+		Model:   gorm.Model{ID: uint(id)},
 		Title:   req.Title,
 		Content: req.Content,
+		UserID:  user.ID,
 	}
-	slide, err = sh.su.Update(slide)
+
+	slide, err = sh.su.Update(user, slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -144,16 +169,22 @@ func (sh *slideHandler) Update(c echo.Context) error {
 }
 
 func (sh *slideHandler) Delete(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	slide, err := sh.su.FindById(id)
+	user := config.GetCurrentUser(c)
+	if user == nil {
+		return c.JSON(http.StatusInternalServerError, "user not found")
+	}
+
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return c.JSON(http.StatusNotFound, err.Error())
-		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	slide, err = sh.su.Delete(slide)
+	slide := &domain.Slide{
+		Model:  gorm.Model{ID: uint(id)},
+		UserID: user.ID,
+	}
+
+	slide, err = sh.su.Delete(user, slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}

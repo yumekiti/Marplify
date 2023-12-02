@@ -6,11 +6,11 @@ import (
 )
 
 type SlideUsecase interface {
-	Store(slide *domain.Slide) (*domain.Slide, error)
-	FindById(id int) (*domain.Slide, error)
-	FindAll() (*domain.Slides, error)
-	Update(slide *domain.Slide) (*domain.Slide, error)
-	Delete(slide *domain.Slide) (*domain.Slide, error)
+	Store(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
+	FindById(user *domain.User, id int) (*domain.Slide, error)
+	FindAll(user *domain.User) (*domain.Slides, error)
+	Update(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
+	Delete(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
 }
 
 type slideUsecase struct {
@@ -21,22 +21,22 @@ func NewSlideUsecase(sr repository.SlideRepository) SlideUsecase {
 	return &slideUsecase{sr}
 }
 
-func (su *slideUsecase) Store(slide *domain.Slide) (*domain.Slide, error) {
-	return su.sr.Store(slide)
+func (su *slideUsecase) Store(user *domain.User, slide *domain.Slide) (*domain.Slide, error) {
+	return su.sr.Store(user, slide)
 }
 
-func (su *slideUsecase) FindById(id int) (*domain.Slide, error) {
-	return su.sr.FindById(id)
+func (su *slideUsecase) FindById(user *domain.User, id int) (*domain.Slide, error) {
+	return su.sr.FindById(user, id)
 }
 
-func (su *slideUsecase) FindAll() (*domain.Slides, error) {
-	return su.sr.FindAll()
+func (su *slideUsecase) FindAll(user *domain.User) (*domain.Slides, error) {
+	return su.sr.FindAll(user)
 }
 
-func (su *slideUsecase) Update(slide *domain.Slide) (*domain.Slide, error) {
-	return su.sr.Update(slide)
+func (su *slideUsecase) Update(user *domain.User, slide *domain.Slide) (*domain.Slide, error) {
+	return su.sr.Update(user, slide)
 }
 
-func (su *slideUsecase) Delete(slide *domain.Slide) (*domain.Slide, error) {
-	return su.sr.Delete(slide)
+func (su *slideUsecase) Delete(user *domain.User, slide *domain.Slide) (*domain.Slide, error) {
+	return su.sr.Delete(user, slide)
 }

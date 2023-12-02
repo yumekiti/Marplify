@@ -13,7 +13,7 @@ const initialState: ViewState = {
   mode: 'both',
   loginModal: false,
   registerModal: false,
-  sidebar: false,
+  sidebar: localStorage.getItem('sidebar') === 'true' ? true : false,
 };
 
 export const viewSlice = createSlice({
@@ -35,6 +35,7 @@ export const viewSlice = createSlice({
     },
     toggleSidebar: (state) => {
       state.sidebar = !state.sidebar;
+      localStorage.setItem('sidebar', state.sidebar.toString());
     },
   },
 });
