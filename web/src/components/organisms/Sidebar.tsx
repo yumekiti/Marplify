@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../../store';
 import { userSlice } from '../../features/user';
+import { fetchInstanceWithToken } from '../../libs/fetchInstance';
 
 import Navigation from '../molecules/Navigation';
 import UserPanel from '../molecules/UserPanel';
 import SidebarToggle from '../molecules/SidebarToggle';
-
-import { fetchInstanceWithToken } from '../../libs/fetchInstance';
 
 const Component = () => {
   const dispatch = useDispatch();

@@ -4,11 +4,11 @@ type Props = {
   sidebar: boolean;
   highlight?: boolean;
   text: string;
-  icon: string;
+  Icon: React.ElementType;
   onClick: () => void;
 };
 
-const Component: FC<Props> = ({ sidebar, highlight, text, icon, onClick }) => {
+const Component: FC<Props> = ({ sidebar, highlight, text, Icon, onClick }) => {
   return (
     <button
       onClick={onClick}
@@ -17,7 +17,7 @@ const Component: FC<Props> = ({ sidebar, highlight, text, icon, onClick }) => {
         ${highlight ? 'bg-icons-highlight' : 'bg-icons-tertiary'}
       `}
     >
-      <img src={icon} alt='plus' className='object-cover w-5 h-5' />
+      <Icon className='w-6 h-6' />
       <p className={`text-sm font-bold ${!sidebar && 'hidden'}`}>{text}</p>
     </button>
   );

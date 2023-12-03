@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import Layout from '../templates/Layout';
 import { useSelector } from 'react-redux';
+
+import Layout from '../templates/Layout';
 import { RootState } from '../../store';
 
 import ModeSwitchBar from '../organisms/ModeSwitchBar';

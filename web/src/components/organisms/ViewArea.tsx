@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
+
 import { RootState } from '../../store';
 import { isMarpSlide } from '../../libs/markdown';
+
 import MarkdownView from '../molecules/MarkdownView';
 import PresentationView from '../molecules/PresentationView';
 import SetStyle from '../molecules/SetStyle';

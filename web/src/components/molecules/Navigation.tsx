@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { viewSlice } from '../../features/view';
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 
-import loginIcon from '../../assets/elements/Tool/loginIcon.svg';
+import { viewSlice } from '../../features/view';
 
 import SidebarButton from '../atoms/SidebarButton';
 import SidebarControlPanel from '../molecules/SidebarControlPanel';
@@ -26,7 +26,12 @@ const Component: FC<Props> = ({ sidebar, isLogin }) => {
       ) : (
         <>
           <div className='h-full'></div>
-          <SidebarButton sidebar={sidebar} onClick={handleLoginButton} text='ログイン' icon={loginIcon} />
+          <SidebarButton
+            sidebar={sidebar}
+            onClick={handleLoginButton}
+            text='ログイン'
+            Icon={ArrowRightOnRectangleIcon}
+          />
         </>
       )}
     </>

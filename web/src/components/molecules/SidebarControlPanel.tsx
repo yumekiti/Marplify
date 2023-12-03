@@ -1,15 +1,17 @@
 import { FC } from 'react';
-import { userSlice } from '../../features/user';
-import { fetchInstanceWithToken } from '../../libs/fetchInstance';
-import plusIcon from '../../assets/elements/Tool/plusIcon.svg';
-import logoutIcon from '../../assets/elements/Tool/logoutIcon.svg';
-import SlideList from '../molecules/SlideList';
-
-import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Navigate } from 'react-router-dom';
-import SidebarButton from '../atoms/SidebarButton';
+import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { InboxArrowDownIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftOnRectangleIcon, PlusIcon } from '@heroicons/react/24/solid';
+
+import { userSlice } from '../../features/user';
+import { contentSlice } from '../../features/content';
+import { fetchInstanceWithToken } from '../../libs/fetchInstance';
+import { RootState } from '../../store';
+
+import SidebarButton from '../atoms/SidebarButton';
+import SlideList from '../molecules/SlideList';
 
 import useSWR from 'swr';
 
@@ -87,13 +89,21 @@ const Component: FC<Props> = ({ sidebar }) => {
     navigate('/');
   };
 
+  const handleNewButton = () => {
+    dispatch(contentSlice.actions.setContent(''));
+    navigate('/');
+  };
+
   return (
     <>
       <div className='mb-2'>
-        <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' icon={plusIcon} highlight />
+        <SidebarButton sidebar={sidebar} onClick={handleNewButton} text='新規' Icon={PlusIcon} highlight />
+      </div>
+      <div className='mb-2'>
+        <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} highlight />
       </div>
       {sidebar ? <SlideList id={id} slides={data} /> : <div className='h-full'></div>}
-      <SidebarButton sidebar={sidebar} onClick={handleLogoutButton} text='ログアウト' icon={logoutIcon} />
+      <SidebarButton sidebar={sidebar} onClick={handleLogoutButton} text='ログアウト' Icon={ArrowLeftOnRectangleIcon} />
     </>
   );
 };

@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { viewSlice } from '../../features/view';
 
-import rightIcon from '../../assets/elements/Tool/rightIcon.svg';
-import leftIcon from '../../assets/elements/Tool/leftIcon.svg';
+import rightIcon from '../../assets/icons/rightIcon.svg';
+import leftIcon from '../../assets/icons/leftIcon.svg';
 
 type Props = {
   sidebar: boolean;

@@ -3,8 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import remarkEmoji from 'remark-emoji';
-import markdownStyle from '../../styles/markdown.module.css';
 import mermaid from 'mermaid';
+
+import markdownStyle from '../../styles/markdown.module.css';
 
 type Props = {
   content: string;

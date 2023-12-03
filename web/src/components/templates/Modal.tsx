@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { viewSlice } from '../../features/view';
 
 import exitIcon from '../../assets/elements/exitIcon.svg';

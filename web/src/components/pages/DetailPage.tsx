@@ -1,16 +1,17 @@
 import { FC, useEffect } from 'react';
-import Layout from '../templates/Layout';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import useSWR from 'swr';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../../store';
 import { fetchInstanceWithToken } from '../../libs/fetchInstance';
-import { useParams, useNavigate } from 'react-router-dom';
 import { contentSlice } from '../../features/content';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import ModeSwitchBar from '../organisms/ModeSwitchBar';
 import ActionPanel from '../organisms/ActionPanel';
 import EditArea from '../organisms/EditArea';
 import ViewArea from '../organisms/ViewArea';
+import Layout from '../templates/Layout';
 
 const MainPage: FC = () => {
   const navigate = useNavigate();

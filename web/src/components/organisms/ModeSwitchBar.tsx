@@ -1,13 +1,11 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { PencilIcon, WindowIcon, EyeIcon } from '@heroicons/react/24/solid';
+
 import { viewSlice } from '../../features/view';
 
 import IconButtonWithTooltip from '../atoms/IconButtonWithTooltip';
 import Card from '../templates/Card';
-
-import editIcon from '../../assets/elements/Tool/editIcon.svg';
-import bothIcon from '../../assets/elements/Tool/bothIcon.svg';
-import viewIcon from '../../assets/elements/Tool/viewIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -16,17 +14,17 @@ const Component: FC = () => {
     <Card>
       <div className='flex justify-between items-center gap-6 relative py-1'>
         <IconButtonWithTooltip
-          icon={editIcon}
+          Icon={PencilIcon}
           text='Edit'
           onClick={() => dispatch(viewSlice.actions.setMode('edit'))}
         />
         <IconButtonWithTooltip
-          icon={bothIcon}
+          Icon={WindowIcon}
           text='Edit & Preview'
           onClick={() => dispatch(viewSlice.actions.setMode('both'))}
         />
         <IconButtonWithTooltip
-          icon={viewIcon}
+          Icon={EyeIcon}
           text='Preview'
           onClick={() => dispatch(viewSlice.actions.setMode('view'))}
         />
