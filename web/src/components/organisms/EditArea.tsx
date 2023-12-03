@@ -1,15 +1,14 @@
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ArrowPathRoundedSquareIcon } from '@heroicons/react/24/solid';
+
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
 import { isMarpSlide, markdownToMarp, marpToMarkdown } from '../../libs/markdown';
 
 import HighlightedIconButton from '../atoms/HighlightedIconButton';
 import Loading from '../atoms/Loading';
-// import CopyAndHelp from '../molecules/CopyAndHelp';
 import Editor from '../molecules/Editor';
-
-import convertIcon from '../../assets/elements/EditArea/convertIcon.svg';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const Component: FC = () => {
       <Editor />
       <div className='absolute bottom-20 right-40 rounded-b-lg'>
         <div className='fixed'>
-          <HighlightedIconButton icon={convertIcon} text='Convert' onClick={handleConvert} tertiary />
+          <HighlightedIconButton Icon={ArrowPathRoundedSquareIcon} text='Convert' onClick={handleConvert} tertiary />
         </div>
       </div>
     </div>

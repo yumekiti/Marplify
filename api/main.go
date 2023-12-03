@@ -11,10 +11,13 @@ import (
 )
 
 func main() {
+	// DB
+	database := config.NewDB()
+
 	// repository
-	userRepository := infrastructure.NewUserRepository(config.NewDB())
-	slideRepository := infrastructure.NewSlideRepository(config.NewDB())
-	authRepository := infrastructure.NewAuthRepository(config.NewDB())
+	userRepository := infrastructure.NewUserRepository(database)
+	slideRepository := infrastructure.NewSlideRepository(database)
+	authRepository := infrastructure.NewAuthRepository(database)
 	// usecase
 	userUsecase := usecase.NewUserUsecase(userRepository)
 	slideUsecase := usecase.NewSlideUsecase(slideRepository)

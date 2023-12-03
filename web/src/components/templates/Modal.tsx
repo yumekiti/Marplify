@@ -1,14 +1,22 @@
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { viewSlice } from '../../features/view';
 
 import exitIcon from '../../assets/elements/exitIcon.svg';
 
 type Props = {
   text: string;
-  handleClick: () => void;
   children: React.ReactNode;
 };
 
-const Component: FC<Props> = ({ text, handleClick, children }) => {
+const Component: FC<Props> = ({ text, children }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(viewSlice.actions.resetModal());
+  };
+
   return (
     <div className='fixed inset-0 bg-background bg-opacity-60 flex justify-center items-center z-30'>
       <div className='absolute inset-0 flex justify-center items-center z-40' onClick={handleClick}>

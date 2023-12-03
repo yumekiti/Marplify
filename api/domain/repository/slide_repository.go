@@ -3,9 +3,9 @@ package repository
 import "api/domain"
 
 type SlideRepository interface {
-	Store(slide *domain.Slide) (*domain.Slide, error)
-	FindById(id int) (*domain.Slide, error)
-	FindAll() (*domain.Slides, error)
-	Update(slide *domain.Slide) (*domain.Slide, error)
-	Delete(slide *domain.Slide) (*domain.Slide, error)
+	Store(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
+	FindById(user *domain.User, id int) (*domain.Slide, error)
+	FindAll(user *domain.User) (*domain.Slides, error)
+	Update(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
+	Delete(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
 }

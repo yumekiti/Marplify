@@ -1,7 +1,8 @@
 import { FC, useEffect } from 'react';
 import { Marp } from '@marp-team/marp-core';
-import marpStyle from '../../styles/marp.module.css';
 import mermaid from 'mermaid';
+
+import marpStyle from '../../styles/marp.module.css';
 
 type Props = {
   content: string;
@@ -40,7 +41,6 @@ const Presentation: FC<Props> = ({ content, style }) => {
     <div className={marpStyle.marpit}>
       <div dangerouslySetInnerHTML={{ __html: html }} />
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      {/* <style dangerouslySetInnerHTML={{ __html: style }} /> */}
       <link rel='stylesheet' href={style} />
     </div>
   );

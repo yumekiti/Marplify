@@ -2,12 +2,12 @@ import { FC } from 'react';
 
 type Props = {
   text: string;
-  icon: string;
+  Icon: React.ElementType;
   onClick?: () => void;
   tertiary?: boolean;
 };
 
-const Component: FC<Props> = ({ text, icon, onClick, tertiary = false }) => (
+const Component: FC<Props> = ({ text, Icon, onClick, tertiary = false }) => (
   <button
     onClick={onClick}
     className={`active:scale-90 duration-100 text-icons-main rounded-md shadow-md ${
@@ -15,7 +15,7 @@ const Component: FC<Props> = ({ text, icon, onClick, tertiary = false }) => (
     }`}
   >
     <div className='flex gap-1 px-4 py-2 items-center hover:opacity-80 text-base tracking-wider'>
-      <img src={icon} alt='icon' className='w-6' />
+      <Icon className='w-6 h-6' />
       {text}
     </div>
   </button>

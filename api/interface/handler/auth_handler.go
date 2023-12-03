@@ -23,9 +23,10 @@ func NewAuthHandler(au usecase.AuthUsecase) AuthHandler {
 }
 
 type requestAuth struct {
-	UserName string `json:"user_name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Identifier string `json:"identifier"`
+	Username   string `json:"username"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
 }
 
 type responseAuth struct {
@@ -38,7 +39,7 @@ func (ah *authHandler) Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	token, err := ah.au.Login(req.Email, req.Password)
+	token, err := ah.au.Login(req.Identifier, req.Password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -53,12 +54,16 @@ func (ah *authHandler) Register(c echo.Context) error {
 	}
 
 	token, err := ah.au.Register(&domain.User{
-		UserName: req.UserName,
+		Username: req.Username,
 		Email:    req.Email,
 		Password: req.Password,
 	})
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	if token == "" {
+		return c.JSON(http.StatusBadRequest, "username or email is already used")
 	}
 
 	return c.JSON(http.StatusOK, &responseAuth{token})

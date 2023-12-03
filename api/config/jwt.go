@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/golang-jwt/jwt"
+	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
 	"api/domain"
@@ -32,4 +33,10 @@ func GenerateToken(user *domain.User) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(JwtSecret)
+}
+
+func GetCurrentUser(c echo.Context) *domain.User {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*JwtCustomClaims)
+	return &claims.User
 }
