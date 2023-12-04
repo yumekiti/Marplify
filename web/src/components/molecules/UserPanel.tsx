@@ -10,7 +10,7 @@ type Props = {
 const Component: FC<Props> = ({ sidebar, username, email }) => {
   return (
     <div className={`mb-4 flex gap-4 items-center border-b border-gray-300 pb-4 ${!sidebar && 'justify-center'}`}>
-      <UserCircleIcon className='w-12 h-12 rounded-full' />
+      <UserCircleIcon className='shrink-0 w-12 h-12 rounded-full' />
       {sidebar && (
         <div className='flex flex-col overflow-hidden whitespace-nowrap'>
           <p className='text-lg font-semibold'>{username}</p>

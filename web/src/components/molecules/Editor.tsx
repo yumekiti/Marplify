@@ -18,6 +18,7 @@ const Component: FC = () => {
       onChange={(value) => dispatch(contentSlice.actions.setContent(value || ''))}
       preview='edit'
       height={'100%'}
+      autoFocus={true}
       textareaProps={{
         placeholder: placeholder,
       }}

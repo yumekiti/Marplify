@@ -53,3 +53,8 @@ ul {
 ol {
   list-style-type: decimal;
 }
+
+.w-md-editor-text {
+  height: 100%;
+  width: 100%;
+}
