@@ -12,7 +12,7 @@ const Component: FC<Props> = ({ sidebar, tertiary, text, Icon, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2
+      className={`shadow-md overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2
         ${!sidebar && 'justify-center'}
         ${tertiary ? 'bg-icons-tertiary' : 'bg-icons-highlight'}
       `}
