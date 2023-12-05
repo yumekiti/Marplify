@@ -1,9 +1,9 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { InboxArrowDownIcon } from '@heroicons/react/24/solid';
-import { ArrowLeftOnRectangleIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftOnRectangleIcon, PlusIcon, CheckIcon } from '@heroicons/react/24/solid';
 
 import { userSlice } from '../../features/user';
 import { contentSlice } from '../../features/content';
@@ -27,12 +27,20 @@ const Component: FC<Props> = ({ sidebar }) => {
   const { content } = useSelector((state: RootState) => state.content);
   const { token } = useSelector((state: RootState) => state.user);
   const { editing } = useSelector((state: RootState) => state.view);
+  const [done, setDone] = useState(false);
 
   const { data, error, mutate } = useSWR('/slides', (url) =>
     fetchInstanceWithToken(token)
       .get(url)
       .then((res) => res.data),
   );
+
+  const handleDone = () => {
+    setDone(true);
+    setTimeout(() => {
+      setDone(false);
+    }, 1500);
+  };
 
   const handleSaveButton = () => {
     if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
@@ -62,12 +70,14 @@ const Component: FC<Props> = ({ sidebar }) => {
         .then(() => {
           mutate();
           handleNewButton();
+          handleDone();
         });
     } else if (id) {
       fetchInstanceWithToken(token)
         .put(`/slides/${id}`, body)
         .then(() => {
           mutate();
+          handleDone();
         })
         .catch((err) => {
           console.error(err);
@@ -78,6 +88,7 @@ const Component: FC<Props> = ({ sidebar }) => {
         .then((res) => {
           mutate();
           navigate(`/slides/${res.data.id}`);
+          handleDone();
         })
         .catch((err) => {
           console.error(err);
@@ -123,6 +134,18 @@ const Component: FC<Props> = ({ sidebar }) => {
       </div>
       <div className='mb-2'>
         <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} />
+      </div>
+      <div className='mb-2'>
+        {done && (
+          <div
+            className={`bg-icons-tertiary overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2
+            ${!sidebar && 'justify-center'}
+          `}
+          >
+            <CheckIcon className='w-6 h-6' />
+            <p className={`text-sm font-bold ${!sidebar && 'hidden'}`}>保存しました</p>
+          </div>
+        )}
       </div>
       {sidebar ? <SlideList id={id} slides={data} /> : <div className='h-full'></div>}
       <SidebarButton
