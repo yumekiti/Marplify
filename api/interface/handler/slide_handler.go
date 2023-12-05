@@ -145,19 +145,19 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	slide := &domain.Slide{
-		Model:   gorm.Model{ID: uint(id)},
-		Title:   req.Title,
-		Content: req.Content,
-		UserID:  user.ID,
-	}
-
-	slide, err = sh.su.FindById(user, id)
+	slide, err := sh.su.FindById(user, id)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.JSON(http.StatusNotFound, err.Error())
 		}
 		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	slide = &domain.Slide{
+		Model:   slide.Model,
+		Title:   req.Title,
+		Content: req.Content,
+		UserID:  user.ID,
 	}
 
 	slide, err = sh.su.Update(user, slide)
