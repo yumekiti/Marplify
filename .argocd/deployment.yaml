@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: marplify-web
-          image: yumekiti/marplify-web:7d42d7d
+          image: yumekiti/marplify-web:605f854
           ports:
             - containerPort: 80
 ---
@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: marplify-api
-          image: yumekiti/marplify-api:7d42d7d
+          image: yumekiti/marplify-api:605f854
           ports:
             - containerPort: 8080
 ---
