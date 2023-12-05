@@ -11,23 +11,23 @@ export const isMarpSlide = (markdown: string): boolean => {
 
 export const markdownToMarp = (markdown: string): string => {
   const lines = markdown.split('\n');
-  let result = `---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n`;
+  let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n\n`;
   let isFirst = true;
   let current = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (line.startsWith('# ')) {
-      if (!isFirst) result += `---\n\n`;
-      result += `<!--\n_class: headline\n-->\n\n`;
+      if (!isFirst) result += `------------------------------------------------------------\n\n`;
+      result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(2);
     } else if (line.startsWith('## ')) {
-      if (!isFirst) result += `---\n\n`;
-      result += `<!--\n_class: headline\n-->\n\n`;
+      if (!isFirst) result += `------------------------------------------------------------\n\n`;
+      result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(3);
     } else if (line.startsWith('### ')) {
-      if (!isFirst) result += `---\n\n`;
-      result += `<!--\n_class: general\n_header: ${current}\n-->\n\n`;
+      if (!isFirst) result += `------------------------------------------------------------\n\n`;
+      result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
     }
     isFirst = false;
     result += line + '\n';
@@ -40,13 +40,13 @@ export const marpToMarkdown = (marpContent: string): string => {
   let markdown = marpContent;
 
   // Remove Marp metadata
-  markdown = markdown.replace(/---[\s\S]*?---/, '');
+  markdown = markdown.replace(/----------[\s\S]*?----------/, '');
 
   // Remove HTML comments
-  markdown = markdown.replace(/<!--[\s\S]*?-->/g, '');
+  markdown = markdown.replace(/<!-----[\s\S]*?----->/g, '');
 
   // Remove horizontal rules
-  markdown = markdown.replace(/^-{3,}\s*$/gm, '');
+  markdown = markdown.replace(/^-{60,}\s*$/gm, '');
 
   // Trim extra spaces and lines
   markdown = markdown.trim();

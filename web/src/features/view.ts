@@ -5,6 +5,7 @@ export type View = {
   loginModal: boolean;
   registerModal: boolean;
   sidebar: boolean;
+  editing: number;
 };
 
 export type ViewState = View;
@@ -14,6 +15,7 @@ const initialState: ViewState = {
   loginModal: false,
   registerModal: false,
   sidebar: localStorage.getItem('sidebar') === 'true' ? true : false,
+  editing: 0,
 };
 
 export const viewSlice = createSlice({
@@ -36,6 +38,9 @@ export const viewSlice = createSlice({
     toggleSidebar: (state) => {
       state.sidebar = !state.sidebar;
       localStorage.setItem('sidebar', state.sidebar.toString());
+    },
+    setEditing: (state, action) => {
+      state.editing = action.payload;
     },
   },
 });
