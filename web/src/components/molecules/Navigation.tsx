@@ -33,6 +33,7 @@ const Component: FC<Props> = ({ sidebar, isLogin }) => {
             onClick={handleLoginButton}
             text='ログイン'
             Icon={ArrowRightOnRectangleIcon}
+            tertiary
           />
         </>
       )}

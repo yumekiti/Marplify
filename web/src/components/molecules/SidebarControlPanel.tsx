@@ -35,13 +35,17 @@ const Component: FC<Props> = ({ sidebar }) => {
   );
 
   const handleSaveButton = () => {
+    if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
+
     let title = 'No Title';
+    let titleFlag = false;
     const headingPrefixes = ['# ', '## ', '### ', '#### ', '##### ', '###### '];
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
       for (const prefix of headingPrefixes) {
-        if (lines[i].startsWith(prefix)) {
+        if (lines[i].startsWith(prefix) && !titleFlag) {
           title = lines[i].slice(prefix.length);
+          titleFlag = true;
           break;
         }
       }
@@ -96,11 +100,10 @@ const Component: FC<Props> = ({ sidebar }) => {
     (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === 's') {
         e.preventDefault();
-        if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
         handleSaveButton();
       }
     },
-    [handleSaveButton, handleNewButton, editing, dispatch],
+    [handleSaveButton, editing, dispatch],
   );
 
   useEffect(() => {
