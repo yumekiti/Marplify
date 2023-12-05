@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react';
+import { FC, useState, ChangeEvent, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { viewSlice } from '../../features/view';
@@ -51,6 +51,22 @@ const Component: FC = () => {
         setMessage('ログインに失敗しました');
       });
   };
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleLoginClick();
+      }
+    },
+    [handleLoginClick],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   const handleResetClick = () => {};
 

@@ -1,23 +1,36 @@
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import MDEditor, { commands } from '@uiw/react-md-editor';
 import { DocumentDuplicateIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
 
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
+import { viewSlice } from '../../features/view';
 import { placeholder, exampleText } from '../../constants/examples';
 
 const Component: FC = () => {
   const dispatch = useDispatch();
   const { content } = useSelector((state: RootState) => state.content);
+  const { editing } = useSelector((state: RootState) => state.view);
+  const { id } = useParams<{ id: string }>();
+
+  const handleOnChage = (value: string | undefined) => {
+    dispatch(contentSlice.actions.setContent(value || ''));
+
+    if (!editing) {
+      dispatch(viewSlice.actions.setEditing(Number(id)));
+    }
+  };
 
   return (
     <MDEditor
       className='w-full rounded-lg text-headline bg-cardBackground'
       value={content}
-      onChange={(value) => dispatch(contentSlice.actions.setContent(value || ''))}
+      onChange={handleOnChage}
       preview='edit'
       height={'100%'}
+      autoFocus={true}
       textareaProps={{
         placeholder: placeholder,
       }}

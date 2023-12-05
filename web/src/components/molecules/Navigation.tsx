@@ -25,7 +25,9 @@ const Component: FC<Props> = ({ sidebar, isLogin }) => {
         <SidebarControlPanel sidebar={sidebar} />
       ) : (
         <>
-          <div className='h-full'></div>
+          <div className='h-full'>
+            {sidebar && <p className='text-sm text-gray-500'>ログインするとデータ追加や編集ができるようになります</p>}
+          </div>
           <SidebarButton
             sidebar={sidebar}
             onClick={handleLoginButton}

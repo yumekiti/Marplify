@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { ArrowLeftOnRectangleIcon, PlusIcon } from '@heroicons/react/24/solid';
 
 import { userSlice } from '../../features/user';
 import { contentSlice } from '../../features/content';
+import { viewSlice } from '../../features/view';
 import { fetchInstanceWithToken } from '../../libs/fetchInstance';
 import { RootState } from '../../store';
 
@@ -25,15 +26,13 @@ const Component: FC<Props> = ({ sidebar }) => {
   const { id } = useParams<{ id: string }>();
   const { content } = useSelector((state: RootState) => state.content);
   const { token } = useSelector((state: RootState) => state.user);
+  const { editing } = useSelector((state: RootState) => state.view);
 
   const { data, error, mutate } = useSWR('/slides', (url) =>
     fetchInstanceWithToken(token)
       .get(url)
       .then((res) => res.data),
   );
-
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
 
   const handleSaveButton = () => {
     let title = 'No Title';
@@ -45,9 +44,6 @@ const Component: FC<Props> = ({ sidebar }) => {
           title = lines[i].slice(prefix.length);
           break;
         }
-      }
-      if (title !== '') {
-        break;
       }
     }
 
@@ -61,6 +57,7 @@ const Component: FC<Props> = ({ sidebar }) => {
         .delete(`/slides/${id}`)
         .then(() => {
           mutate();
+          handleNewButton();
         });
     } else if (id) {
       fetchInstanceWithToken(token)
@@ -74,8 +71,9 @@ const Component: FC<Props> = ({ sidebar }) => {
     } else {
       fetchInstanceWithToken(token)
         .post('/slides', body)
-        .then(() => {
+        .then((res) => {
           mutate();
+          navigate(`/slides/${res.data.id}`);
         })
         .catch((err) => {
           console.error(err);
@@ -94,16 +92,43 @@ const Component: FC<Props> = ({ sidebar }) => {
     navigate('/');
   };
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
+        handleSaveButton();
+      }
+    },
+    [handleSaveButton, handleNewButton, editing, dispatch],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+
   return (
     <>
       <div className='mb-2'>
-        <SidebarButton sidebar={sidebar} onClick={handleNewButton} text='新規' Icon={PlusIcon} highlight />
+        <SidebarButton sidebar={sidebar} onClick={handleNewButton} text='新規' Icon={PlusIcon} />
       </div>
       <div className='mb-2'>
-        <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} highlight />
+        <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} />
       </div>
       {sidebar ? <SlideList id={id} slides={data} /> : <div className='h-full'></div>}
-      <SidebarButton sidebar={sidebar} onClick={handleLogoutButton} text='ログアウト' Icon={ArrowLeftOnRectangleIcon} />
+      <SidebarButton
+        sidebar={sidebar}
+        onClick={handleLogoutButton}
+        text='ログアウト'
+        Icon={ArrowLeftOnRectangleIcon}
+        tertiary
+      />
     </>
   );
 };
