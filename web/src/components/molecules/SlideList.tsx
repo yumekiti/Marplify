@@ -33,8 +33,9 @@ const Component: FC<Props> = ({ id, slides }) => {
             className='flex items-start py-1 w-full rounded group hover:bg-headline hover:bg-opacity-30 justify-center flex-col'
           >
             <div className='px-2 flex items-center gap-2'>
-              {editing === index + 1}
-              {editing !== 0 && editing === index + 1 && <div className='rounded-full w-3 h-3 bg-icons-tertiary' />}
+              {editing !== 0 && editing === Number(slide.id) && (
+                <div className='rounded-full w-3 h-3 bg-icons-tertiary' />
+              )}
               <p className={`whitespace-nowrap group-hover:underline ${id == slide.id && 'text-icons-highlight'}`}>
                 {slide.title}
               </p>

@@ -152,6 +152,14 @@ func (sh *slideHandler) Update(c echo.Context) error {
 		UserID:  user.ID,
 	}
 
+	slide, err = sh.su.FindById(user, id)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, err.Error())
+		}
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
 	slide, err = sh.su.Update(user, slide)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
