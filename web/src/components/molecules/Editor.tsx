@@ -25,7 +25,7 @@ const Component: FC = () => {
 
   return (
     <MDEditor
-      className='w-full rounded-lg text-headline bg-cardBackground overflow-y-scroll'
+      className='w-full rounded-lg text-headline bg-cardBackground'
       value={content}
       onChange={handleOnChage}
       preview='edit'
