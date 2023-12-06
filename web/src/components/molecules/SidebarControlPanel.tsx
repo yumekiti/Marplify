@@ -110,11 +110,11 @@ const Component: FC<Props> = ({ sidebar }) => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 's') {
+      if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'S')) {
         e.preventDefault();
         handleSaveButton();
       }
-      if (e.ctrlKey && e.key === 'b') {
+      if ((e.ctrlKey && e.key === 'b') || (e.ctrlKey && e.key === 'B')) {
         e.preventDefault();
         dispatch(viewSlice.actions.toggleSidebar());
       }
