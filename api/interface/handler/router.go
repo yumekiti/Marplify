@@ -25,8 +25,8 @@ func InitRouting(
 	api.DELETE("/users/me", userHandler.Delete)
 
 	api.GET("/slides", slideHandler.FindAll)
-	api.GET("/slides/:id", slideHandler.FindById)
+	api.GET("/slides/:uuid", slideHandler.FindById)
 	api.POST("/slides", slideHandler.Store)
-	api.PUT("/slides/:id", slideHandler.Update)
-	api.DELETE("/slides/:id", slideHandler.Delete)
+	api.PUT("/slides/:uuid", slideHandler.Update)
+	api.DELETE("/slides/:uuid", slideHandler.Delete)
 }

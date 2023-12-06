@@ -5,7 +5,7 @@ export type View = {
   loginModal: boolean;
   registerModal: boolean;
   sidebar: boolean;
-  editing: number;
+  editing: string;
 };
 
 export type ViewState = View;
@@ -15,7 +15,7 @@ const initialState: ViewState = {
   loginModal: false,
   registerModal: false,
   sidebar: localStorage.getItem('sidebar') === 'true' ? true : false,
-  editing: 0,
+  editing: '',
 };
 
 export const viewSlice = createSlice({

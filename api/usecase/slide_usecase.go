@@ -1,13 +1,15 @@
 package usecase
 
 import (
+	"github.com/google/uuid"
+
 	"api/domain"
 	"api/domain/repository"
 )
 
 type SlideUsecase interface {
 	Store(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
-	FindById(user *domain.User, id int) (*domain.Slide, error)
+	FindById(user *domain.User, uuid uuid.UUID) (*domain.Slide, error)
 	FindAll(user *domain.User) (*domain.Slides, error)
 	Update(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
 	Delete(user *domain.User, slide *domain.Slide) (*domain.Slide, error)
@@ -25,8 +27,8 @@ func (su *slideUsecase) Store(user *domain.User, slide *domain.Slide) (*domain.S
 	return su.sr.Store(user, slide)
 }
 
-func (su *slideUsecase) FindById(user *domain.User, id int) (*domain.Slide, error) {
-	return su.sr.FindById(user, id)
+func (su *slideUsecase) FindById(user *domain.User, uuid uuid.UUID) (*domain.Slide, error) {
+	return su.sr.FindById(user, uuid)
 }
 
 func (su *slideUsecase) FindAll(user *domain.User) (*domain.Slides, error) {

@@ -11,7 +11,7 @@ const App: FC = () => {
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='/presentation' element={<PresentationPage />} />
-          <Route path='/slides/:id' element={<DetailPage />} />
+          <Route path='/slides/:uuid' element={<DetailPage />} />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </BrowserRouter>

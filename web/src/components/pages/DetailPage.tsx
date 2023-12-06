@@ -16,13 +16,13 @@ import Layout from '../templates/Layout';
 const MainPage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams<{ id: string }>();
+  const { uuid } = useParams<{ uuid: string }>();
   const { mode } = useSelector((state: RootState) => state.view);
   const { token } = useSelector((state: RootState) => state.user);
 
   if (!token) navigate('/');
 
-  const { data, error } = useSWR(`/slides/${id}`, (url) =>
+  const { data, error } = useSWR(`/slides/${uuid}`, (url) =>
     fetchInstanceWithToken(token)
       .get(url)
       .then((res) => res.data),
