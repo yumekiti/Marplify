@@ -138,10 +138,7 @@ const Component: FC<Props> = ({ sidebar }) => {
         <SidebarButton sidebar={sidebar} onClick={handleNewButton} text='新規' Icon={PlusIcon} />
       </div>
       <div className='mb-2'>
-        <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} />
-      </div>
-      <div className='mb-2'>
-        {done && (
+        {done ? (
           <div
             className={`bg-icons-tertiary overflow-hidden whitespace-nowrap w-full flex items-center py-2 px-4 bg-icons-highlight hover:bg-icons-secondary text-white rounded focus:outline-none gap-2
             ${!sidebar && 'justify-center'}
@@ -150,6 +147,8 @@ const Component: FC<Props> = ({ sidebar }) => {
             <CheckIcon className='w-6 h-6' />
             <p className={`text-sm font-bold ${!sidebar && 'hidden'}`}>保存しました</p>
           </div>
+        ) : (
+          <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} />
         )}
       </div>
       {sidebar ? <SlideList id={id} slides={data} /> : <div className='h-full'></div>}
