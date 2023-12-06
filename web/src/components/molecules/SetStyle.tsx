@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { EyeDropperIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/solid';
+import { PaintBrushIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/solid';
 
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
@@ -87,7 +87,7 @@ const Component: FC = () => {
         className='fixed bg-cardBackground rounded-lg p-4 shadow-md flex justify-center items-center'
         onClick={handleClickStyle}
       >
-        <IconButtonWithTooltip Icon={EyeDropperIcon} text='Style' onClick={() => {}} />
+        <IconButtonWithTooltip Icon={PaintBrushIcon} text='Style' onClick={() => {}} />
       </div>
     </div>
   );
