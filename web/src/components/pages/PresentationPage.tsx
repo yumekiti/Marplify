@@ -1,9 +1,8 @@
 import { FC, useEffect, useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ChevronRightIcon, ChevronLeftIcon, ArrowsPointingOutIcon } from '@heroicons/react/24/solid';
 
 import { RootState } from '../../store';
-import { contentSlice } from '../../features/content';
 import { isMarpSlide, markdownToMarp } from '../../libs/markdown';
 
 import PresentationView from '../molecules/PresentationView';
@@ -31,7 +30,6 @@ const generatePageStyle = (currentPage: number) => {
 };
 
 const PresentationPage: FC = () => {
-  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const { content, theme } = useSelector((state: RootState) => state.content);
