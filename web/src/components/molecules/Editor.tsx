@@ -81,8 +81,12 @@ const Component: FC = () => {
           buttonProps: { 'aria-label': 'Cunning', title: 'Cunning' },
           icon: <ChatBubbleBottomCenterTextIcon className='w-3' />,
           execute: () => {
-            const style = `\n\n<style>.markdown-body div > :not(blockquote) { display: none; } blockquote { display: block; }</style>\n\n`;
-            dispatch(contentSlice.actions.setContent(content + style));
+            const style = `\n\n<style>blockquote { display: none; } .markdown-body div > :not(blockquote) { display: none; } blockquote { display: block; }</style>\n\n`;
+            if (content.includes(style)) {
+              dispatch(contentSlice.actions.setContent(content.replace(style, '')));
+            } else {
+              dispatch(contentSlice.actions.setContent(content + style));
+            }
           },
         },
       ]}
