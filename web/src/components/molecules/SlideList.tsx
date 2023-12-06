@@ -29,7 +29,7 @@ const Component: FC<Props> = ({ uuid, slides }) => {
       {slides.map((slide: Slide, index: number) => (
         <li className='mb-2' key={index}>
           <Link
-            to={`/slides/${slide.uuid}`}
+            to={`/${slide.uuid}`}
             className='flex items-start py-1 w-full rounded group hover:bg-headline hover:bg-opacity-30 justify-center flex-col'
           >
             <div className='px-2 flex items-center gap-2'>

@@ -88,7 +88,7 @@ const Component: FC<Props> = ({ sidebar }) => {
         .post('/slides', body)
         .then((res) => {
           mutate();
-          navigate(`/slides/${res.data.uuid}`);
+          navigate(`/${res.data.uuid}`);
           handleDone();
         })
         .catch((err) => {
