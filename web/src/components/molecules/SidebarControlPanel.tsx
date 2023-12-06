@@ -23,7 +23,7 @@ type Props = {
 const Component: FC<Props> = ({ sidebar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { uuid } = useParams<{ uuid: string }>();
   const { content } = useSelector((state: RootState) => state.content);
   const { token } = useSelector((state: RootState) => state.user);
   const { editing } = useSelector((state: RootState) => state.view);
@@ -43,7 +43,7 @@ const Component: FC<Props> = ({ sidebar }) => {
   };
 
   const handleSaveButton = () => {
-    if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
+    if (editing != '') dispatch(viewSlice.actions.setEditing(''));
     else return;
 
     let title = 'No Title';
@@ -67,15 +67,15 @@ const Component: FC<Props> = ({ sidebar }) => {
 
     if (!content) {
       fetchInstanceWithToken(token)
-        .delete(`/slides/${id}`)
+        .delete(`/slides/${uuid}`)
         .then(() => {
           mutate();
           handleNewButton();
           handleDone();
         });
-    } else if (id) {
+    } else if (uuid) {
       fetchInstanceWithToken(token)
-        .put(`/slides/${id}`, body)
+        .put(`/slides/${uuid}`, body)
         .then(() => {
           mutate();
           handleDone();
@@ -88,7 +88,7 @@ const Component: FC<Props> = ({ sidebar }) => {
         .post('/slides', body)
         .then((res) => {
           mutate();
-          navigate(`/slides/${res.data.id}`);
+          navigate(`/${res.data.uuid}`);
           handleDone();
         })
         .catch((err) => {
@@ -151,7 +151,7 @@ const Component: FC<Props> = ({ sidebar }) => {
           <SidebarButton sidebar={sidebar} onClick={handleSaveButton} text='保存' Icon={InboxArrowDownIcon} />
         )}
       </div>
-      {sidebar ? <SlideList id={id} slides={data} /> : <div className='h-full'></div>}
+      {sidebar ? <SlideList uuid={uuid} slides={data} /> : <div className='h-full'></div>}
       <SidebarButton
         sidebar={sidebar}
         onClick={handleLogoutButton}

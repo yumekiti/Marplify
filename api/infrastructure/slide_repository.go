@@ -1,6 +1,7 @@
 package infrastructure
 
 import (
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 
 	"api/domain"
@@ -23,9 +24,9 @@ func (sr *slideRepository) Store(user *domain.User, slide *domain.Slide) (*domai
 	return slide, nil
 }
 
-func (sr *slideRepository) FindById(user *domain.User, id int) (*domain.Slide, error) {
+func (sr *slideRepository) FindById(user *domain.User, uuid uuid.UUID) (*domain.Slide, error) {
 	slide := &domain.Slide{}
-	if err := sr.db.Where("id = ?", id).First(slide).Error; err != nil {
+	if err := sr.db.Where("uuid = ?", uuid).First(slide).Error; err != nil {
 		return nil, err
 	}
 	return slide, nil

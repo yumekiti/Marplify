@@ -17,13 +17,13 @@ const Component: FC = () => {
   const dispatch = useDispatch();
   const { content } = useSelector((state: RootState) => state.content);
   const { editing } = useSelector((state: RootState) => state.view);
-  const { id } = useParams<{ id: string }>();
+  const { uuid } = useParams<{ uuid: string }>();
 
   const handleOnChage = (value: string | undefined) => {
     dispatch(contentSlice.actions.setContent(value || ''));
 
     if (!editing) {
-      dispatch(viewSlice.actions.setEditing(Number(id)));
+      dispatch(viewSlice.actions.setEditing(uuid));
     }
   };
 
