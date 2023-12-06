@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../store';
