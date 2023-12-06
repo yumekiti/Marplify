@@ -44,6 +44,7 @@ const Component: FC<Props> = ({ sidebar }) => {
 
   const handleSaveButton = () => {
     if (editing !== 0) dispatch(viewSlice.actions.setEditing(0));
+    else return;
 
     let title = 'No Title';
     let titleFlag = false;
@@ -112,6 +113,10 @@ const Component: FC<Props> = ({ sidebar }) => {
       if (e.ctrlKey && e.key === 's') {
         e.preventDefault();
         handleSaveButton();
+      }
+      if (e.ctrlKey && e.key === 'b') {
+        e.preventDefault();
+        dispatch(viewSlice.actions.toggleSidebar());
       }
     },
     [handleSaveButton, editing, dispatch],

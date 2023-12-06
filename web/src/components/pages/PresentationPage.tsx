@@ -35,20 +35,21 @@ const PresentationPage: FC = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const { content, theme } = useSelector((state: RootState) => state.content);
+  const [marpContent, setMarpContent] = useState(content);
 
   useEffect(() => {
-    if (!isMarpSlide(content)) {
-      if (!content) return;
-      dispatch(contentSlice.actions.setContent(markdownToMarp(content)));
+    if (!isMarpSlide(marpContent)) {
+      setMarpContent(markdownToMarp(content));
     }
-  }, [content, dispatch]);
+  }, [content]);
 
   useEffect(() => {
-    const marp = document.querySelector('.marpit') as HTMLElement;
+    const marp = document.querySelector('.marpit') as HTMLElement | null;
+    if (!marp) return;
     const pages = marp.children;
     setTotalPage(pages.length);
     generatePageStyle(page);
-  }, [page]);
+  }, [page, marpContent]);
 
   const handlePreviousPage = useCallback(() => {
     setPage((prev) => (prev === 1 ? prev : prev - 1));
@@ -90,7 +91,7 @@ const PresentationPage: FC = () => {
 
   return (
     <div className='relative w-full h-full flex justify-center items-center group'>
-      <PresentationView content={content} style={theme} />
+      <PresentationView content={marpContent} style={theme} />
       <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed group-active:bg-opacity-50 group-active:opacity-100'>
         <div className='flex justify-center items-center mx-auto'>
           <button className='text-icons-main active:opacity-50' onClick={handlePreviousPage} disabled={page === 1}>
