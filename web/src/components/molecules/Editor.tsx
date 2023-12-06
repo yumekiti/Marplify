@@ -2,7 +2,11 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MDEditor, { commands } from '@uiw/react-md-editor';
-import { DocumentDuplicateIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid';
+import {
+  DocumentDuplicateIcon,
+  QuestionMarkCircleIcon,
+  ChatBubbleBottomCenterTextIcon,
+} from '@heroicons/react/24/solid';
 
 import { RootState } from '../../store';
 import { contentSlice } from '../../features/content';
@@ -69,6 +73,16 @@ const Component: FC = () => {
           icon: <QuestionMarkCircleIcon className='w-3' />,
           execute: () => {
             dispatch(contentSlice.actions.setContent(exampleText));
+          },
+        },
+        {
+          name: 'cunning',
+          keyCommand: 'cunning',
+          buttonProps: { 'aria-label': 'Cunning', title: 'Cunning' },
+          icon: <ChatBubbleBottomCenterTextIcon className='w-3' />,
+          execute: () => {
+            const style = `\n\n<style>.markdown-body div > :not(blockquote) { display: none; } blockquote { display: block; }</style>\n\n`;
+            dispatch(contentSlice.actions.setContent(content + style));
           },
         },
       ]}
