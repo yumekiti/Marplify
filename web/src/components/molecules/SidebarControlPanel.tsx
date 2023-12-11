@@ -32,7 +32,14 @@ const Component: FC<Props> = ({ sidebar }) => {
   const { data, error, mutate } = useSWR('/slides', (url) =>
     fetchInstanceWithToken(token)
       .get(url)
-      .then((res) => res.data),
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 401) {
+          dispatch(userSlice.actions.setToken(''));
+          localStorage.removeItem('token');
+          navigate('/');
+        }
+      }),
   );
 
   const handleDone = () => {

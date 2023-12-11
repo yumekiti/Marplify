@@ -32,7 +32,6 @@ const MainPage: FC = () => {
     if (uuid) fetchData();
   }, [dispatch, navigate, token, uuid]);
 
-  if (!uuid) return <EditorAndViewer mode={mode} />;
   return <EditorAndViewer mode={mode} />;
 };
 
