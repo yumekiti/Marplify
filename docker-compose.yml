@@ -33,3 +33,11 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: database
+  tbls:
+    image: k1low/tbls
+    working_dir: /work
+    volumes:
+      - ./:/work
+    command: doc
+    depends_on:
+      - db
