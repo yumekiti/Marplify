@@ -33,7 +33,6 @@ export const markdownToMarp = (markdown: string): string => {
     } else if (line.startsWith('### ')) {
       result += appendString;
       result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
-      current = line.substring(4);
     } else if (line.startsWith('![')) {
       result += appendString;
     }
