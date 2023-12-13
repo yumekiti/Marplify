@@ -18,6 +18,10 @@ const generatePageStyle = (currentPage: number) => {
       margin: 0;
       display: block;
     }
+    .marpit > svg > svg {
+      margin: 0;
+      display: block;
+    }
     .marpit > svg {
       position: absolute;
       top: 0;
