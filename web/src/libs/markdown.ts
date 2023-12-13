@@ -10,7 +10,7 @@ export const isMarpSlide = (markdown: string): boolean => {
 };
 export const markdownToMarp = (markdown: string): string => {
   const lines = markdown.split('\n');
-  let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n`;
+  let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n\n`;
   let isFirst = true;
   let current = '';
 
