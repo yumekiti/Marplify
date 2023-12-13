@@ -12,11 +12,11 @@ const generatePageStyle = (currentPage: number) => {
   style.innerHTML = `
     .marpit > svg:not(:nth-child(${currentPage})) {
       margin: 0;
-      opacity: 0;
+      display: none;
     }
     .marpit > svg:nth-child(${currentPage}){
       margin: 0;
-      opacity: 1;
+      display: block;
     }
     .marpit > svg {
       position: absolute;
@@ -30,7 +30,7 @@ const generatePageStyle = (currentPage: number) => {
 };
 
 const PresentationPage: FC = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(localStorage.getItem('page')) || 1);
   const [totalPage, setTotalPage] = useState(1);
   const { content, theme } = useSelector((state: RootState) => state.content);
   const [marpContent, setMarpContent] = useState(content);
@@ -47,6 +47,7 @@ const PresentationPage: FC = () => {
     const pages = marp.children;
     setTotalPage(pages.length);
     generatePageStyle(page);
+    localStorage.setItem('page', String(page));
   }, [page, marpContent]);
 
   const handlePreviousPage = useCallback(() => {
@@ -88,7 +89,7 @@ const PresentationPage: FC = () => {
   }, [handleKeyDown]);
 
   return (
-    <div className='relative w-full h-full flex justify-center items-center group'>
+    <>
       <PresentationView content={marpContent} style={theme} />
       <div className='h-20 bottom-0 left-0 right-0 flex justify-between items-center z-20 bg-icons-secondary opacity-0 bg-opacity-0 hover:bg-opacity-50 hover:opacity-100 gap-16 transition-all duration-300 fixed group-active:bg-opacity-50 group-active:opacity-100'>
         <div className='flex justify-center items-center mx-auto'>
@@ -112,7 +113,7 @@ const PresentationPage: FC = () => {
         <button onClick={handlePreviousPage} className='w-full h-full' />
         <button onClick={handleNextPage} className='w-full h-full' />
       </div>
-    </div>
+    </>
   );
 };
 

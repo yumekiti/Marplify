@@ -13,6 +13,7 @@ export const markdownToMarp = (markdown: string): string => {
   let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n\n`;
   let isFirst = true;
   let current = '';
+  let isCodeBlock = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -22,28 +23,29 @@ export const markdownToMarp = (markdown: string): string => {
       appendString = `------------------------------------------------------------\n\n`;
     }
 
-    if (line.startsWith('# ')) {
-      result += appendString;
-      result += `<!-----\n_class: headline\n----->\n\n`;
-      current = line.substring(2);
-    } else if (line.startsWith('## ')) {
-      result += appendString;
-      result += `<!-----\n_class: headline\n----->\n\n`;
-      current = line.substring(3);
-    } else if (line.startsWith('### ')) {
-      result += appendString;
-      result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
-    } else if (line.startsWith('![')) {
-      result += appendString;
-      result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
+    if (line.startsWith('```')) {
+      isCodeBlock = !isCodeBlock;
+    }
+
+    if (!isCodeBlock) {
+      if (line.startsWith('# ')) {
+        result += appendString;
+        result += `<!-----\n_class: headline\n----->\n\n`;
+        current = line.substring(2);
+      } else if (line.startsWith('## ')) {
+        result += appendString;
+        result += `<!-----\n_class: headline\n----->\n\n`;
+        current = line.substring(3);
+      } else if (line.startsWith('### ')) {
+        result += appendString;
+        result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
+      } else if (line.startsWith('![')) {
+        result += appendString;
+      }
     }
 
     isFirst = false;
     result += line + '\n';
-
-    if (line.startsWith('![')) {
-      result += `\n${appendString}`;
-    }
   }
 
   return result;
