@@ -10,7 +10,7 @@ export const isMarpSlide = (markdown: string): boolean => {
 };
 export const markdownToMarp = (markdown: string): string => {
   const lines = markdown.split('\n');
-  let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n\n`;
+  let result = `----------\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n----------\n`;
   let isFirst = true;
   let current = '';
 
@@ -19,23 +19,22 @@ export const markdownToMarp = (markdown: string): string => {
     let appendString = '';
 
     if (!isFirst) {
-      appendString = `------------------------------------------------------------\n\n`;
+      appendString = `------------------------------------------------------------\n`;
     }
 
     if (line.startsWith('# ')) {
-      result += appendString;
+      result += `${appendString}\n`;
       result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(2);
     } else if (line.startsWith('## ')) {
-      result += appendString;
+      result += `${appendString}\n`;
       result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(3);
     } else if (line.startsWith('### ')) {
-      result += appendString;
+      result += `${appendString}\n`;
       result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
     } else if (line.startsWith('![')) {
-      result += appendString;
-      result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
+      result += `${appendString}\n`;
     }
 
     isFirst = false;
