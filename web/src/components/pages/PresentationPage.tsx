@@ -30,7 +30,7 @@ const generatePageStyle = (currentPage: number) => {
 };
 
 const PresentationPage: FC = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(localStorage.getItem('page')) || 1);
   const [totalPage, setTotalPage] = useState(1);
   const { content, theme } = useSelector((state: RootState) => state.content);
   const [marpContent, setMarpContent] = useState(content);
@@ -47,6 +47,7 @@ const PresentationPage: FC = () => {
     const pages = marp.children;
     setTotalPage(pages.length);
     generatePageStyle(page);
+    localStorage.setItem('page', String(page));
   }, [page, marpContent]);
 
   const handlePreviousPage = useCallback(() => {
