@@ -19,20 +19,23 @@ export const markdownToMarp = (markdown: string): string => {
     let appendString = '';
 
     if (!isFirst) {
-      appendString = `------------------------------------------------------------\n`;
+      appendString = `------------------------------------------------------------\n\n`;
     }
 
     if (line.startsWith('# ')) {
-      result += `${appendString}\n`;
+      result += appendString;
       result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(2);
     } else if (line.startsWith('## ')) {
-      result += `${appendString}\n`;
+      result += appendString;
       result += `<!-----\n_class: headline\n----->\n\n`;
       current = line.substring(3);
     } else if (line.startsWith('### ')) {
-      result += `${appendString}\n`;
+      result += appendString;
       result += `<!-----\n_class: general\n_header: ${current}\n----->\n\n`;
+      current = line.substring(4);
+    } else if (line.startsWith('![')) {
+      result += appendString;
     }
 
     isFirst = false;
