@@ -15,9 +15,8 @@ const MainPage: FC = () => {
   const { mode } = useSelector((state: RootState) => state.view);
   const { token } = useSelector((state: RootState) => state.user);
 
-  if (!token) navigate('/');
-
   useEffect(() => {
+    if (!token) navigate('/');
     const fetchData = async () => {
       try {
         const response = await fetchInstanceWithToken(token).get(`/slides/${uuid}`);
