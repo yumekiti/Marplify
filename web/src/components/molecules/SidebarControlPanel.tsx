@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { InboxArrowDownIcon } from '@heroicons/react/24/solid';
 import { ArrowLeftOnRectangleIcon, PlusIcon, CheckIcon } from '@heroicons/react/24/solid';
 
