@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: marplify
-          image: yumekiti/marplify:ec39356
+          image: yumekiti/marplify:50257a6
           ports:
             - containerPort: 80
